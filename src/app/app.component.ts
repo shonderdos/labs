@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StandingsService } from './services/standings/standings.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'dev-case';
+  constructor(private standingsService: StandingsService) {}
+
+  public standings = this.standingsService.driverStandings;
 }

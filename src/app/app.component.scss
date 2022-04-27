@@ -1,0 +1,31 @@
+.driver-card {
+  background-image: linear-gradient(173deg, #414141 3%, #202020 96%);
+  box-shadow: 0 0 5px 2px #000000;
+  border-radius: 10px;
+  height: 53px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  margin: 35px auto;
+}
+
+.text-small {
+  font-weight: lighter;
+  font-size: 12px;
+}
+
+.text-large {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.text-container {
+  display: flex;
+  justify-content: space-between;
+
+  &:first-child {
+    margin-bottom: 6px;
+  }
+}
