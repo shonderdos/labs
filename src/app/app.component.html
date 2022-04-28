@@ -1,6 +1,7 @@
 <div *ngFor="let driver of standings | async" class="driver-card" data-test-id="driver-entry">
   <div class="text-small text-container">
     <span data-test-id="driver-first-name">{{ driver.firstName }}</span>
+    <span data-test-id="driver-position">{{ driver.position | ordinal }}</span>
   </div>
   <div class="text-large text-container">
     <span data-test-id="driver-last-name">{{ driver.lastName }}</span>

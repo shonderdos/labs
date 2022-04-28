@@ -8,7 +8,7 @@ export interface DriverStanding {
   lastName: string;
   constructorName: string;
   points: string;
-  position: string;
+  position: number;
 }
 
 export const createDriverStanding = (override?: Partial<DriverStanding>): DriverStanding => {
@@ -17,7 +17,7 @@ export const createDriverStanding = (override?: Partial<DriverStanding>): Driver
     firstName: 'Nicholas',
     lastName: 'Latifi',
     points: '86',
-    position: '1',
+    position: 1,
     ...override,
   };
 };
@@ -37,7 +37,7 @@ export class StandingsService {
             lastName: driverStanding.Driver.familyName,
             constructorName: driverStanding.Constructors[0].name,
             points: driverStanding.points,
-            position: driverStanding.position,
+            position: Number(driverStanding.position),
           };
         })
       )

@@ -3,6 +3,8 @@ import { AppComponent } from './app.component';
 import { createDriverStanding, StandingsService } from './services/standings/standings.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { MockPipe } from 'ng-mocks';
+import { OrdinalPipe } from './services/pipes/ordinal/ordinal.pipe';
 
 const arrange = (override?: { standingService?: Partial<StandingsService> }) => {
   const stub = {
@@ -13,7 +15,7 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
   };
 
   TestBed.configureTestingModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
     providers: [{ provide: StandingsService, useValue: stub.standingService }],
   });
 
@@ -65,7 +67,7 @@ describe('AppComponent', () => {
     expect(name.nativeElement.innerHTML).toContain(firstName);
   });
 
-  it('should display the first name', () => {
+  it('should display the last name', () => {
     const lastName = 'Latifi';
     const driverStandings = [createDriverStanding({ lastName })];
     const { fixture } = arrange({
@@ -91,5 +93,19 @@ describe('AppComponent', () => {
     const name = fixture.debugElement.query(By.css("[data-test-id='driver-points']"));
 
     expect(name.nativeElement.innerHTML).toContain(points);
+  });
+
+  it('should display the position', () => {
+    const position = 1;
+    const driverStandings = [createDriverStanding({ position })];
+    const { fixture } = arrange({
+      standingService: {
+        driverStandings: of(driverStandings),
+      },
+    });
+
+    const name = fixture.debugElement.query(By.css("[data-test-id='driver-position']"));
+
+    expect(name.nativeElement.innerHTML).toContain(`fake: ${position}`);
   });
 });
