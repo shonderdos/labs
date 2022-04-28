@@ -53,6 +53,21 @@ describe('AppComponent', () => {
     expect(entries).toHaveLength(driverStandings.length);
   });
 
+  it('should apply correct classname based on constructorsId', () => {
+    const mockedId = 'mockedId';
+    const driverStandings = [createDriverStanding({ constructorId: mockedId })];
+
+    const { fixture } = arrange({
+      standingService: {
+        driverStandings: of(driverStandings),
+      },
+    });
+
+    const classes = fixture.debugElement.query(By.css("[data-test-id='driver-entry']")).classes;
+
+    expect(classes[mockedId]).toBeTruthy();
+  });
+
   it('should display the first name', () => {
     const firstName = 'Nicholas';
     const driverStandings = [createDriverStanding({ firstName })];

@@ -1,4 +1,9 @@
-<div *ngFor="let driver of standings | async" class="driver-card" data-test-id="driver-entry">
+<div
+  *ngFor="let driver of standings | async"
+  class="driver-card"
+  [ngClass]="driver.constructorId"
+  data-test-id="driver-entry"
+>
   <div class="text-small text-container">
     <span data-test-id="driver-first-name">{{ driver.firstName }}</span>
     <span data-test-id="driver-position">{{ driver.position | ordinal }}</span>
