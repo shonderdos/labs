@@ -6,6 +6,7 @@ import { DTOStandings } from './standings.interface';
 export interface DriverStanding {
   firstName: string;
   lastName: string;
+  driverId: string;
   constructorName: string;
   constructorId: string;
   points: string;
@@ -15,6 +16,7 @@ export interface DriverStanding {
 export const createDriverStanding = (override?: Partial<DriverStanding>): DriverStanding => {
   return {
     constructorName: 'Williams',
+    driverId: 'latifi',
     constructorId: 'williams',
     firstName: 'Nicholas',
     lastName: 'Latifi',
@@ -39,6 +41,7 @@ export class StandingsService {
             lastName: driverStanding.Driver.familyName,
             constructorName: driverStanding.Constructors[0].name,
             constructorId: driverStanding.Constructors[0].constructorId,
+            driverId: driverStanding.Driver.driverId,
             points: driverStanding.points,
             position: Number(driverStanding.position),
           };
