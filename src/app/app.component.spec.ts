@@ -136,4 +136,17 @@ describe('AppComponent', () => {
     const image = fixture.debugElement.query(By.css("[data-test-id='driver-portrait']"));
     expect(image.nativeElement.src).toContain(driverId);
   });
+
+  it('should display the drivers number', () => {
+    const driverNumber = 'mockedDriverNumber';
+    const driverStandings = [createDriverStanding({ driverNumber })];
+    const { fixture } = arrange({
+      standingService: {
+        driverStandings: of(driverStandings),
+      },
+    });
+
+    const number = fixture.debugElement.query(By.css("[data-test-id='driver-number']"));
+    expect(number.nativeElement.innerHTML).toContain(driverNumber);
+  });
 });
