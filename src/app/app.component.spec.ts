@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { MockPipe } from 'ng-mocks';
 import { OrdinalPipe } from './services/pipes/ordinal/ordinal.pipe';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const arrange = (override?: { standingService?: Partial<StandingsService> }) => {
   const stub = {
@@ -16,6 +17,7 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
 
   TestBed.configureTestingModule({
     declarations: [AppComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
+    imports: [NoopAnimationsModule],
     providers: [{ provide: StandingsService, useValue: stub.standingService }],
   });
 

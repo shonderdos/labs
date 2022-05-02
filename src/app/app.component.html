@@ -1,17 +1,21 @@
-<div
-  *ngFor="let driver of standings | async"
-  class="driver-card"
-  [ngClass]="driver.constructorId"
-  data-test-id="driver-entry"
->
-  <div class="text-small text-container">
-    <span data-test-id="driver-first-name">{{ driver.firstName }}</span>
-    <span data-test-id="driver-position">{{ driver.position | ordinal }}</span>
+<ng-container *ngIf="standings$ | async as standings">
+  <div [@listAnimation]="standings.length">
+    <div
+      *ngFor="let driver of standings"
+      class="driver-card"
+      [ngClass]="driver.constructorId"
+      data-test-id="driver-entry"
+    >
+      <div class="text-small text-container">
+        <span data-test-id="driver-first-name">{{ driver.firstName }}</span>
+        <span data-test-id="driver-position">{{ driver.position | ordinal }}</span>
+      </div>
+      <div class="text-large text-container">
+        <span data-test-id="driver-last-name">{{ driver.lastName }}</span>
+        <span data-test-id="driver-points">{{ driver.points }}pts</span>
+      </div>
+      <span data-test-id="driver-number" class="driver-number">{{ driver.driverNumber }}</span>
+      <img data-test-id="driver-portrait" class="driver-image" src="/assets/drivers/{{ driver.driverId }}.png" alt="" />
+    </div>
   </div>
-  <div class="text-large text-container">
-    <span data-test-id="driver-last-name">{{ driver.lastName }}</span>
-    <span data-test-id="driver-points">{{ driver.points }}pts</span>
-  </div>
-  <span data-test-id="driver-number" class="driver-number">{{ driver.driverNumber }}</span>
-  <img data-test-id="driver-portrait" class="driver-image" src="/assets/drivers/{{ driver.driverId }}.png" alt="" />
-</div>
+</ng-container>
