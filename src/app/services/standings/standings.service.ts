@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { DTOStandings } from './standings.interface';
+import { ConstructorsEntity, ConstructorStandingEntity, DTOErgast } from './standings.interface';
 
 export interface DriverStanding {
   firstName: string;
@@ -28,12 +28,37 @@ export const createDriverStanding = (override?: Partial<DriverStanding>): Driver
   };
 };
 
+export const createConstructor = (override?: Partial<ConstructorsEntity>): ConstructorsEntity => {
+  return {
+    constructorId: 'williams',
+    url: 'http://fake-url.com',
+    name: 'Williams',
+    nationality: 'British',
+    ...override,
+  };
+};
+
+export const createConstructorStanding = (override?: Partial<ConstructorStandingEntity>): ConstructorStandingEntity => {
+  return {
+    position: '1',
+    positionText: '1',
+    points: '86',
+    wins: '12',
+    Constructor: createConstructor(override?.Constructor),
+    ...override,
+  };
+};
+
 @Injectable({ providedIn: 'root' })
 export class StandingsService {
+  private hostName = 'https://ergast.com/api/';
+  private series = 'f1';
+  private baseUrl = `${this.hostName}${this.series}/`;
+
   constructor(private http: HttpClient) {}
 
   public driverStandings: Observable<DriverStanding[]> = this.http
-    .get<DTOStandings>('https://ergast.com/api/f1/current/driverStandings.json')
+    .get<DTOErgast>(`${this.baseUrl}current/driverStandings.json`)
     .pipe(
       map((dto) => dto.MRData.StandingsTable.StandingsLists[0].DriverStandings),
       map((driverStandings) =>
@@ -51,4 +76,8 @@ export class StandingsService {
         })
       )
     );
+
+  public constructorStandings: Observable<ConstructorStandingEntity[]> = this.http
+    .get<DTOErgast>(`${this.baseUrl}current/constructorStandings.json`)
+    .pipe(map((dto) => dto.MRData.StandingsTable.StandingsLists[0].ConstructorStandings));
 }

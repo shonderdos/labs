@@ -1,4 +1,4 @@
-export interface DTOStandings {
+export interface DTOErgast {
   MRData: MRData;
 }
 export interface MRData {
@@ -17,6 +17,7 @@ export interface StandingsTable {
 export interface StandingsListsEntity {
   season: string;
   round: string;
+  ConstructorStandings: ConstructorStandingEntity[];
   DriverStandings: DriverStandingsEntity[];
 }
 export interface DriverStandingsEntity {
@@ -26,6 +27,13 @@ export interface DriverStandingsEntity {
   wins: string;
   Driver: Driver;
   Constructors: ConstructorsEntity[];
+}
+export interface ConstructorStandingEntity {
+  position: string;
+  positionText: string;
+  points: string;
+  wins: string;
+  Constructor: ConstructorsEntity;
 }
 export interface Driver {
   driverId: string;
