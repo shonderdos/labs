@@ -1,0 +1,28 @@
+<ng-container *ngIf="standings$ | async as standings">
+  <div [@listAnimation]="standings.length">
+    <div
+      *ngFor="let constructor of standings"
+      class="constructor-card"
+      [ngClass]="constructor.Constructor.constructorId"
+      data-test-id="constructor-entry"
+    >
+      <div class="team-wrapper">
+        <img
+          data-test-id="constructor-logo"
+          class="driver-image"
+          src="/assets/constructors/logos/{{ constructor.Constructor.constructorId }}.png"
+          alt=""
+        />
+        <div data-test-id="divider" class="divider" [ngClass]="constructor.Constructor.constructorId"></div>
+        <div class="text-container">
+          <span class="text-small">Team</span>
+          <span data-test-id="constructor-name" class="text-large">{{ constructor.Constructor.name }}</span>
+        </div>
+      </div>
+      <div class="text-container">
+        <span data-test-id="constructor-position" class="text-small">{{ +constructor.position | ordinal }}</span>
+        <span data-test-id="constructor-points" class="text-large">{{ constructor.points }}pts</span>
+      </div>
+    </div>
+  </div>
+</ng-container>

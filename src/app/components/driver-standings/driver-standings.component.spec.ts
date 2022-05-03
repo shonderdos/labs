@@ -34,7 +34,7 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
   };
 };
 
-describe('AppComponent', () => {
+describe('DriverStandingsComponent', () => {
   it('should compile', () => {
     const { componentInstance } = arrange();
 
