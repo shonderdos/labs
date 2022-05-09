@@ -1,27 +1,71 @@
-# DevCase
+# F1 Standings
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
+A personal project to show off my development skills - ➡️ [Live demo](https://spiffy-lollipop-ded314.netlify.app) ⬅️
 
-## Development server
+![Project Banner](https://i.ibb.co/DpX2WF1/Artboard.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- Automated dependency updates with Renovate
+- Automated deployments with Netlify
+- Automated CI with Github Actions
+- Unit tests with Jest
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tech Stack
 
-## Build
+**Client:** Angular, RxJS
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+**Development:** Typescript, ESLint, Jest, Cypress, Husky, Ng-Mocks, Prettier
 
-## Running unit tests
+**CI/CD:** Netlify, Renovate
 
-Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io/).
+## Run Locally
 
-## Running end-to-end tests (Todo)
+Clone the project
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+  git clone https://github.com/shonderdos/labs.git
+```
 
-## Further help
+Go to the project directory
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+  cd labs
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+You can now view the project on http://localhost:4200
+
+## Running Unit Tests
+
+To run tests, run the following command
+
+```bash
+  npm run test
+```
+
+## Roadmap
+
+- Constructors standings
+- Mocked data for local development with Mock Service Worker
+- Integration tests with cypress.io
+- Driver profiles
+- Team profiles
+- Race schedule
+- Race results
+
+## Acknowledgements
+
+- [Design by Wojtek Dziedzic](https://dribbble.com/shots/10977528-Formula-1-App-Standings-and-Driver-Details)
+- [Data by Ergast](http://ergast.com/mrd/)
