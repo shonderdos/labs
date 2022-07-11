@@ -19,9 +19,10 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
   };
 
   TestBed.configureTestingModule({
-    declarations: [ConstructorStandingsComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
-    imports: [NoopAnimationsModule],
+    imports: [NoopAnimationsModule, ConstructorStandingsComponent],
     providers: [{ provide: StandingsService, useValue: stub.standingService }],
+  }).overrideComponent(ConstructorStandingsComponent, {
+    add: { imports: [MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
   });
 
   const fixture = TestBed.createComponent(ConstructorStandingsComponent);

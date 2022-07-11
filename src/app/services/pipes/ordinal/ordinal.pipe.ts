@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 const ordinals: string[] = ['th', 'st', 'nd', 'rd'];
 
-@Pipe({ name: 'ordinal' })
+@Pipe({ standalone: true, name: 'ordinal' })
 export class OrdinalPipe implements PipeTransform {
   transform(n: number) {
     const v = n % 100;

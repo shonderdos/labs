@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterOutlet } from '@angular/router';
-import { MockDirective } from 'ng-mocks';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 
 const arrange = () => {
   TestBed.configureTestingModule({
-    declarations: [AppComponent, MockDirective(RouterOutlet)],
-    imports: [NoopAnimationsModule],
+    providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+    imports: [NoopAnimationsModule, AppComponent, RouterModule.forRoot([])],
   });
 
   const fixture = TestBed.createComponent(AppComponent);
