@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { StandingsService } from '../../services/standings/standings.service';
+import { OrdinalPipe } from '../../services/pipes/ordinal/ordinal.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [OrdinalPipe, CommonModule],
   selector: 'app-driver-standings',
   animations: [
     trigger('listAnimation', [
