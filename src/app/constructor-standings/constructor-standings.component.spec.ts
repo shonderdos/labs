@@ -1,17 +1,15 @@
-import {
-  createConstructor,
-  createConstructorStanding,
-  StandingsService,
-} from '../../services/standings/standings.service';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { MockPipe } from 'ng-mocks';
-import { OrdinalPipe } from '../../services/pipes/ordinal/ordinal.pipe';
+import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { ConstructorStandingsComponent } from './constructor-standings.component';
+import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
+import { createConstructor } from './utils/fixtures/constructor.fixture';
+import { createConstructorStanding } from './utils/fixtures/constructor-standing.fixture';
 
-const arrange = (override?: { standingService?: Partial<StandingsService> }) => {
+const arrange = (override?: { standingService?: Partial<ContrsuctorStandingsService> }) => {
   const stub = {
     standingService: {
       ...override?.standingService,
@@ -20,7 +18,7 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
 
   TestBed.configureTestingModule({
     imports: [NoopAnimationsModule, ConstructorStandingsComponent],
-    providers: [{ provide: StandingsService, useValue: stub.standingService }],
+    providers: [{ provide: ContrsuctorStandingsService, useValue: stub.standingService }],
   }).overrideComponent(ConstructorStandingsComponent, {
     add: { imports: [MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
   });
@@ -45,7 +43,7 @@ describe('ConstructorStandingsComponent', () => {
     expect(componentInstance).toBeTruthy();
   });
 
-  it('should display entry for each item in standings', () => {
+  it('should display entry for each item in interfaces', () => {
     const constructorStandings = [createConstructorStanding(), createConstructorStanding()];
     const { fixture } = arrange({
       standingService: {

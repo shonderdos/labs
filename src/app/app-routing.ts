@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { DriverStandingsComponent } from './components/driver-standings/driver-standings.component';
-import { ConstructorStandingsComponent } from './components/constructor-standings/constructor-standings.component';
+import { DriverStandingsComponent } from './driver-standings/driver-standings.component';
+import { ConstructorStandingsComponent } from './constructor-standings/constructor-standings.component';
 
 export const routes: Routes = [
   { path: 'drivers', component: DriverStandingsComponent },

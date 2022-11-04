@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { StandingsService } from '../../services/standings/standings.service';
-import { OrdinalPipe } from '../../services/pipes/ordinal/ordinal.pipe';
+import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { CommonModule } from '@angular/common';
+import { DriverStandingsService } from './data-access/driver-standings.service';
 
 @Component({
   standalone: true,
   imports: [OrdinalPipe, CommonModule],
-  selector: 'app-driver-standings',
+  selector: 'app-driver-interfaces',
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['driver-standings.component.scss'],
 })
 export class DriverStandingsComponent {
-  constructor(private standingsService: StandingsService) {}
+  constructor(private standingsService: DriverStandingsService) {}
 
   public standings$ = this.standingsService.driverStandings;
 }
