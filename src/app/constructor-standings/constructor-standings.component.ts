@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { StandingsService } from '../../services/standings/standings.service';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { OrdinalPipe } from '../../services/pipes/ordinal/ordinal.pipe';
+import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { CommonModule } from '@angular/common';
+import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
 
 @Component({
   standalone: true,
   imports: [OrdinalPipe, CommonModule],
-  selector: 'app-constructor-standings',
+  selector: 'app-constructor-interfaces',
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./constructor-standings.component.scss'],
 })
 export class ConstructorStandingsComponent {
-  constructor(private standingsService: StandingsService) {}
+  constructor(private constructorStandingService: ContrsuctorStandingsService) {}
 
-  public standings$ = this.standingsService.constructorStandings;
+  public standings$ = this.constructorStandingService.constructorStandings;
 }

@@ -4,10 +4,11 @@ import { By } from '@angular/platform-browser';
 import { MockPipe } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DriverStandingsComponent } from './driver-standings.component';
-import { OrdinalPipe } from '../../services/pipes/ordinal/ordinal.pipe';
-import { createDriverStanding, StandingsService } from '../../services/standings/standings.service';
+import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
+import { DriverStandingsService } from './data-access/driver-standings.service';
+import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
 
-const arrange = (override?: { standingService?: Partial<StandingsService> }) => {
+const arrange = (override?: { standingService?: Partial<DriverStandingsService> }) => {
   const stub = {
     standingService: {
       standings: of([]),
@@ -17,7 +18,12 @@ const arrange = (override?: { standingService?: Partial<StandingsService> }) => 
 
   TestBed.configureTestingModule({
     imports: [NoopAnimationsModule],
-    providers: [{ provide: StandingsService, useValue: stub.standingService }],
+    providers: [
+      {
+        provide: DriverStandingsService,
+        useValue: stub.standingService,
+      },
+    ],
   }).overrideComponent(DriverStandingsComponent, { add: { imports: [MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] } });
 
   const fixture = TestBed.createComponent(DriverStandingsComponent);
