@@ -1,9 +1,8 @@
 <ng-container *ngIf="standings$ | async as standings">
   <div [@listAnimation]="standings.length">
-    <div
+    <app-standings-card
       *ngFor="let driver of standings"
-      class="driver-card"
-      [ngClass]="driver.constructorId"
+      [constructorId]="driver.constructorId"
       data-test-id="driver-entry"
     >
       <div class="text-small text-container">
@@ -16,6 +15,6 @@
       </div>
       <span data-test-id="driver-number" class="driver-number">{{ driver.driverNumber }}</span>
       <img data-test-id="driver-portrait" class="driver-image" src="/assets/drivers/{{ driver.driverId }}.png" alt="" />
-    </div>
+    </app-standings-card>
   </div>
 </ng-container>

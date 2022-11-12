@@ -3,10 +3,11 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { CommonModule } from '@angular/common';
 import { DriverStandingsService } from './data-access/driver-standings.service';
+import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 
 @Component({
   standalone: true,
-  imports: [OrdinalPipe, CommonModule],
+  imports: [OrdinalPipe, CommonModule, StandingsCardComponent],
   selector: 'app-driver-interfaces',
   animations: [
     trigger('listAnimation', [

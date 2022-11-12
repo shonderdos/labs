@@ -3,10 +3,11 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { CommonModule } from '@angular/common';
 import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
+import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 
 @Component({
   standalone: true,
-  imports: [OrdinalPipe, CommonModule],
+  imports: [OrdinalPipe, CommonModule, StandingsCardComponent],
   selector: 'app-constructor-interfaces',
   animations: [
     trigger('listAnimation', [
