@@ -7,6 +7,8 @@ import { DriverStandingsComponent } from './driver-standings.component';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { DriverStandingsService } from './data-access/driver-standings.service';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
+import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
+import { CommonModule } from '@angular/common';
 
 const arrange = (override?: { standingService?: Partial<DriverStandingsService> }) => {
   const stub = {
@@ -24,7 +26,11 @@ const arrange = (override?: { standingService?: Partial<DriverStandingsService> 
         useValue: stub.standingService,
       },
     ],
-  }).overrideComponent(DriverStandingsComponent, { add: { imports: [MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] } });
+  }).overrideComponent(DriverStandingsComponent, {
+    set: {
+      imports: [CommonModule, StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
+    },
+  });
 
   const fixture = TestBed.createComponent(DriverStandingsComponent);
   const nativeElement = fixture.nativeElement;
@@ -42,7 +48,6 @@ const arrange = (override?: { standingService?: Partial<DriverStandingsService> 
 describe('DriverStandingsComponent', () => {
   it('should compile', () => {
     const { componentInstance } = arrange();
-
     expect(componentInstance).toBeTruthy();
   });
 
@@ -59,19 +64,19 @@ describe('DriverStandingsComponent', () => {
     expect(entries).toHaveLength(driverStandings.length);
   });
 
-  it('should apply correct classname based on constructorsId', () => {
+  it('should apply correct input based on constructorsId', () => {
     const mockedId = 'mockedId';
     const driverStandings = [createDriverStanding({ constructorId: mockedId })];
-
     const { fixture } = arrange({
       standingService: {
         driverStandings: of(driverStandings),
       },
     });
 
-    const classes = fixture.debugElement.query(By.css("[data-test-id='driver-entry']")).classes;
+    const constructorId = fixture.debugElement.query(By.css("[data-test-id='driver-entry']")).componentInstance
+      .constructorId;
 
-    expect(classes[mockedId]).toBeTruthy();
+    expect(constructorId).toEqual(mockedId);
   });
 
   it('should display the first name', () => {

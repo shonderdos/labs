@@ -8,6 +8,7 @@ import { ConstructorStandingsComponent } from './constructor-standings.component
 import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
 import { createConstructor } from './utils/fixtures/constructor.fixture';
 import { createConstructorStanding } from './utils/fixtures/constructor-standing.fixture';
+import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 
 const arrange = (override?: { standingService?: Partial<ContrsuctorStandingsService> }) => {
   const stub = {
@@ -18,9 +19,14 @@ const arrange = (override?: { standingService?: Partial<ContrsuctorStandingsServ
 
   TestBed.configureTestingModule({
     imports: [NoopAnimationsModule, ConstructorStandingsComponent],
-    providers: [{ provide: ContrsuctorStandingsService, useValue: stub.standingService }],
+    providers: [
+      {
+        provide: ContrsuctorStandingsService,
+        useValue: stub.standingService,
+      },
+    ],
   }).overrideComponent(ConstructorStandingsComponent, {
-    add: { imports: [MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
+    add: { imports: [StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
   });
 
   const fixture = TestBed.createComponent(ConstructorStandingsComponent);
@@ -56,17 +62,20 @@ describe('ConstructorStandingsComponent', () => {
     expect(entries).toHaveLength(constructorStandings.length);
   });
 
-  it('should give entry correct class', () => {
-    const constructorId = 'mockedId';
-    const constructorStandings = [createConstructorStanding({ Constructor: createConstructor({ constructorId }) })];
+  it('should give correct constructorId', () => {
+    const mockedId = 'mockedId';
+    const constructorStandings = [
+      createConstructorStanding({ Constructor: createConstructor({ constructorId: mockedId }) }),
+    ];
     const { fixture } = arrange({
       standingService: {
         constructorStandings: of(constructorStandings),
       },
     });
 
-    const entry = fixture.debugElement.query(By.css("[data-test-id='constructor-entry']"));
-    expect(entry.classes[constructorId]).toBeTruthy();
+    const constructorId = fixture.debugElement.query(By.css("[data-test-id='constructor-entry']")).componentInstance
+      .constructorId;
+    expect(constructorId).toEqual(mockedId);
   });
 
   it('should display correct logo based on constructorId', () => {
