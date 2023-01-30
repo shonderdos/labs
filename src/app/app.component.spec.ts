@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
+import { NavigationComponent } from './shared/ui/navigation/navigation.component';
 
 const arrange = () => {
   TestBed.configureTestingModule({
@@ -37,5 +38,12 @@ describe('AppComponent', () => {
     const routerOutlet = fixture.debugElement.query(By.directive(RouterOutlet));
 
     expect(routerOutlet).toBeTruthy();
+  });
+  it('should have a navigation component', () => {
+    const { fixture } = arrange();
+
+    const navigation = fixture.debugElement.query(By.directive(NavigationComponent));
+
+    expect(navigation).toBeTruthy();
   });
 });

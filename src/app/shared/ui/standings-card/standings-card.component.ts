@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   styles: [
     `
       .wrapper {
-        box-shadow: 0 0 5px 2px #000000;
+        box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         border: 1px solid rgba(200, 200, 200, 0.1);
         height: 53px;
