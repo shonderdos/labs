@@ -26,10 +26,10 @@ describe('NavigationComponent', () => {
     expect(componentInstance).toBeTruthy();
   });
 
-  it('should have two links', () => {
+  it('should have three links', () => {
     const { nativeElement } = arrange();
     const links = nativeElement.querySelectorAll('a');
-    expect(links.length).toBe(2);
+    expect(links.length).toBe(3);
   });
 
   it('should have a link to drivers', () => {
@@ -50,5 +50,14 @@ describe('NavigationComponent', () => {
       });
 
     expect(link).toEqual(expect.arrayContaining(['/constructors']));
+  });
+
+  it('should have a link to settings', () => {
+    const { fixture } = arrange();
+    const link = fixture.debugElement.queryAll(By.css('[data-test-id="settings-link"]')).map(({ nativeElement }) => {
+      return nativeElement.getAttribute('href');
+    });
+
+    expect(link).toEqual(expect.arrayContaining(['/settings']));
   });
 });
