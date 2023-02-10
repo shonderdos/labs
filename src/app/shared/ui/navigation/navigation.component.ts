@@ -7,24 +7,24 @@ import { RouterModule } from '@angular/router';
   template: `
     <a routerLink="/drivers" data-test-id="drivers-link" routerLinkActive="active">Drivers</a>
     <a routerLink="/constructors" data-test-id="constructors-link" routerLinkActive="active">Constructors</a>
+    <a routerLink="/settings" data-test-id="settings-link" routerLinkActive="active">Settings</a>
   `,
   styles: [
     `
       :host {
         height: 80px;
-        color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgb(15, 23, 42);
-        box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        background-color: var(--navigation-background-color);
+        box-shadow: var(--navigation-box-shadow);
       }
 
       a,
       a:hover,
       a:active,
       a:visited {
-        color: #fff;
+        color: var(--navigation-text-color);
         text-decoration: none;
         padding: 0 20px;
       }

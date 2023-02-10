@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
         justify-content: center;
         max-width: 380px;
         margin: 35px auto;
+        color: var(--standings-text-color);
 
         background-color: #313131;
         background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.65) 75%);
