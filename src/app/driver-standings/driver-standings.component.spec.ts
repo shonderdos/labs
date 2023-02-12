@@ -8,7 +8,7 @@ import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { DriverStandingsService } from './data-access/driver-standings.service';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 const arrange = (override?: { standingService?: Partial<DriverStandingsService> }) => {
   const stub = {
@@ -28,7 +28,7 @@ const arrange = (override?: { standingService?: Partial<DriverStandingsService> 
     ],
   }).overrideComponent(DriverStandingsComponent, {
     set: {
-      imports: [CommonModule, StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
+      imports: [NgIf, AsyncPipe, NgFor, StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
     },
   });
 

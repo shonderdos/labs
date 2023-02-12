@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
-import { CommonModule } from '@angular/common';
+import { NgFor } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
       }
     `,
   ],
-  imports: [CommonModule, NavigationItemComponent],
+  imports: [NgFor, NavigationItemComponent],
 })
 export class NavigationComponent {
   public navigationItems = [

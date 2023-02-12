@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
       }
     `,
   ],
-  imports: [RouterModule],
+  imports: [RouterLink],
 })
 export class NavigationItemComponent {
   @Input() link: string | undefined;
