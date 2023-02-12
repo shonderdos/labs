@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './shared/ui/navigation/navigation.component';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, NavigationComponent],
+  imports: [RouterOutlet, NavigationComponent],
   selector: 'app-root',
   template: ` <app-navigation></app-navigation>
 

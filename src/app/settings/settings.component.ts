@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DarkModeService } from '../shared/services/dark-mode.service';
-import { CommonModule } from '@angular/common';
+import { DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -60,7 +60,7 @@ import { CommonModule } from '@angular/common';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [AsyncPipe],
 })
 export class SettingsComponent {
   public darkMode = this.darkModeService.isEnabled$;

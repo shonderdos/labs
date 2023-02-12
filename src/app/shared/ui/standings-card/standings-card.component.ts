@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -66,7 +66,7 @@ import { CommonModule } from '@angular/common';
       }
     `,
   ],
-  imports: [CommonModule],
+  imports: [NgClass],
 })
 export class StandingsCardComponent {
   @HostBinding('class.someClass') someField = false;
