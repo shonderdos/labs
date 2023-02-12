@@ -5,9 +5,7 @@ import { Subscription } from 'rxjs';
 
 describe('DarkModeService', () => {
   const arrange = () => {
-    TestBed.configureTestingModule({
-      providers: [DarkModeService],
-    });
+    TestBed.configureTestingModule({});
 
     const service = TestBed.inject(DarkModeService);
     const document = TestBed.inject(DOCUMENT);
