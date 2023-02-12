@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, shareReplay, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class ThemeSwitcherService {
+export class DarkModeService {
   private value = true;
   private state = new BehaviorSubject(this.value);
   public isEnabled$ = this.state.asObservable().pipe(

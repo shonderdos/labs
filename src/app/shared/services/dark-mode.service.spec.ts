@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { ThemeSwitcherService } from './theme-switcher.service';
+import { DarkModeService } from './dark-mode.service';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-describe('ThemeSwitcherService', () => {
+describe('DarkModeService', () => {
   const arrange = () => {
     TestBed.configureTestingModule({
-      providers: [ThemeSwitcherService],
+      providers: [DarkModeService],
     });
 
-    const service = TestBed.inject(ThemeSwitcherService);
+    const service = TestBed.inject(DarkModeService);
     const document = TestBed.inject(DOCUMENT);
 
     return {
