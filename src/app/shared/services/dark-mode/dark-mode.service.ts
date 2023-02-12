@@ -11,7 +11,7 @@ export class DarkModeService {
     tap((enabled) => {
       enabled ? this.enable() : this.disable();
     }),
-    shareReplay()
+    shareReplay(1)
   );
 
   constructor(@Inject(DOCUMENT) private document: Document, private localStoreService: LocalStorageService) {}
@@ -23,20 +23,26 @@ export class DarkModeService {
 
   public init() {
     const preference = this.loadPreferenceFromLocalStore();
+    if (preference !== null) {
+      this.value = preference;
+      this.state.next(this.value);
+      preference ? this.enable() : this.disable();
+      return;
+    }
     this.value ? this.enable() : this.disable();
   }
 
-  private loadPreferenceFromLocalStore(): string | null {
-    return this.localStoreService.get('darkMode');
+  private loadPreferenceFromLocalStore() {
+    return this.localStoreService.get<boolean>('darkMode');
   }
 
   private enable() {
     this.document.body.classList.add('dark');
-    this.localStoreService.set('darkMode', 'true');
+    this.localStoreService.set('darkMode', true);
   }
 
   private disable() {
     this.document.body.classList.remove('dark');
-    this.localStoreService.set('darkMode', 'false');
+    this.localStoreService.set('darkMode', false);
   }
 }
