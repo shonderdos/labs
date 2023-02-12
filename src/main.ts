@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app/app-routing';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ThemeSwitcherService } from './app/shared/services/theme-switcher.service';
+import { DarkModeService } from './app/shared/services/dark-mode.service';
 
 if (environment.production) {
   enableProdMode();
@@ -17,8 +17,8 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(RouterModule.forRoot(routes), HttpClientModule, BrowserAnimationsModule),
     {
       provide: APP_INITIALIZER,
-      useFactory: (themeSwitcherService: ThemeSwitcherService) => () => themeSwitcherService.init(),
-      deps: [ThemeSwitcherService],
+      useFactory: (darkModeService: DarkModeService) => () => darkModeService.init(),
+      deps: [DarkModeService],
       multi: true,
     },
   ],

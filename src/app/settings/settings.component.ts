@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ThemeSwitcherService } from '../shared/services/theme-switcher.service';
+import { DarkModeService } from '../shared/services/dark-mode.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -63,11 +63,11 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
 })
 export class SettingsComponent {
-  public darkMode = this.themeSwitcherService.isEnabled$;
+  public darkMode = this.darkModeService.isEnabled$;
 
-  constructor(private themeSwitcherService: ThemeSwitcherService) {}
+  constructor(private darkModeService: DarkModeService) {}
 
   switchDarkmode() {
-    this.themeSwitcherService.toggle();
+    this.darkModeService.toggle();
   }
 }
