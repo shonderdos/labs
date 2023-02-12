@@ -2,6 +2,7 @@
 html {
   --navigation-background-color: rgb(255, 255, 255);
   --navigation-text-color: rgb(30, 41, 59);
+  --navigation-hover-background-color: rgb(241, 245, 249);
   --navigation-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   --body-text-color: rgb(30, 41, 59);
   --body-background-color: rgb(241, 245, 249);
@@ -13,6 +14,7 @@ html {
 .dark {
   --navigation-background-color: rgb(15, 23, 42);
   --navigation-text-color: #fff;
+  --navigation-hover-background-color: rgb(54, 64, 80);
   --navigation-box-shadow: 0 1px 0 0 rgb(54, 64, 80);
   --body-text-color: #fff;
   --body-background-color: rgb(15, 23, 42);

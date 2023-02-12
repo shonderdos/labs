@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-navigation',
   template: `
-    <a routerLink="/drivers" data-test-id="drivers-link" routerLinkActive="active">Drivers</a>
-    <a routerLink="/constructors" data-test-id="constructors-link" routerLinkActive="active">Constructors</a>
-    <a routerLink="/settings" data-test-id="settings-link" routerLinkActive="active">Settings</a>
+    <ng-container *ngFor="let item of navigationItems">
+      <app-navigation-item [link]="item.link" [name]="item.name"></app-navigation-item>
+    </ng-container>
   `,
   styles: [
     `
@@ -19,17 +20,23 @@ import { RouterModule } from '@angular/router';
         background-color: var(--navigation-background-color);
         box-shadow: var(--navigation-box-shadow);
       }
-
-      a,
-      a:hover,
-      a:active,
-      a:visited {
-        color: var(--navigation-text-color);
-        text-decoration: none;
-        padding: 0 20px;
-      }
     `,
   ],
-  imports: [RouterModule],
+  imports: [CommonModule, NavigationItemComponent],
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+  public navigationItems = [
+    {
+      name: 'Drivers',
+      link: '/drivers',
+    },
+    {
+      name: 'Constructors',
+      link: '/constructors',
+    },
+    {
+      name: 'Settings',
+      link: '/settings',
+    },
+  ];
+}
