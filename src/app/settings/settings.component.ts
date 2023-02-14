@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
+import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -14,7 +14,11 @@ import { AsyncPipe } from '@angular/common';
             <h2>Dark mode</h2>
             <p>Switch between dark or light mode</p>
           </section>
-          <input type="checkbox" [checked]="darkMode | async" (change)="switchDarkmode()" />
+          <select (change)="updatePreference($any($event.target).value)" [value]="darkModePreference | async">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="system-default">System default</option>
+          </select>
         </div>
       </div>
     </div>
@@ -63,11 +67,11 @@ import { AsyncPipe } from '@angular/common';
   imports: [AsyncPipe],
 })
 export class SettingsComponent {
-  public darkMode = this.darkModeService.isEnabled$;
+  public darkModePreference = this.darkModeService.preference;
 
   constructor(private darkModeService: DarkModeService) {}
 
-  switchDarkmode() {
-    this.darkModeService.toggle();
+  updatePreference(value: DarkModePreference) {
+    this.darkModeService.updatePreference(value);
   }
 }
