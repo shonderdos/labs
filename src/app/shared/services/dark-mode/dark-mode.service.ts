@@ -21,6 +21,7 @@ export class DarkModeService {
   public init() {
     const preference = this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK;
     this.updateUI()(of(preference)).subscribe();
+
     this.updateLocalStorage()(of(preference)).subscribe();
 
     this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {

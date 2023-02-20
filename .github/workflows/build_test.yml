@@ -20,5 +20,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Lint - Eslint
+        run: npm run lint
+
+      - name: Format - Prettier
+        run: npm run format:check
+
       - name: Test
         run: npm test
