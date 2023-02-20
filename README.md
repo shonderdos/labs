@@ -15,7 +15,7 @@ A personal project to show off my development skills - ➡️ [Live demo](https:
 
 **Client:** Angular, RxJS
 
-**Development:** Typescript, ESLint, Jest, Cypress, Husky, Ng-Mocks, Prettier
+**Development:** Typescript, ESLint, Jest, Cypress, Ng-Mocks, Prettier
 
 **CI/CD:** Netlify, Renovate
 
