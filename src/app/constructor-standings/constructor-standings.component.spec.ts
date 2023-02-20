@@ -4,7 +4,7 @@ import { MockPipe } from 'ng-mocks';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { ConstructorStandingsComponent } from './constructor-standings.component';
+import ConstructorStandingsComponent from './constructor-standings.component';
 import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
 import { createConstructor } from './utils/fixtures/constructor.fixture';
 import { createConstructorStanding } from './utils/fixtures/constructor-standing.fixture';

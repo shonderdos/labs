@@ -19,7 +19,7 @@ import { StandingsCardComponent } from '../shared/ui/standings-card/standings-ca
   templateUrl: './driver-standings.component.html',
   styleUrls: ['driver-standings.component.scss'],
 })
-export class DriverStandingsComponent {
+export default class DriverStandingsComponent {
   constructor(private standingsService: DriverStandingsService) {}
 
   public standings$ = this.standingsService.driverStandings;

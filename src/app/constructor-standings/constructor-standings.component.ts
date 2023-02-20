@@ -19,7 +19,7 @@ import { StandingsCardComponent } from '../shared/ui/standings-card/standings-ca
   templateUrl: 'constructor-standings.component.html',
   styleUrls: ['./constructor-standings.component.scss'],
 })
-export class ConstructorStandingsComponent {
+export default class ConstructorStandingsComponent {
   constructor(private constructorStandingService: ContrsuctorStandingsService) {}
 
   public standings$ = this.constructorStandingService.constructorStandings;

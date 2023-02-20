@@ -66,7 +66,7 @@ import { AsyncPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AsyncPipe],
 })
-export class SettingsComponent {
+export default class SettingsComponent {
   public darkModePreference = this.darkModeService.preference;
 
   constructor(private darkModeService: DarkModeService) {}

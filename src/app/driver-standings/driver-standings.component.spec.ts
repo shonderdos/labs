@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { MockPipe } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DriverStandingsComponent } from './driver-standings.component';
+import DriverStandingsComponent from './driver-standings.component';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { DriverStandingsService } from './data-access/driver-standings.service';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
