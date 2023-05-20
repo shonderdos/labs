@@ -13,7 +13,7 @@ A personal project to show off my development skills - ➡️ [Live demo](https:
 
 ## Tech Stack
 
-**Client:** Angular, RxJS
+**Technologies:** Angular, Firebase, RxJS
 
 **Development:** Typescript, ESLint, Jest, Cypress, Ng-Mocks, Prettier
 
@@ -68,4 +68,3 @@ To run tests, run the following command
 ## Acknowledgements
 
 - [Design by Wojtek Dziedzic](https://dribbble.com/shots/10977528-Formula-1-App-Standings-and-Driver-Details)
-- [Data by Ergast](http://ergast.com/mrd/)
