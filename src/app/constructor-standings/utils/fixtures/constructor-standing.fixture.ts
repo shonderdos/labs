@@ -1,13 +1,11 @@
-import { ConstructorStandingEntity } from '../../../shared/interfaces/standings.interface';
-import { createConstructor } from './constructor.fixture';
+import { ConstructorStanding } from '../constructor-standings.interface';
 
-export const createConstructorStanding = (override?: Partial<ConstructorStandingEntity>): ConstructorStandingEntity => {
+export const createConstructorStanding = (override?: Partial<ConstructorStanding>): ConstructorStanding => {
   return {
-    position: '1',
-    positionText: '1',
-    points: '86',
-    wins: '12',
-    Constructor: createConstructor(override?.Constructor),
+    position: 1,
+    points: 86,
+    constructorId: 'ferrari',
+    constructorName: 'Ferrari',
     ...override,
   };
 };

@@ -1,20 +1,21 @@
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { MockPipe } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import DriverStandingsComponent from './driver-standings.component';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
-import { DriverStandingsService } from './data-access/driver-standings.service';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { FirebaseService } from '../shared/services/firebase/firebase.service';
 
-const arrange = (override?: { standingService?: Partial<DriverStandingsService> }) => {
+const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
   const stub = {
-    standingService: {
-      standings: of([]),
-      ...override?.standingService,
+    firebaseService: {
+      getDriverStandings: jest.fn(),
+      driverStandings: new BehaviorSubject([]),
+      ...override?.firebaseService,
     },
   };
 
@@ -22,8 +23,8 @@ const arrange = (override?: { standingService?: Partial<DriverStandingsService> 
     imports: [NoopAnimationsModule],
     providers: [
       {
-        provide: DriverStandingsService,
-        useValue: stub.standingService,
+        provide: FirebaseService,
+        useValue: stub.firebaseService,
       },
     ],
   }).overrideComponent(DriverStandingsComponent, {
@@ -51,25 +52,35 @@ describe('DriverStandingsComponent', () => {
     expect(componentInstance).toBeTruthy();
   });
 
+  it('should call getDriverStandings on init', () => {
+    const getDriverStandings = jest.fn();
+    arrange({
+      firebaseService: {
+        getDriverStandings,
+      },
+    });
+    expect(getDriverStandings).toHaveBeenCalled();
+  });
+
   it('should display a row for each entry', () => {
     const driverStandings = [createDriverStanding(), createDriverStanding()];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
     const entries = fixture.debugElement.queryAll(By.css("[data-test-id='driver-entry']"));
 
-    expect(entries).toHaveLength(driverStandings.length);
+    expect(entries).toHaveLength(2);
   });
 
   it('should apply correct input based on constructorsId', () => {
     const mockedId = 'mockedId';
     const driverStandings = [createDriverStanding({ constructorId: mockedId })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -83,8 +94,8 @@ describe('DriverStandingsComponent', () => {
     const firstName = 'Nicholas';
     const driverStandings = [createDriverStanding({ firstName })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -97,8 +108,8 @@ describe('DriverStandingsComponent', () => {
     const lastName = 'Latifi';
     const driverStandings = [createDriverStanding({ lastName })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -111,8 +122,8 @@ describe('DriverStandingsComponent', () => {
     const points = '86';
     const driverStandings = [createDriverStanding({ points })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -125,8 +136,8 @@ describe('DriverStandingsComponent', () => {
     const position = 1;
     const driverStandings = [createDriverStanding({ position })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -139,8 +150,8 @@ describe('DriverStandingsComponent', () => {
     const driverId = 'mockedDriverId';
     const driverStandings = [createDriverStanding({ driverId })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 
@@ -152,8 +163,8 @@ describe('DriverStandingsComponent', () => {
     const driverNumber = 'mockedDriverNumber';
     const driverStandings = [createDriverStanding({ driverNumber })];
     const { fixture } = arrange({
-      standingService: {
-        driverStandings: of(driverStandings),
+      firebaseService: {
+        driverStandings: new BehaviorSubject(driverStandings),
       },
     });
 

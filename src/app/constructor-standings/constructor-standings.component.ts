@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
+import { FirebaseService } from '../shared/services/firebase/firebase.service';
 
 @Component({
   standalone: true,
@@ -20,7 +20,9 @@ import { StandingsCardComponent } from '../shared/ui/standings-card/standings-ca
   styleUrls: ['./constructor-standings.component.scss'],
 })
 export default class ConstructorStandingsComponent {
-  constructor(private constructorStandingService: ContrsuctorStandingsService) {}
+  constructor(private firebaseService: FirebaseService) {
+    this.firebaseService.getConstructorStandings();
+  }
 
-  public standings$ = this.constructorStandingService.constructorStandings;
+  public standings = this.firebaseService.constructorStandings;
 }

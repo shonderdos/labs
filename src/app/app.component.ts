@@ -6,8 +6,9 @@ import { NavigationComponent } from './shared/ui/navigation/navigation.component
   standalone: true,
   imports: [RouterOutlet, NavigationComponent],
   selector: 'app-root',
-  template: ` <app-navigation></app-navigation>
-
-    <router-outlet></router-outlet>`,
+  template: `
+    <app-navigation></app-navigation>
+    <router-outlet></router-outlet>
+  `,
 })
 export class AppComponent {}

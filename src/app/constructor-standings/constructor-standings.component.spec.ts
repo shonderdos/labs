@@ -1,19 +1,19 @@
-import { of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { MockPipe } from 'ng-mocks';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import ConstructorStandingsComponent from './constructor-standings.component';
-import { ContrsuctorStandingsService } from './data-access/constructor-standings.service';
-import { createConstructor } from './utils/fixtures/constructor.fixture';
 import { createConstructorStanding } from './utils/fixtures/constructor-standing.fixture';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
+import { FirebaseService } from '../shared/services/firebase/firebase.service';
 
-const arrange = (override?: { standingService?: Partial<ContrsuctorStandingsService> }) => {
+const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
   const stub = {
-    standingService: {
-      ...override?.standingService,
+    firebaseService: {
+      getConstructorStandings: jest.fn(),
+      ...override?.firebaseService,
     },
   };
 
@@ -21,8 +21,8 @@ const arrange = (override?: { standingService?: Partial<ContrsuctorStandingsServ
     imports: [NoopAnimationsModule, ConstructorStandingsComponent],
     providers: [
       {
-        provide: ContrsuctorStandingsService,
-        useValue: stub.standingService,
+        provide: FirebaseService,
+        useValue: stub.firebaseService,
       },
     ],
   }).overrideComponent(ConstructorStandingsComponent, {
@@ -49,11 +49,22 @@ describe('ConstructorStandingsComponent', () => {
     expect(componentInstance).toBeTruthy();
   });
 
+  it('should call getConstructorStandings on init', () => {
+    const getConstructorStandings = jest.fn();
+    arrange({
+      firebaseService: {
+        getConstructorStandings,
+      },
+    });
+
+    expect(getConstructorStandings).toHaveBeenCalled();
+  });
+
   it('should display entry for each item in interfaces', () => {
     const constructorStandings = [createConstructorStanding(), createConstructorStanding()];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -64,12 +75,10 @@ describe('ConstructorStandingsComponent', () => {
 
   it('should give correct constructorId', () => {
     const mockedId = 'mockedId';
-    const constructorStandings = [
-      createConstructorStanding({ Constructor: createConstructor({ constructorId: mockedId }) }),
-    ];
+    const constructorStandings = [createConstructorStanding({ constructorId: mockedId })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -80,10 +89,10 @@ describe('ConstructorStandingsComponent', () => {
 
   it('should display correct logo based on constructorId', () => {
     const constructorId = 'mockedId';
-    const constructorStandings = [createConstructorStanding({ Constructor: createConstructor({ constructorId }) })];
+    const constructorStandings = [createConstructorStanding({ constructorId })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -93,10 +102,10 @@ describe('ConstructorStandingsComponent', () => {
 
   it('should display divider with correct class', () => {
     const constructorId = 'mockedId';
-    const constructorStandings = [createConstructorStanding({ Constructor: createConstructor({ constructorId }) })];
+    const constructorStandings = [createConstructorStanding({ constructorId })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -105,24 +114,24 @@ describe('ConstructorStandingsComponent', () => {
   });
 
   it('should display constructors name', () => {
-    const name = 'mockedName';
-    const constructorStandings = [createConstructorStanding({ Constructor: createConstructor({ name }) })];
+    const constructorName = 'mockedName';
+    const constructorStandings = [createConstructorStanding({ constructorName })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
-    const constructorName = fixture.debugElement.query(By.css("[data-test-id='constructor-name']"));
-    expect(constructorName.nativeElement.innerHTML).toContain(name);
+    const constructorNameRef = fixture.debugElement.query(By.css("[data-test-id='constructor-name']"));
+    expect(constructorNameRef.nativeElement.innerHTML).toContain(name);
   });
 
   it('should display constructors position', () => {
-    const position = '12';
+    const position = 12;
     const constructorStandings = [createConstructorStanding({ position })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -131,15 +140,15 @@ describe('ConstructorStandingsComponent', () => {
   });
 
   it('should display constructors points', () => {
-    const points = '12';
+    const points = 12;
     const constructorStandings = [createConstructorStanding({ points })];
     const { fixture } = arrange({
-      standingService: {
-        constructorStandings: of(constructorStandings),
+      firebaseService: {
+        constructorStandings: new BehaviorSubject(constructorStandings),
       },
     });
 
     const constructorPoints = fixture.debugElement.query(By.css("[data-test-id='constructor-points']"));
-    expect(constructorPoints.nativeElement.innerHTML).toContain(points);
+    expect(constructorPoints.nativeElement.innerHTML).toContain(String(points));
   });
 });
