@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { BehaviorSubject, defer, from } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
 import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
 
@@ -18,6 +19,7 @@ export class FirebaseService {
 
   // Initialize Firebase
   private app = initializeApp(this.firebaseConfig);
+  private auth = getAuth(this.app);
   public db = getFirestore(this.app);
 
   public driverStandings = new BehaviorSubject<DriverStanding[]>([]);
@@ -40,5 +42,8 @@ export class FirebaseService {
       data.push(doc.data() as DriverStanding);
     });
     this.driverStandings.next(data);
+  }
+  public login(email: string, password: string) {
+    return defer(() => from(signInWithEmailAndPassword(this.auth, email, password)));
   }
 }
