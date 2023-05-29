@@ -3,6 +3,9 @@ import LayoutComponent from './layouts/layout.component';
 import { isLoggedInGuard } from './shared/guards/isLogedIn.guard';
 
 export const routes: Routes = [
+  // Redirect an empty path to '/drivers'
+  { path: '', pathMatch: 'full', redirectTo: '/drivers' },
+
   //   AUTHENTICATION
   {
     path: '',
@@ -20,11 +23,7 @@ export const routes: Routes = [
       layout: 'vertical',
     },
     canActivate: [isLoggedInGuard],
-    children: [
-      { path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component') },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-      { path: '**', redirectTo: '/dashboard' },
-    ],
+    children: [{ path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component') }],
   },
   // PUBLIC
   {
@@ -37,8 +36,9 @@ export const routes: Routes = [
       { path: 'drivers', loadComponent: () => import('./driver-standings/driver-standings.component') },
       { path: 'constructors', loadComponent: () => import('./constructor-standings/constructor-standings.component') },
       { path: 'settings', loadComponent: () => import('./settings/settings.component') },
-      { path: '', redirectTo: '/drivers', pathMatch: 'full' },
-      { path: '**', redirectTo: '/drivers' },
     ],
   },
+
+  // redirect to /drivers if no route matches
+  { path: '**', redirectTo: '/drivers' },
 ];
