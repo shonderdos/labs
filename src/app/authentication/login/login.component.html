@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div class="half left">
+    <div>
+      <h1>Sign in</h1>
+      <div *ngIf="error | async">
+        <p>Login attempt failed, please try again.</p>
+      </div>
+      <form [formGroup]="loginForm">
+        <div class="formfield">
+          <div class="input-wrapper">
+            <label for="email">Email*</label>
+            <input [formControl]="email" type="text" id="email" name="email" placeholder="Email" />
+          </div>
+        </div>
+        <br />
+
+        <div class="formfield">
+          <div class="input-wrapper">
+            <label for="password">Password*</label>
+            <input [formControl]="password" type="password" id="password" name="password" placeholder="Password" />
+          </div>
+        </div>
+        <br />
+        <div class="button-container">
+          <button (click)="handleSubmit()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="half right">
+    <div class="content-container">
+      <h1 class="header">Welcome to F1 standings</h1>
+      <p>
+        This is a personal project to demonstrate my programming skills and techniques. The application is a demo that
+        shows the current standings in the F1 World Championship and is not open for registration.
+      </p>
+    </div>
+  </div>
+</div>
