@@ -1,6 +1,12 @@
+@import 'responsive.mixin';
+
+:host {
+  height: 100%;
+  display: block;
+}
 .wrapper {
   display: flex;
-  height: 100vh;
+  height: 100%;
 }
 
 .half {
@@ -14,14 +20,23 @@
   color: #1e293b;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
 }
 
 .right {
-  background-color: #1e293b;
-  color: #f1f5f9;
-  display: flex;
-  align-items: center;
+  display: none;
+}
+@include minWidth('lg') {
+  .right {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+  }
+
+  .left {
+    justify-content: end;
+  }
 }
 
 .header {
