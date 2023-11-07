@@ -16,7 +16,10 @@ export class DarkModeService {
   );
   public preference = this.preferenceSubject.pipe(distinctUntilChanged(), this.updateUI(), this.updateLocalStorage());
 
-  constructor(@Inject(DOCUMENT) private document: Document, private localStoreService: LocalStorageService) {}
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private localStoreService: LocalStorageService
+  ) {}
 
   public init() {
     const preference = this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK;
