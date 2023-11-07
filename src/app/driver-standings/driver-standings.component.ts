@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
-import { AsyncPipe, JsonPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe, NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 
 @Component({
   standalone: true,
-  imports: [OrdinalPipe, NgIf, AsyncPipe, NgFor, StandingsCardComponent, JsonPipe],
+  imports: [OrdinalPipe, NgIf, AsyncPipe, NgFor, StandingsCardComponent, JsonPipe, NgOptimizedImage],
   selector: 'app-driver-interfaces',
   templateUrl: './driver-standings.component.html',
   styleUrls: ['driver-standings.component.scss'],

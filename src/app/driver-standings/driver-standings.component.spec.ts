@@ -7,7 +7,7 @@ import DriverStandingsComponent from './driver-standings.component';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 
 const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
@@ -29,7 +29,14 @@ const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
     ],
   }).overrideComponent(DriverStandingsComponent, {
     set: {
-      imports: [NgIf, AsyncPipe, NgFor, StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)],
+      imports: [
+        NgOptimizedImage,
+        NgIf,
+        AsyncPipe,
+        NgFor,
+        StandingsCardComponent,
+        MockPipe(OrdinalPipe, (s) => `fake: ${s}`),
+      ],
     },
   });
 

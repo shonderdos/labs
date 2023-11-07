@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { MockPipe } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -26,7 +26,8 @@ const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
       },
     ],
   }).overrideComponent(ConstructorStandingsComponent, {
-    add: { imports: [StandingsCardComponent, MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
+    remove: { imports: [StandingsCardComponent, OrdinalPipe] },
+    add: { imports: [MockComponent(StandingsCardComponent), MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
   });
 
   const fixture = TestBed.createComponent(ConstructorStandingsComponent);
