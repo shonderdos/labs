@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { getAuth } from 'firebase/auth';
+import { getAuth, UserCredential } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _isAuthenticated = false;
-  private _user = null;
+  private _user: UserCredential | null = null;
 
   get isAuthenticated() {
     return this._isAuthenticated;
@@ -16,7 +16,7 @@ export class AuthService {
     return this._user;
   }
 
-  public login(user: any) {
+  public login(user: UserCredential) {
     const auth = getAuth();
 
     console.log(auth);

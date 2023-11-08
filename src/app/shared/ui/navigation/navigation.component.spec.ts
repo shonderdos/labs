@@ -3,12 +3,11 @@ import { NavigationComponent } from './navigation.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
-import { MockComponent } from 'ng-mocks';
 
 const arrange = (override?: { navigationItems?: { name: string; link: string }[] }) => {
   const navigationItems = override?.navigationItems ?? [];
   TestBed.configureTestingModule({
-    imports: [MockComponent(NavigationComponent), RouterTestingModule],
+    imports: [NavigationComponent, RouterTestingModule],
   });
 
   const fixture = TestBed.createComponent(NavigationComponent);

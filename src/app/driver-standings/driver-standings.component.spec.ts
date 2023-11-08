@@ -1,15 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { MockPipe } from 'ng-mocks';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import DriverStandingsComponent from './driver-standings.component';
-import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
-import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 import { AsyncPipe, NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
+import { Component, Input, Pipe, PipeTransform } from '@angular/core';
 
+@Component({ standalone: true, selector: 'app-standings-card', template: '<ng-content></ng-content>' })
+export class StandingCardStubComponent {
+  @Input() constructorId: string | undefined;
+}
+@Pipe({ standalone: true, name: 'ordinal' })
+export class OrdinalStubPipe implements PipeTransform {
+  transform(value: number): string {
+    return `fake: ${value}`;
+  }
+}
 const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
   const stub = {
     firebaseService: {
@@ -29,14 +37,7 @@ const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
     ],
   }).overrideComponent(DriverStandingsComponent, {
     set: {
-      imports: [
-        NgOptimizedImage,
-        NgIf,
-        AsyncPipe,
-        NgFor,
-        StandingsCardComponent,
-        MockPipe(OrdinalPipe, (s) => `fake: ${s}`),
-      ],
+      imports: [NgOptimizedImage, NgIf, AsyncPipe, NgFor, StandingCardStubComponent, OrdinalStubPipe],
     },
   });
 

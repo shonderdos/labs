@@ -1,6 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { MockComponent, MockPipe } from 'ng-mocks';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -8,6 +7,7 @@ import ConstructorStandingsComponent from './constructor-standings.component';
 import { createConstructorStanding } from './utils/fixtures/constructor-standing.fixture';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
+import { OrdinalStubPipe, StandingCardStubComponent } from '../driver-standings/driver-standings.component.spec';
 
 const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
   const stub = {
@@ -27,7 +27,7 @@ const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
     ],
   }).overrideComponent(ConstructorStandingsComponent, {
     remove: { imports: [StandingsCardComponent, OrdinalPipe] },
-    add: { imports: [MockComponent(StandingsCardComponent), MockPipe(OrdinalPipe, (s) => `fake: ${s}`)] },
+    add: { imports: [StandingCardStubComponent, OrdinalStubPipe] },
   });
 
   const fixture = TestBed.createComponent(ConstructorStandingsComponent);
