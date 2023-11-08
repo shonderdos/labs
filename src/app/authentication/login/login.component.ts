@@ -29,7 +29,7 @@ export default class LoginComponent {
 
   public email = this.loginForm.get('email') as FormControl;
   public password = this.loginForm.get('password') as FormControl;
-  public error = new BehaviorSubject<any>(null);
+  public error = new BehaviorSubject<unknown>(null);
 
   public handleSubmit() {
     this.firebaseService
@@ -38,7 +38,7 @@ export default class LoginComponent {
         tap((res) => {
           this.authService.login(res);
         }),
-        tap((res) => {
+        tap(() => {
           this.router.navigate(['/dashboard']);
         }),
         catchError((err) => {
