@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
 import { AsyncPipe } from '@angular/common';
 
@@ -139,9 +139,8 @@ import { AsyncPipe } from '@angular/common';
   imports: [AsyncPipe],
 })
 export default class SettingsComponent {
+  private darkModeService = inject(DarkModeService);
   public darkModePreference = this.darkModeService.preference;
-
-  constructor(private darkModeService: DarkModeService) {}
 
   updatePreference(value: DarkModePreference) {
     this.darkModeService.updatePreference(value);

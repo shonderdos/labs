@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,12 +15,10 @@ import { AuthService } from '../../shared/services/auth/auth.service';
   imports: [ReactiveFormsModule, AsyncPipe],
 })
 export default class LoginComponent {
-  constructor(
-    private firebaseService: FirebaseService,
-    private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  private firebaseService = inject(FirebaseService);
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   public loginForm = this.fb.group({
     email: [''],
