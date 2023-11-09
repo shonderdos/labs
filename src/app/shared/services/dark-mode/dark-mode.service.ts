@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, distinctUntilChanged, of, pipe, tap } from 'rxjs';
 import { LocalStorageService } from '../local-storage/local-storage.service';
@@ -11,15 +11,13 @@ export enum DarkModePreference {
 
 @Injectable({ providedIn: 'root' })
 export class DarkModeService {
+  private localStoreService = inject(LocalStorageService);
+  private document = inject(DOCUMENT);
+
   private preferenceSubject = new BehaviorSubject<DarkModePreference>(
     this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK
   );
   public preference = this.preferenceSubject.pipe(distinctUntilChanged(), this.updateUI(), this.updateLocalStorage());
-
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private localStoreService: LocalStorageService
-  ) {}
 
   public init() {
     const preference = this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK;
