@@ -12,9 +12,7 @@ import { FirebaseService } from '../shared/services/firebase/firebase.service';
   styleUrls: ['driver-standings.component.scss'],
 })
 export default class DriverStandingsComponent {
-  constructor(private firebaseService: FirebaseService) {
-    this.firebaseService.getDriverStandings();
-  }
+  constructor(private firebaseService: FirebaseService) {}
 
-  public standings = this.firebaseService.driverStandings;
+  public standings = this.firebaseService.getDriverStandings();
 }

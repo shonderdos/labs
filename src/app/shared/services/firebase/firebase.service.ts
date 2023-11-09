@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { BehaviorSubject, defer, from } from 'rxjs';
+import { defer, from, map, Observable } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
 import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
 
@@ -22,26 +22,15 @@ export class FirebaseService {
   private auth = getAuth(this.app);
   public db = getFirestore(this.app);
 
-  public driverStandings = new BehaviorSubject<DriverStanding[]>([]);
-  public constructorStandings = new BehaviorSubject<ConstructorStanding[]>([]);
-
-  public async getConstructorStandings() {
+  public getConstructorStandings(): Observable<ConstructorStanding[]> {
     const q = query(collection(this.db, 'constructor-standings'), orderBy('position'));
-    const querySnapshot = await getDocs(q);
-    const data: ConstructorStanding[] = [];
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as ConstructorStanding);
-    });
-    this.constructorStandings.next(data);
+    return from(getDocs(q)).pipe(
+      map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as ConstructorStanding))
+    );
   }
-  public async getDriverStandings() {
+  public getDriverStandings(): Observable<DriverStanding[]> {
     const q = query(collection(this.db, 'driver-standings'), orderBy('position'));
-    const querySnapshot = await getDocs(q);
-    const data: DriverStanding[] = [];
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as DriverStanding);
-    });
-    this.driverStandings.next(data);
+    return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as DriverStanding)));
   }
   public login(email: string, password: string) {
     return defer(() => from(signInWithEmailAndPassword(this.auth, email, password)));

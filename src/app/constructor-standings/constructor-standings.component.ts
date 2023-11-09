@@ -12,9 +12,7 @@ import { FirebaseService } from '../shared/services/firebase/firebase.service';
   styleUrls: ['./constructor-standings.component.scss'],
 })
 export default class ConstructorStandingsComponent {
-  constructor(private firebaseService: FirebaseService) {
-    this.firebaseService.getConstructorStandings();
-  }
+  constructor(private firebaseService: FirebaseService) {}
 
-  public standings = this.firebaseService.constructorStandings;
+  public standings = this.firebaseService.getConstructorStandings();
 }
