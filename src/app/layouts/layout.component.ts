@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import VerticalComponent from './vertical/vertical.component';
 import EmptyComponent from './empty/empty.component';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-layout',
@@ -10,7 +9,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./layout.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [EmptyComponent, VerticalComponent, NgIf],
+  imports: [EmptyComponent, VerticalComponent],
 })
 export default class LayoutComponent {
   public layout = 'vertical';
