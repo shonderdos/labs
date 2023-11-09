@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import DriverStandingsComponent from './driver-standings.component';
 import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
-import { AsyncPipe, NgFor, NgIf, NgOptimizedImage } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { Component, Input, Pipe, PipeTransform } from '@angular/core';
 
@@ -37,7 +37,7 @@ const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
     ],
   }).overrideComponent(DriverStandingsComponent, {
     set: {
-      imports: [NgOptimizedImage, NgIf, AsyncPipe, NgFor, StandingCardStubComponent, OrdinalStubPipe],
+      imports: [NgOptimizedImage, AsyncPipe, StandingCardStubComponent, OrdinalStubPipe],
     },
   });
 

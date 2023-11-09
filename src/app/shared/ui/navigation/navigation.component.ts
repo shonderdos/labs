@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
-import { NgFor } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-navigation',
   template: `
-    <ng-container *ngFor="let item of navigationItems">
-      <app-navigation-item [link]="item.link" [name]="item.name"></app-navigation-item>
-    </ng-container>
+    @for(item of navigationItems; track item.link){
+    <app-navigation-item [link]="item.link" [name]="item.name" />
+    }
   `,
   styles: [
     `
@@ -22,7 +21,7 @@ import { NgFor } from '@angular/common';
       }
     `,
   ],
-  imports: [NgFor, NavigationItemComponent],
+  imports: [NavigationItemComponent],
 })
 export class NavigationComponent {
   public navigationItems = [

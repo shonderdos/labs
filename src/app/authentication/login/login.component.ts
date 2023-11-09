@@ -3,7 +3,7 @@ import { FirebaseService } from '../../shared/services/firebase/firebase.service
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, EMPTY, tap } from 'rxjs';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../shared/services/auth/auth.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
   styleUrls: ['./login.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, AsyncPipe, NgIf],
+  imports: [ReactiveFormsModule, AsyncPipe],
 })
 export default class LoginComponent {
   constructor(
