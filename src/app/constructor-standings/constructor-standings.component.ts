@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OrdinalPipe } from '../shared/pipes/ordinal/ordinal.pipe';
 import { AsyncPipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { StandingsCardComponent } from '../shared/ui/standings-card/standings-card.component';
@@ -12,7 +12,5 @@ import { FirebaseService } from '../shared/services/firebase/firebase.service';
   styleUrls: ['./constructor-standings.component.scss'],
 })
 export default class ConstructorStandingsComponent {
-  constructor(private firebaseService: FirebaseService) {}
-
-  public standings = this.firebaseService.getConstructorStandings();
+  public standings = inject(FirebaseService).getConstructorStandings();
 }
