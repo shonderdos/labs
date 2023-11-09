@@ -65,7 +65,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding(), createConstructorStanding()];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -79,7 +79,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ constructorId: mockedId })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -93,7 +93,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ constructorId })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -106,7 +106,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ constructorId })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -119,7 +119,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ constructorName })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -132,7 +132,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ position })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 
@@ -145,7 +145,7 @@ describe('ConstructorStandingsComponent', () => {
     const constructorStandings = [createConstructorStanding({ points })];
     const { fixture } = arrange({
       firebaseService: {
-        constructorStandings: new BehaviorSubject(constructorStandings),
+        getConstructorStandings: () => new BehaviorSubject(constructorStandings),
       },
     });
 

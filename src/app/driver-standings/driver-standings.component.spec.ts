@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import DriverStandingsComponent from './driver-standings.component';
@@ -21,8 +21,7 @@ export class OrdinalStubPipe implements PipeTransform {
 const arrange = (override?: { firebaseService?: Partial<FirebaseService> }) => {
   const stub = {
     firebaseService: {
-      getDriverStandings: jest.fn(),
-      driverStandings: new BehaviorSubject([]),
+      getDriverStandings: () => of([]),
       ...override?.firebaseService,
     },
   };
@@ -74,7 +73,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding(), createDriverStanding()];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -88,7 +87,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ constructorId: mockedId })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -103,7 +102,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ firstName })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -117,7 +116,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ lastName })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -131,7 +130,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ points })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -145,7 +144,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ position })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -159,7 +158,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ driverId })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
@@ -172,7 +171,7 @@ describe('DriverStandingsComponent', () => {
     const driverStandings = [createDriverStanding({ driverNumber })];
     const { fixture } = arrange({
       firebaseService: {
-        driverStandings: new BehaviorSubject(driverStandings),
+        getDriverStandings: () => new BehaviorSubject(driverStandings),
       },
     });
 
