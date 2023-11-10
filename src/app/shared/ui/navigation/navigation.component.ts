@@ -6,7 +6,7 @@ import { NavigationItemComponent } from '../navigation-item/navigation-item.comp
   selector: 'app-navigation',
   template: `
     @for(item of navigationItems; track item.link){
-    <app-navigation-item [link]="item.link" [name]="item.name" />
+    <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
     }
   `,
   styles: [
@@ -28,14 +28,17 @@ export class NavigationComponent {
     {
       name: 'Drivers',
       link: '/drivers',
+      icon: 'person',
     },
     {
       name: 'Constructors',
       link: '/constructors',
+      icon: 'people',
     },
     {
       name: 'Settings',
       link: '/settings',
+      icon: 'settings',
     },
   ];
 }
