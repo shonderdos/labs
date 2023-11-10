@@ -1,33 +1,39 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
   selector: 'app-navigation-item',
-  template: ` <a [routerLink]="link">{{ name }}</a> `,
+  template: `
+    <div role="button" [routerLink]="link">
+      <mat-icon class="material-icons-outlined">{{ icon }}</mat-icon>
+      <span>{{ name }}</span>
+    </div>
+  `,
   styles: [
     `
-      a,
-      a:hover,
-      a:active,
-      a:visited {
-        color: var(--navigation-text-color);
-        text-decoration: none;
-        padding: 0 20px;
-        height: 48px;
-        display: inline-block;
-        line-height: 48px;
+      div {
+        display: flex;
+        align-items: center;
         border-radius: 6px;
+        padding: 0 20px;
+        color: var(--navigation-text-color);
+        height: 48px;
       }
-
-      a:hover {
+      div:hover {
+        cursor: pointer;
         background-color: var(--navigation-hover-background-color);
+      }
+      mat-icon {
+        margin-right: 10px;
       }
     `,
   ],
-  imports: [RouterLink],
+  imports: [RouterLink, MatIconModule],
 })
 export class NavigationItemComponent {
   @Input() link: string | undefined;
   @Input() name: string | undefined;
+  @Input() icon: string | undefined;
 }

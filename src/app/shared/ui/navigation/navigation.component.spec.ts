@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
 
-const arrange = (override?: { navigationItems?: { name: string; link: string }[] }) => {
+const arrange = (override?: { navigationItems?: { name: string; link: string; icon: string }[] }) => {
   const navigationItems = override?.navigationItems ?? [];
   TestBed.configureTestingModule({
     imports: [NavigationComponent, RouterTestingModule],
@@ -36,14 +36,17 @@ describe('NavigationComponent', () => {
         {
           name: 'Drivers',
           link: '/drivers',
+          icon: 'person',
         },
         {
           name: 'Constructors',
           link: '/constructors',
+          icon: 'people',
         },
         {
           name: 'Settings',
           link: '/settings',
+          icon: 'settings',
         },
       ],
     });
@@ -59,6 +62,7 @@ describe('NavigationComponent', () => {
         {
           name: 'Drivers',
           link,
+          icon: 'person',
         },
       ],
     });
@@ -72,10 +76,25 @@ describe('NavigationComponent', () => {
         {
           name,
           link: '/drivers',
+          icon: 'person',
         },
       ],
     });
     const item = fixture.debugElement.query(By.directive(NavigationItemComponent));
     expect(item.componentInstance.name).toBe(name);
+  });
+  it('should pass the correct param to icon', () => {
+    const icon = 'person';
+    const { fixture } = arrange({
+      navigationItems: [
+        {
+          name: 'Drivers',
+          link: '/drivers',
+          icon,
+        },
+      ],
+    });
+    const item = fixture.debugElement.query(By.directive(NavigationItemComponent));
+    expect(item.componentInstance.icon).toBe(icon);
   });
 });
