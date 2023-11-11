@@ -3,18 +3,18 @@ import { NavigationComponent } from './navigation.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
+import { Navigation, NAVIGATION_TOKEN } from '../../../app.component';
 
-const arrange = (override?: { navigationItems?: { name: string; link: string; icon: string }[] }) => {
+const arrange = (override?: { navigationItems?: Navigation[] }) => {
   const navigationItems = override?.navigationItems ?? [];
   TestBed.configureTestingModule({
+    providers: [{ provide: NAVIGATION_TOKEN, useValue: navigationItems }],
     imports: [NavigationComponent, RouterTestingModule],
   });
 
   const fixture = TestBed.createComponent(NavigationComponent);
   const nativeElement = fixture.nativeElement;
   const componentInstance = fixture.componentInstance;
-
-  componentInstance.navigationItems = navigationItems;
 
   fixture.detectChanges();
 
