@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavigationItemComponent } from '../navigation-item/navigation-item.component';
+import { NAVIGATION_TOKEN } from '../../../app.component';
 
 @Component({
   standalone: true,
@@ -24,21 +25,5 @@ import { NavigationItemComponent } from '../navigation-item/navigation-item.comp
   imports: [NavigationItemComponent],
 })
 export class NavigationComponent {
-  public navigationItems = [
-    {
-      name: 'Drivers',
-      link: '/drivers',
-      icon: 'person',
-    },
-    {
-      name: 'Constructors',
-      link: '/constructors',
-      icon: 'people',
-    },
-    {
-      name: 'Settings',
-      link: '/settings',
-      icon: 'settings',
-    },
-  ];
+  public navigationItems = inject(NAVIGATION_TOKEN);
 }
