@@ -17,6 +17,7 @@ class TestHostComponent {
   icon = 'test';
 }
 
+// eslint-disable-next-line @angular-eslint/component-selector
 @Component({ standalone: true, selector: 'mat-icon', template: '<ng-content></ng-content>' })
 class MatIconComponent {}
 
@@ -51,7 +52,7 @@ describe('NavigationItemComponent', () => {
     const { debugElement } = arrange();
 
     const divEl = debugElement.query(By.css('div'));
-    const [key, value] = Object.entries(divEl.attributes).find(([_, value]) => value === '/test') ?? [null, null];
+    const [key, value] = Object.entries(divEl.attributes).find(([, value]) => value === '/test') ?? [null, null];
     expect(key).toBe('ng-reflect-router-link');
     expect(value).toBe('/test');
   });
