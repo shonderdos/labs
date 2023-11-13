@@ -1,32 +1,20 @@
-import { Injectable } from '@angular/core';
-import { getAuth, UserCredential } from 'firebase/auth';
+import { inject, Injectable } from '@angular/core';
+import { onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
+import { FirebaseService } from '../firebase/firebase.service';
+import { defer, from, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _isAuthenticated = false;
-  private _user: UserCredential | null = null;
+  public state = new Subject<User | null>();
+  private auth = inject(FirebaseService).auth;
 
-  get isAuthenticated() {
-    return this._isAuthenticated;
+  constructor() {
+    onAuthStateChanged(this.auth, this.state.next.bind(this.state));
   }
 
-  get user() {
-    return this._user;
-  }
-
-  public login(user: UserCredential) {
-    const auth = getAuth();
-
-    console.log(auth);
-
-    this._isAuthenticated = true;
-    this._user = user;
-  }
-
-  public logout() {
-    this._isAuthenticated = false;
-    this._user = null;
+  public login(email: string, password: string) {
+    return defer(() => from(signInWithEmailAndPassword(this.auth, email, password)));
   }
 }
