@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { FirebaseService } from '../firebase/firebase.service';
-import { defer, from, Subject } from 'rxjs';
+import { defer, from, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public state = new Subject<User | null>();
+  public state = new ReplaySubject<User | null>(1);
   private auth = inject(FirebaseService).auth;
 
   constructor() {
