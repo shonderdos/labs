@@ -2,8 +2,8 @@
   <div class="half left">
     <div>
       <h1>Sign in</h1>
-      @if(error | async) {
-      <p data-test-id="error">Login attempt failed, please try again.</p>
+      @if (error | async) {
+        <p data-test-id="error">Login attempt failed, please try again.</p>
       }
       <form [formGroup]="loginForm">
         <div class="formfield">

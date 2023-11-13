@@ -6,8 +6,8 @@ import { NAVIGATION_TOKEN } from '../../../app.component';
   standalone: true,
   selector: 'app-navigation',
   template: `
-    @for(item of navigationItems; track item.link){
-    <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
+    @for (item of navigationItems; track item.link) {
+      <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
     }
   `,
   styles: [
