@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, EMPTY, tap } from 'rxjs';
@@ -15,10 +14,9 @@ import { AuthService } from '../../shared/services/auth/auth.service';
   imports: [ReactiveFormsModule, AsyncPipe],
 })
 export default class LoginComponent {
-  private firebaseService = inject(FirebaseService);
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private authService = inject(AuthService);
 
   public loginForm = this.fb.group({
     email: [''],
@@ -30,12 +28,9 @@ export default class LoginComponent {
   public error = new BehaviorSubject<unknown>(null);
 
   public handleSubmit() {
-    this.firebaseService
+    this.authService
       .login(this.email.value as string, this.password.value as string)
       .pipe(
-        tap((res) => {
-          this.authService.login(res);
-        }),
         tap(() => {
           this.router.navigate(['/dashboard']);
         }),

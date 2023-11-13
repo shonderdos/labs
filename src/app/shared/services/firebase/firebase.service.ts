@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { defer, from, map, Observable } from 'rxjs';
+import { getAuth } from 'firebase/auth';
+import { from, map, Observable } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
 import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
 
@@ -19,7 +19,7 @@ export class FirebaseService {
 
   // Initialize Firebase
   private app = initializeApp(this.firebaseConfig);
-  private auth = getAuth(this.app);
+  public auth = getAuth(this.app);
   public db = getFirestore(this.app);
 
   public getConstructorStandings(): Observable<ConstructorStanding[]> {
@@ -31,8 +31,5 @@ export class FirebaseService {
   public getDriverStandings(): Observable<DriverStanding[]> {
     const q = query(collection(this.db, 'driver-standings'), orderBy('position'));
     return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as DriverStanding)));
-  }
-  public login(email: string, password: string) {
-    return defer(() => from(signInWithEmailAndPassword(this.auth, email, password)));
   }
 }
