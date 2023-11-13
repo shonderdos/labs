@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import LayoutComponent from './layouts/layout.component';
-import { isLoggedInGuard } from './shared/guards/isLogedIn.guard';
+import { isLoggedInAndRedirectGuard, isLoggedInGuard } from './shared/guards/isLogedIn.guard';
 
 export const routes: Routes = [
   // Redirect an empty path to '/drivers'
@@ -13,7 +13,13 @@ export const routes: Routes = [
     data: {
       layout: 'empty',
     },
-    children: [{ path: 'login', loadComponent: () => import('./authentication/login/login.component') }],
+    children: [
+      {
+        path: 'login',
+        canActivate: [isLoggedInAndRedirectGuard('/dashboard')],
+        loadComponent: () => import('./authentication/login/login.component'),
+      },
+    ],
   },
   // DASHBOARD
   {
