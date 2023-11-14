@@ -25,11 +25,28 @@ export class FirebaseService {
   public getConstructorStandings(): Observable<ConstructorStanding[]> {
     const q = query(collection(this.db, 'constructor-standings'), orderBy('position'));
     return from(getDocs(q)).pipe(
-      map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as ConstructorStanding))
+      map((querySnapshot) =>
+        querySnapshot.docs.map((doc) => {
+          return {
+            ...(doc.data() as ConstructorStanding),
+            id: doc.id,
+          };
+        })
+      )
     );
   }
   public getDriverStandings(): Observable<DriverStanding[]> {
     const q = query(collection(this.db, 'driver-standings'), orderBy('position'));
-    return from(getDocs(q)).pipe(map((querySnapshot) => querySnapshot.docs.map((doc) => doc.data() as DriverStanding)));
+    return from(getDocs(q)).pipe(
+      map((querySnapshot) =>
+        querySnapshot.docs.map((doc) => {
+          return {
+            ...(doc.data() as DriverStanding),
+            id: doc.id,
+          };
+        })
+      )
+    );
+  }
   }
 }
