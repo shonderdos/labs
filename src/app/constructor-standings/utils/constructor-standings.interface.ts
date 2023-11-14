@@ -3,4 +3,5 @@ export interface ConstructorStanding {
   constructorName: string;
   position: number;
   points: number;
+  id: string;
 }
