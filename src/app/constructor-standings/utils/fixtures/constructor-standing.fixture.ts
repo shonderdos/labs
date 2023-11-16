@@ -6,6 +6,7 @@ export const createConstructorStanding = (override?: Partial<ConstructorStanding
     points: 86,
     constructorId: 'ferrari',
     constructorName: 'Ferrari',
+    id: 'mocked id',
     ...override,
   };
 };
