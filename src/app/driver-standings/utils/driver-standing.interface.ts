@@ -7,4 +7,5 @@ export interface DriverStanding {
   points: string;
   position: number;
   driverNumber: string;
+  id: string;
 }

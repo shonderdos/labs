@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
+import { collection, doc, getDocs, getFirestore, orderBy, query, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { from, map, Observable } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
@@ -48,5 +48,17 @@ export class FirebaseService {
       )
     );
   }
+
+  public writeData({
+    id,
+    points,
+    position,
+  }: {
+    id: DriverStanding['id'];
+    points: DriverStanding['points'];
+    position: DriverStanding['position'];
+  }) {
+    const docRef = doc(this.db, 'driver-standings', id);
+    updateDoc(docRef, { points, position });
   }
 }
