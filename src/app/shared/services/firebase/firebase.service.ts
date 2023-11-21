@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { collection, doc, getDocs, getFirestore, orderBy, query, updateDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import {
+  collection,
+  connectFirestoreEmulator,
+  doc,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+  updateDoc,
+} from 'firebase/firestore';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { from, map, Observable } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
 import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
@@ -22,6 +32,12 @@ export class FirebaseService {
   public auth = getAuth(this.app);
   public db = getFirestore(this.app);
 
+  constructor() {
+    if (!environment.production) {
+      connectAuthEmulator(this.auth, 'http://localhost:9099', { disableWarnings: true });
+      connectFirestoreEmulator(this.db, 'localhost', 8080);
+    }
+  }
   public getConstructorStandings(): Observable<ConstructorStanding[]> {
     const q = query(collection(this.db, 'constructor-standings'), orderBy('position'));
     return from(getDocs(q)).pipe(

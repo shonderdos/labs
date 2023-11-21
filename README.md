@@ -45,7 +45,14 @@ Start the server
   npm run start
 ```
 
+Run firebase emulator
+
+```bash
+  npx run firebase emulators:start
+```
+
 You can now view the project on http://localhost:4200
+And the firebase emulator on http://localhost:4000
 
 ## Running Unit Tests
 

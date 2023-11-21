@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+    function affectedKeys(keys) {
+        return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys)
+    }
+    function isLoggedIn() {
+        return request.auth != null && request.auth.uid != null
+    }
+
+    function isNumber(property) {
+        return request.resource.data[property] is number
+    }
+
+    function isString(property) {
+        return request.resource.data[property] is string
+    }
+
+    function isInRange(property, min, max) {
+        return request.resource.data[property] >= min && request.resource.data[property] <= max
+    }
+
+    match /databases/{database}/documents {
+        match /driver-standings/{id} {
+            allow read
+            allow update:
+            if affectedKeys(['points', 'position']) &&
+            isLoggedIn() &&
+            isString('points') &&
+            isNumber('position') &&
+            isInRange('position', 1, 30)
+        }
+        match /constructor-standings/{id} {
+            allow read
+        }
+    }
+}
