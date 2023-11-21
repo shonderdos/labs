@@ -6,6 +6,11 @@
 /out-tsc
 /bazel-out
 
+# Firebase
+ui-debug.log
+firebase-debug.log
+firestore-debug.log
+
 # Node
 /node_modules
 npm-debug.log
