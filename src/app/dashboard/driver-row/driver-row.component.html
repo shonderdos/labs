@@ -1,0 +1,14 @@
+@if (driver) {
+  <td data-test-id="first-name">{{ driver.firstName }}</td>
+  <td data-test-id="last-name">{{ driver.lastName }}</td>
+  <td data-test-id="constructor-name">{{ driver.constructorName }}</td>
+  <td>
+    <input data-test-id="position" type="number" [(ngModel)]="driver.position" />
+  </td>
+  <td>
+    <input data-test-id="points" type="text" [(ngModel)]="driver.points" />
+  </td>
+  <td><button data-test-id="submit" (click)="submit(driver)">Submit</button></td>
+} @else {
+  <p>Loading</p>
+}

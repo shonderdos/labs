@@ -58,96 +58,35 @@ describe('DashboardComponent', () => {
     });
   }));
 
-  it('should should display each driver on the page', () => {
+  it('should render a row element for each driver', async () => {
     const driversStandings = [createDriverStanding(), createDriverStanding(), createDriverStanding()];
-    const { debugElement } = arrange({
+    const { fixture, debugElement } = arrange({
       firebaseService: {
         getDriverStandings: () => of(driversStandings),
       },
     });
 
+    await fixture.whenStable();
     const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
     expect(driverElements.length).toEqual(driversStandings.length);
   });
 
-  it('should have all the elements for each driver', () => {
-    const driverStandings = createDriverStanding({
-      firstName: 'Lewis',
-      lastName: 'Hamilton',
-      constructorName: 'Mercedes',
-      position: 1,
-      points: '100',
-    });
+  it('should pass the correct properties to the driver-row component', async () => {
+    const driversStandings = [createDriverStanding(), createDriverStanding(), createDriverStanding()];
     const { fixture, debugElement } = arrange({
       firebaseService: {
-        getDriverStandings: () => of([driverStandings]),
+        getDriverStandings: () => of(driversStandings),
       },
     });
 
-    fixture.whenStable().then(() => {
-      const firstNameElement = debugElement.query(By.css('[data-test-id="first-name"]')).nativeElement;
-      const lastNameElement = debugElement.query(By.css('[data-test-id="last-name"]')).nativeElement;
-      const constructorElement = debugElement.query(By.css('[data-test-id="constructor-name"]')).nativeElement;
-      const positionElement = debugElement.query(By.css('[data-test-id="position"]')).nativeElement;
-      const pointsElement = debugElement.query(By.css('[data-test-id="points"]')).nativeElement;
+    await fixture.whenStable();
 
-      expect(firstNameElement.textContent).toEqual(driverStandings.firstName);
-      expect(lastNameElement.textContent).toEqual(driverStandings.lastName);
-      expect(constructorElement.textContent).toEqual(driverStandings.constructorName);
-      expect(positionElement.value).toEqual(driverStandings.position);
-      expect(pointsElement.value).toEqual(driverStandings.points);
-    });
-  });
-
-  it('should call the firebaseService when the submit button is clicked', () => {
-    const spy = jest.fn();
-    const driverStandings = createDriverStanding({
-      id: 'mocked-id',
-      position: 1,
-      points: '100',
-    });
-    const { fixture, debugElement } = arrange({
-      firebaseService: {
-        getDriverStandings: () => of([driverStandings]),
-        writeData: spy,
-      },
-    });
-
-    fixture.whenStable().then(() => {
-      const submitButton = debugElement.query(By.css('[data-test-id="submit"]')).nativeElement;
-      submitButton.click();
-
-      expect(spy).toHaveBeenCalledWith({
-        id: driverStandings.id,
-        points: driverStandings.points,
-        position: driverStandings.position,
-      });
-    });
-  });
-
-  it('should call the firebaseService with the correct data after updating the points', () => {
-    const spy = jest.fn();
-    const newPoints = '200';
-    const driverStandings = createDriverStanding({
-      points: '100',
-    });
-    const { fixture, debugElement } = arrange({
-      firebaseService: {
-        getDriverStandings: () => of([driverStandings]),
-        writeData: spy,
-      },
-    });
-
-    fixture.whenStable().then(() => {
-      const pointsElement = debugElement.query(By.css('[data-test-id="points"]')).nativeElement;
-      pointsElement.value = newPoints;
-      pointsElement.dispatchEvent(new Event('input'));
-
-      expect(spy).toHaveBeenCalledWith({
-        id: driverStandings.id,
-        points: newPoints,
-        position: driverStandings.position,
-      });
+    const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
+    expect(driverElements.length).toEqual(driversStandings.length);
+    driverElements.forEach((driverElement, index) => {
+      const driver = driversStandings[index];
+      const driverRowComponent = driverElement.componentInstance;
+      expect(driverRowComponent.driver).toEqual(driver);
     });
   });
 });
