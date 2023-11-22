@@ -3,6 +3,9 @@ service cloud.firestore {
     function affectedKeys(keys) {
         return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys)
     }
+    function hasOnly(keys) {
+        return request.resource.data.keys().hasOnly(keys)
+    }
     function isLoggedIn() {
         return request.auth != null && request.auth.uid != null
     }
@@ -22,6 +25,19 @@ service cloud.firestore {
     match /databases/{database}/documents {
         match /driver-standings/{id} {
             allow read
+            allow create:
+            if isLoggedIn() &&
+            hasOnly(['constructorName', 'driverId', 'constructorId', 'firstName', 'lastName', 'points', 'driverNumber', 'position', 'id']) &&
+            isString('constructorName') &&
+            isString('driverId') &&
+            isString('constructorId') &&
+            isString('firstName') &&
+            isString('lastName') &&
+            isString('driverNumber') &&
+            isString('points') &&
+            isNumber('position') &&
+            isInRange('position', 0, 30) &&
+            isString('id')
             allow update:
             if affectedKeys(['points', 'position']) &&
             isLoggedIn() &&

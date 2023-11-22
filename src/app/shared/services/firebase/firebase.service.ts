@@ -8,6 +8,7 @@ import {
   getFirestore,
   orderBy,
   query,
+  setDoc,
   updateDoc,
 } from 'firebase/firestore';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
@@ -76,5 +77,21 @@ export class FirebaseService {
   }) {
     const docRef = doc(this.db, 'driver-standings', id);
     updateDoc(docRef, { points, position });
+  }
+
+  addNewDriver() {
+    const colRef = collection(this.db, 'driver-standings');
+    const newDoc = doc(colRef);
+    setDoc(newDoc, {
+      constructorName: '',
+      driverId: '',
+      constructorId: '',
+      firstName: '',
+      lastName: '',
+      points: '',
+      driverNumber: '',
+      position: 0,
+      id: newDoc.id,
+    });
   }
 }

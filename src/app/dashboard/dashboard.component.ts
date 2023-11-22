@@ -15,7 +15,8 @@ import { DriverRowComponent } from './driver-row/driver-row.component';
   imports: [AsyncPipe, FormsModule, DriverRowComponent, PageWrapperComponent],
 })
 export default class DashboardComponent {
-  public drivers = inject(FirebaseService).getDriverStandings() || of([]);
+  private firebaseService = inject(FirebaseService);
+  public drivers = this.firebaseService.getDriverStandings() || of([]);
   public searchEvent = new Subject<Event>();
 
   private searchTerm = this.searchEvent.pipe(
@@ -32,4 +33,8 @@ export default class DashboardComponent {
       });
     })
   );
+
+  public addNewDriver() {
+    this.firebaseService.addNewDriver();
+  }
 }
