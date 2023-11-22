@@ -149,4 +149,21 @@ describe('DashboardComponent', () => {
     expect(driverElements.length).toEqual(1);
     expect(driverElements[0].componentInstance.driver).toEqual(driversStandings[0]);
   });
+
+  it('should have a button to add a new driver', () => {
+    const { debugElement } = arrange();
+    const addDriverButton = debugElement.query(By.css('[data-test-id="add-driver-button"]'));
+    expect(addDriverButton).toBeTruthy();
+  });
+  it('should call the correct firebase service method when the add driver button is clicked', () => {
+    const spy = jest.fn();
+    const { debugElement } = arrange({
+      firebaseService: {
+        addNewDriver: spy,
+      },
+    });
+    const addDriverButton = debugElement.query(By.css('[data-test-id="add-driver-button"]'));
+    addDriverButton.nativeElement.click();
+    expect(spy).toHaveBeenCalled();
+  });
 });
