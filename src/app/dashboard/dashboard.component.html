@@ -1,17 +1,19 @@
 <app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
-  <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
-  <button (click)="addNewDriver()" data-test-id="add-driver-button">Add</button>
-  <table>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Team</th>
-      <th>Position</th>
-      <th>Points</th>
-      <th>Submit</th>
-    </tr>
-    @for (driver of filteredDrivers | async; track driver.id) {
-      <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
-    }
-  </table>
+  <app-panel>
+    <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
+    <button (click)="addNewDriver()" data-test-id="add-driver-button">Add</button>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Points</th>
+        <th>Submit</th>
+      </tr>
+      @for (driver of filteredDrivers | async; track driver.id) {
+        <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
+      }
+    </table>
+  </app-panel>
 </app-page-wrapper>

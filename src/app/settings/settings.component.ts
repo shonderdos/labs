@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
 import { AsyncPipe } from '@angular/common';
 import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
+import { PanelComponent } from '../shared/ui/panel/panel.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   template: `
     <app-page-wrapper heading="Settings">
-      <div class="panel">
+      <app-panel>
         <div class="settings-row">
           <section>
             <h2>Dark mode</h2>
@@ -22,7 +23,7 @@ import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.com
             </select>
           </div>
         </div>
-      </div>
+      </app-panel>
     </app-page-wrapper>
   `,
   styles: [
@@ -50,13 +51,6 @@ import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.com
       .settings-row {
         display: flex;
         justify-content: space-between;
-      }
-
-      .panel {
-        background-color: var(--panel-background-color);
-        border-radius: 16px;
-        padding: 2.5rem;
-        box-shadow: var(--panel-box-shadow);
       }
 
       select {
@@ -124,7 +118,7 @@ import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.com
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, PageWrapperComponent],
+  imports: [AsyncPipe, PageWrapperComponent, PanelComponent],
 })
 export default class SettingsComponent {
   private darkModeService = inject(DarkModeService);
