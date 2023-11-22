@@ -6,6 +6,7 @@ import {
   doc,
   getDocs,
   getFirestore,
+  onSnapshot,
   orderBy,
   query,
   setDoc,
@@ -54,16 +55,23 @@ export class FirebaseService {
   }
   public getDriverStandings(): Observable<DriverStanding[]> {
     const q = query(collection(this.db, 'driver-standings'), orderBy('position'));
-    return from(getDocs(q)).pipe(
-      map((querySnapshot) =>
-        querySnapshot.docs.map((doc) => {
-          return {
-            ...(doc.data() as DriverStanding),
-            id: doc.id,
-          };
-        })
-      )
-    );
+
+    return new Observable((subscriber) => {
+      const snapUnsub = onSnapshot(q, (next) => {
+        subscriber.next(
+          next.docs.map((doc) => {
+            return {
+              ...(doc.data() as DriverStanding),
+              id: doc.id,
+            };
+          })
+        );
+      });
+
+      subscriber.add(() => {
+        snapUnsub();
+      });
+    });
   }
 
   public writeData({
