@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
 import { AsyncPipe } from '@angular/common';
+import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   template: `
-    <div class="wrapper">
-      <h1>Settings</h1>
+    <app-page-wrapper heading="Settings">
       <div class="panel">
         <div class="settings-row">
           <section>
@@ -23,17 +23,10 @@ import { AsyncPipe } from '@angular/common';
           </div>
         </div>
       </div>
-    </div>
+    </app-page-wrapper>
   `,
   styles: [
     `
-      h1 {
-        font-size: 24px;
-        font-weight: bold;
-        margin: 55px 0;
-        color: var(--body-text-color);
-      }
-
       h2 {
         font-size: 14px;
         font-weight: bold;
@@ -52,11 +45,6 @@ import { AsyncPipe } from '@angular/common';
         display: flex;
         flex-direction: column;
         justify-content: center;
-      }
-
-      .wrapper {
-        max-width: 1080px;
-        margin: 0 auto;
       }
 
       .settings-row {
@@ -136,7 +124,7 @@ import { AsyncPipe } from '@angular/common';
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, PageWrapperComponent],
 })
 export default class SettingsComponent {
   private darkModeService = inject(DarkModeService);
