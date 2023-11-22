@@ -8,17 +8,6 @@
     <th>Submit</th>
   </tr>
   @for (driver of drivers | async; track driver.id) {
-    <tr data-test-id="driver-row">
-      <td data-test-id="first-name">{{ driver.firstName }}</td>
-      <td data-test-id="last-name">{{ driver.lastName }}</td>
-      <td data-test-id="constructor-name">{{ driver.constructorName }}</td>
-      <td>
-        <input data-test-id="position" type="number" [(ngModel)]="driver.position" />
-      </td>
-      <td>
-        <input data-test-id="points" type="text" [(ngModel)]="driver.points" />
-      </td>
-      <td><button data-test-id="submit" (click)="submit(driver)">Submit</button></td>
-    </tr>
+    <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
   }
 </table>

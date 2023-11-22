@@ -65,7 +65,7 @@ describe('LoginComponent', () => {
     expect(error).toBeTruthy();
   });
 
-  it('should call the login method on the authService when the submit button is clicked', () => {
+  it('should call the login method on the authService when the submit button is clicked', async () => {
     const spy = jest.fn(() => of({} as UserCredential));
     const email = 'email';
     const password = 'password';
@@ -80,11 +80,14 @@ describe('LoginComponent', () => {
 
     emailEl.nativeElement.value = email;
     passwordEl.nativeElement.value = password;
-    fixture.whenStable().then(() => {
-      submitEl.triggerEventHandler('click');
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(email, password);
-    });
+    emailEl.nativeElement.dispatchEvent(new Event('input'));
+    passwordEl.nativeElement.dispatchEvent(new Event('input'));
+
+    await fixture.whenStable();
+
+    submitEl.triggerEventHandler('click');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(email, password);
   });
 
   it('should navigate to the dashboard when the submit button is clicked', () => {
