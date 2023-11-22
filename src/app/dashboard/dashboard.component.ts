@@ -5,6 +5,7 @@ import { combineLatest, debounceTime, distinctUntilChanged, map, of, startWith, 
 import { FormsModule } from '@angular/forms';
 import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 import { DriverRowComponent } from './driver-row/driver-row.component';
+import { PanelComponent } from '../shared/ui/panel/panel.component';
 
 @Component({
   standalone: true,
@@ -12,7 +13,7 @@ import { DriverRowComponent } from './driver-row/driver-row.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, FormsModule, DriverRowComponent, PageWrapperComponent],
+  imports: [AsyncPipe, FormsModule, DriverRowComponent, PageWrapperComponent, PanelComponent],
 })
 export default class DashboardComponent {
   private firebaseService = inject(FirebaseService);
