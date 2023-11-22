@@ -97,4 +97,56 @@ describe('DashboardComponent', () => {
       expect(driverRowComponent.driver).toEqual(driver);
     });
   });
+
+  it('should have a search input', () => {
+    const { debugElement } = arrange();
+    const searchInput = debugElement.query(By.css('[data-test-id="search-input"]'));
+    expect(searchInput).toBeTruthy();
+  });
+
+  it('should filter the drivers by firstName in the search input', async () => {
+    const driversStandings = [
+      createDriverStanding({ firstName: 'lewis' }),
+      createDriverStanding({ firstName: 'lando' }),
+    ];
+    const { fixture, debugElement } = arrange({
+      firebaseService: {
+        getDriverStandings: () => of(driversStandings),
+      },
+    });
+
+    const searchInput = debugElement.query(By.css('[data-test-id="search-input"]'));
+    searchInput.nativeElement.value = driversStandings[0].firstName;
+    searchInput.nativeElement.dispatchEvent(new Event('keyup'));
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
+    expect(driverElements.length).toEqual(1);
+    expect(driverElements[0].componentInstance.driver).toEqual(driversStandings[0]);
+  });
+
+  it('should filter the drivers by lastName in the search input', async () => {
+    const driversStandings = [
+      createDriverStanding({ lastName: 'hamilton' }),
+      createDriverStanding({ lastName: 'norris' }),
+    ];
+    const { fixture, debugElement } = arrange({
+      firebaseService: {
+        getDriverStandings: () => of(driversStandings),
+      },
+    });
+
+    const searchInput = debugElement.query(By.css('[data-test-id="search-input"]'));
+    searchInput.nativeElement.value = driversStandings[0].lastName;
+    searchInput.nativeElement.dispatchEvent(new Event('keyup'));
+
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
+    expect(driverElements.length).toEqual(1);
+    expect(driverElements[0].componentInstance.driver).toEqual(driversStandings[0]);
+  });
 });
