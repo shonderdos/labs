@@ -1,13 +1,15 @@
-<table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Team</th>
-    <th>Position</th>
-    <th>Points</th>
-    <th>Submit</th>
-  </tr>
-  @for (driver of drivers | async; track driver.id) {
-    <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
-  }
-</table>
+<app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
+  <table>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Team</th>
+      <th>Position</th>
+      <th>Points</th>
+      <th>Submit</th>
+    </tr>
+    @for (driver of drivers | async; track driver.id) {
+      <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
+    }
+  </table>
+</app-page-wrapper>

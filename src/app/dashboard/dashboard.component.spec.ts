@@ -40,6 +40,14 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should have a app page wrapper with the correct header', () => {
+    const { debugElement } = arrange();
+    const pageWrapper = debugElement.query(By.css('[data-test-id="page-wrapper"]'));
+
+    expect(pageWrapper).toBeTruthy();
+    expect(pageWrapper.attributes['heading']).toEqual('Manage drivers');
+  });
+
   it('should have a list of drivers', () => {
     const { component } = arrange();
     expect(component.drivers).toBeTruthy();
