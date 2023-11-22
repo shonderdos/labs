@@ -1,4 +1,5 @@
 <app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
+  <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
   <table>
     <tr>
       <th>First Name</th>
@@ -8,7 +9,7 @@
       <th>Points</th>
       <th>Submit</th>
     </tr>
-    @for (driver of drivers | async; track driver.id) {
+    @for (driver of filteredDrivers | async; track driver.id) {
       <tr app-driver-row [driver]="driver" data-test-id="driver-row"></tr>
     }
   </table>
