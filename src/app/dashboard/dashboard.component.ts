@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 import { DriverRowComponent } from './driver-row/driver-row.component';
 import { PanelComponent } from '../shared/ui/panel/panel.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -13,7 +14,15 @@ import { PanelComponent } from '../shared/ui/panel/panel.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, FormsModule, DriverRowComponent, PageWrapperComponent, PanelComponent],
+  imports: [
+    AsyncPipe,
+    MatIconModule,
+    FormsModule,
+    DriverRowComponent,
+    PageWrapperComponent,
+    PanelComponent,
+    MatIconModule,
+  ],
 })
 export default class DashboardComponent {
   private firebaseService = inject(FirebaseService);
