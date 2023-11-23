@@ -1,7 +1,10 @@
 <app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
   <app-panel>
     <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
-    <button (click)="addNewDriver()" data-test-id="add-driver-button">Add</button>
+    <button (click)="addNewDriver()" data-test-id="add-driver-button">
+      <mat-icon class="material-icons-outlined">person_add</mat-icon>
+      Add new driver
+    </button>
     @for (driver of filteredDrivers | async; track driver.id) {
       <app-driver-row [driver]="driver" [isFirst]="$first" data-test-id="driver-row" />
     }
