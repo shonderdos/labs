@@ -1,0 +1,30 @@
+.flex {
+  display: flex;
+  align-items: center;
+  padding: 16px 40px;
+  border-bottom: 1px solid var(--select-border-color);
+  margin: 0 -40px;
+  &:hover {
+    background-color: var(--navigation-hover-background-color);
+    cursor: pointer;
+  }
+}
+.border-top {
+  border-top: 1px solid var(--select-border-color);
+}
+.data {
+  margin-left: 16px;
+  color: var(--body-text-color);
+  font-size: 14px;
+  font-weight: 500;
+}
+.profiles {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--profile-background-color);
+  color: var(--profile-text-color);
+}

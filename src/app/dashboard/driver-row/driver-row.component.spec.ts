@@ -8,31 +8,19 @@ import { DriverStanding } from '../../driver-standings/utils/driver-standing.int
 
 describe('DashboardComponent', () => {
   function arrange({
-    firebaseService,
     host,
-  }: { host?: { driver: DriverStanding }; firebaseService?: Partial<FirebaseService> } = {}) {
+  }: { host?: { isFirst?: boolean; driver?: DriverStanding }; firebaseService?: Partial<FirebaseService> } = {}) {
     @Component({
       standalone: true,
       imports: [DriverRowComponent],
-      template: `<app-driver-row [driver]="driver" />`,
+      template: `<app-driver-row [driver]="driver" [isFirst]="isFirst" />`,
     })
     class TestHostComponent {
       driver = host?.driver ?? createDriverStanding();
+      isFirst = host?.isFirst ?? false;
     }
-    const stub = {
-      firebaseService: {
-        writeData: () => {},
-        ...firebaseService,
-      },
-    };
     TestBed.configureTestingModule({
       imports: [DriverRowComponent, TestHostComponent],
-      providers: [
-        {
-          provide: FirebaseService,
-          useValue: stub.firebaseService,
-        },
-      ],
     });
 
     const fixture = TestBed.createComponent(TestHostComponent);
@@ -47,13 +35,10 @@ describe('DashboardComponent', () => {
       debugElement,
     };
   }
-  it('should have all the elements for each driver', async () => {
+  it('should display name for a driver', async () => {
     const driverStandings = createDriverStanding({
       firstName: 'Lewis',
       lastName: 'Hamilton',
-      constructorName: 'Mercedes',
-      position: 1,
-      points: '100',
     });
     const { fixture, debugElement } = arrange({
       host: {
@@ -62,72 +47,32 @@ describe('DashboardComponent', () => {
     });
 
     await fixture.whenStable();
-    const firstNameElement = debugElement.query(By.css('[data-test-id="first-name"]')).nativeElement;
-    const lastNameElement = debugElement.query(By.css('[data-test-id="last-name"]')).nativeElement;
-    const constructorElement = debugElement.query(By.css('[data-test-id="constructor-name"]')).nativeElement;
-    const positionElement = debugElement.query(By.css('[data-test-id="position"]')).nativeElement;
-    const pointsElement = debugElement.query(By.css('[data-test-id="points"]')).nativeElement;
+    const firstNameElement = debugElement.query(By.css('[data-test-id="name"]')).nativeElement;
 
-    expect(firstNameElement.textContent).toEqual(driverStandings.firstName);
-    expect(lastNameElement.textContent).toEqual(driverStandings.lastName);
-    expect(constructorElement.textContent).toEqual(driverStandings.constructorName);
-    expect(positionElement.value).toEqual(String(driverStandings.position));
-    expect(pointsElement.value).toEqual(driverStandings.points);
+    expect(firstNameElement.textContent).toEqual(`${driverStandings.firstName} ${driverStandings.lastName}`);
   });
 
-  it('should call the firebaseService when the submit button is clicked', async () => {
-    const spy = jest.fn();
-    const driverStandings = createDriverStanding({
-      id: 'mocked-id',
-      position: 1,
-      points: '100',
-    });
+  it('should have a border top class if it is the first driver', async () => {
     const { fixture, debugElement } = arrange({
-      firebaseService: {
-        writeData: spy,
-      },
       host: {
-        driver: driverStandings,
+        isFirst: true,
       },
     });
-
     await fixture.whenStable();
-    const submitButton = debugElement.query(By.css('[data-test-id="submit"]')).nativeElement;
-    submitButton.click();
+    const firstNameElement = debugElement.query(By.css('[data-test-id="row"]')).nativeElement;
 
-    expect(spy).toHaveBeenCalledWith({
-      id: driverStandings.id,
-      points: driverStandings.points,
-      position: driverStandings.position,
-    });
+    expect(firstNameElement.classList).toContain('border-top');
   });
 
-  it('should call the firebaseService with the correct data after updating the points', async () => {
-    const spy = jest.fn();
-    const newPoints = '200';
-    const driverStandings = createDriverStanding({
-      points: '100',
-    });
+  it('should not have a border top class if it is not the first driver', async () => {
     const { fixture, debugElement } = arrange({
-      firebaseService: {
-        writeData: spy,
-      },
       host: {
-        driver: driverStandings,
+        isFirst: false,
       },
     });
-
     await fixture.whenStable();
-    const pointsElement = debugElement.query(By.css('[data-test-id="points"]')).nativeElement;
-    pointsElement.value = newPoints;
-    pointsElement.dispatchEvent(new Event('input'));
-    const submitButton = debugElement.query(By.css('[data-test-id="submit"]')).nativeElement;
-    submitButton.click();
+    const firstNameElement = debugElement.query(By.css('[data-test-id="row"]')).nativeElement;
 
-    expect(spy).toHaveBeenCalledWith({
-      id: driverStandings.id,
-      points: newPoints,
-      position: driverStandings.position,
-    });
+    expect(firstNameElement.classList).not.toContain('border-top');
   });
 });
