@@ -7,6 +7,7 @@ import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.com
 import { DriverRowComponent } from './driver-row/driver-row.component';
 import { PanelComponent } from '../shared/ui/panel/panel.component';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -22,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     PageWrapperComponent,
     PanelComponent,
     MatIconModule,
+    RouterOutlet,
   ],
 })
 export default class DashboardComponent {

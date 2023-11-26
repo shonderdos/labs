@@ -1,5 +1,5 @@
 @if (driver) {
-  <div data-test-id="row" class="flex" [ngClass]="{ 'border-top': isFirst }">
+  <div data-test-id="row" class="flex" [ngClass]="{ 'border-top': isFirst }" (click)="openDrawer()">
     <div class="profiles">
       <span>{{ driver.firstName[0]?.toUpperCase() }}</span>
     </div>

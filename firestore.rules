@@ -39,11 +39,24 @@ service cloud.firestore {
             isInRange('position', 0, 30) &&
             isString('id')
             allow update:
-            if affectedKeys(['points', 'position']) &&
+            if affectedKeys(['points',
+                'position',
+                'constructorId',
+                'constructorName',
+                'firstName',
+                'lastName',
+                'driverId',
+                'driverNumber']) &&
             isLoggedIn() &&
             isString('points') &&
             isNumber('position') &&
-            isInRange('position', 1, 30)
+            isInRange('position', 0, 30) &&
+            isString('constructorId') &&
+            isString('constructorName') &&
+            isString('firstName') &&
+            isString('lastName') &&
+            isString('driverId') &&
+            isString('driverNumber')
         }
         match /constructor-standings/{id} {
             allow read

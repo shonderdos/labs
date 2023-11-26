@@ -74,17 +74,45 @@ export class FirebaseService {
     });
   }
 
+  public getDriver(id: string): Observable<DriverStanding> {
+    const q = doc(this.db, `driver-standings/${id}`);
+    return new Observable((subscriber) => {
+      const snapUnsub = onSnapshot(q, (doc) => {
+        subscriber.next({
+          ...(doc.data() as DriverStanding),
+          id: doc.id,
+        });
+      });
+
+      subscriber.add(() => {
+        snapUnsub();
+      });
+    });
+  }
+
   public writeData({
     id,
     points,
     position,
-  }: {
-    id: DriverStanding['id'];
-    points: DriverStanding['points'];
-    position: DriverStanding['position'];
-  }) {
+    constructorId,
+    constructorName,
+    firstName,
+    lastName,
+    driverNumber,
+    driverId,
+  }: DriverStanding) {
+    position = Number(position);
     const docRef = doc(this.db, 'driver-standings', id);
-    updateDoc(docRef, { points, position });
+    updateDoc(docRef, {
+      points,
+      position,
+      constructorId,
+      constructorName,
+      firstName,
+      lastName,
+      driverId,
+      driverNumber,
+    });
   }
 
   addNewDriver() {

@@ -1,0 +1,11 @@
+<app-panel>
+  <button (click)="closeModal()">close</button>
+  <button (click)="edit()">Edit</button>
+  <p>display content for:</p>
+  @for (prop of driver | async; track prop) {
+    <p>
+      <strong>{{ prop[0] }}:</strong>
+    </p>
+    <i>{{ prop[1] || '-' }}</i>
+  }
+</app-panel>

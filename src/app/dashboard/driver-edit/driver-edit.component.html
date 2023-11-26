@@ -1,0 +1,13 @@
+<app-panel>
+  <p>Edit page works</p>
+
+  <button (click)="close()">Close</button>
+  <button (click)="cancel()">Cancel</button>
+  @for (prop of driverStream(); track prop) {
+    <p>
+      <strong>{{ prop[0] }}:</strong>
+    </p>
+    <input [disabled]="prop[0] === 'id'" type="text" [(ngModel)]="prop[1]" />
+  }
+  <button (click)="save()">Save</button>
+</app-panel>

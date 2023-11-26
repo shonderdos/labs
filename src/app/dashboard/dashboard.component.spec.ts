@@ -4,7 +4,14 @@ import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { createDriverStanding } from '../driver-standings/utils/fixtures/driver-standing.fixutre';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { DriverRowComponent } from './driver-row/driver-row.component';
+import { Component, Input } from '@angular/core';
 
+@Component({ standalone: true, selector: 'app-driver-row', template: '' })
+class DriverRowStubComponent {
+  @Input() isFirst = false;
+  @Input() driver = {};
+}
 describe('DashboardComponent', () => {
   function arrange({ firebaseService }: { firebaseService?: Partial<FirebaseService> } = {}) {
     const stub = {
@@ -21,6 +28,13 @@ describe('DashboardComponent', () => {
           useValue: stub.firebaseService,
         },
       ],
+    }).overrideComponent(DashboardComponent, {
+      remove: {
+        imports: [DriverRowComponent],
+      },
+      add: {
+        imports: [DriverRowStubComponent],
+      },
     });
 
     const fixture = TestBed.createComponent(DashboardComponent);
