@@ -5,6 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { DriverRowComponent } from './driver-row.component';
 import { Component } from '@angular/core';
 import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { ActivatedRoute } from '@angular/router';
 
 describe('DashboardComponent', () => {
   function arrange({
@@ -20,6 +21,7 @@ describe('DashboardComponent', () => {
       isFirst = host?.isFirst ?? false;
     }
     TestBed.configureTestingModule({
+      providers: [{ provide: ActivatedRoute, useValue: {} }],
       imports: [DriverRowComponent, TestHostComponent],
     });
 

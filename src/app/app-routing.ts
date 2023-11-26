@@ -29,7 +29,22 @@ export const routes: Routes = [
       layout: 'vertical',
     },
     canActivate: [isLoggedInGuard],
-    children: [{ path: 'dashboard', loadComponent: () => import('./dashboard/dashboard.component') }],
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./dashboard/dashboard.component'),
+        children: [
+          {
+            path: ':id',
+            loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
+          },
+          {
+            path: ':id/edit',
+            loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
+          },
+        ],
+      },
+    ],
   },
   // PUBLIC
   {
