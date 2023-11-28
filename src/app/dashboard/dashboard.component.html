@@ -2,10 +2,9 @@
   <app-panel>
     <div class="table-heading">
       <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
-      <button (click)="addNewDriver()" data-test-id="add-driver-button">
-        <mat-icon class="material-icons-outlined">person_add</mat-icon>
+      <app-button (addNewDriver)="addNewDriver()" icon="person_add" data-test-id="add-driver-button">
         Add new driver
-      </button>
+      </app-button>
     </div>
     @for (driver of filteredDrivers | async; track driver.id) {
       <app-driver-row [driver]="driver" [isFirst]="$first" data-test-id="driver-row" />

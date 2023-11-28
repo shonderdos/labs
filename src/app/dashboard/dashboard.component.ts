@@ -8,6 +8,7 @@ import { DriverRowComponent } from './driver-row/driver-row.component';
 import { PanelComponent } from '../shared/ui/panel/panel.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
+import { ButtonComponent } from '../shared/ui/button/button.component';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ import { RouterOutlet } from '@angular/router';
     PanelComponent,
     MatIconModule,
     RouterOutlet,
+    ButtonComponent,
   ],
 })
 export default class DashboardComponent {
