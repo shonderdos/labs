@@ -7,6 +7,7 @@ import { FirebaseService } from '../../shared/services/firebase/firebase.service
 import { FormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { ButtonComponent } from '../../shared/ui/button/button.component';
 
 @Component({
   selector: 'app-driver-edit',
@@ -14,7 +15,7 @@ import { DriverStanding } from '../../driver-standings/utils/driver-standing.int
   styleUrls: ['./driver-edit.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PanelComponent, AsyncPipe, FormsModule],
+  imports: [PanelComponent, AsyncPipe, FormsModule, ButtonComponent],
 })
 export default class DriverEditComponent {
   private router = inject(Router);
