@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { PanelComponent } from '../../shared/ui/panel/panel.component';
 import { map, switchMap } from 'rxjs';
 import { FirebaseService } from '../../shared/services/firebase/firebase.service';
+import { ButtonComponent } from '../../shared/ui/button/button.component';
 
 @Component({
   selector: 'app-driver-details',
@@ -11,7 +12,7 @@ import { FirebaseService } from '../../shared/services/firebase/firebase.service
   styleUrls: ['./driver-details.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PanelComponent, AsyncPipe],
+  imports: [PanelComponent, AsyncPipe, ButtonComponent],
 })
 export default class DriverDetailsComponent {
   private router = inject(Router);
