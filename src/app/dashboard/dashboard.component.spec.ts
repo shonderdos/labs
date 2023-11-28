@@ -5,12 +5,17 @@ import { createDriverStanding } from '../driver-standings/utils/fixtures/driver-
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { DriverRowComponent } from './driver-row/driver-row.component';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonComponent } from '../shared/ui/button/button.component';
 
 @Component({ standalone: true, selector: 'app-driver-row', template: '' })
 class DriverRowStubComponent {
   @Input() isFirst = false;
   @Input() driver = {};
+}
+@Component({ standalone: true, selector: 'app-button', template: '<ng-content />' })
+class ButtonStubComponent {
+  @Output() addNewDriver = new EventEmitter();
 }
 describe('DashboardComponent', () => {
   function arrange({ firebaseService }: { firebaseService?: Partial<FirebaseService> } = {}) {
@@ -30,10 +35,10 @@ describe('DashboardComponent', () => {
       ],
     }).overrideComponent(DashboardComponent, {
       remove: {
-        imports: [DriverRowComponent],
+        imports: [DriverRowComponent, ButtonComponent],
       },
       add: {
-        imports: [DriverRowStubComponent],
+        imports: [DriverRowStubComponent, ButtonStubComponent],
       },
     });
 
@@ -166,9 +171,16 @@ describe('DashboardComponent', () => {
 
   it('should have a button to add a new driver', () => {
     const { debugElement } = arrange();
-    const addDriverButton = debugElement.query(By.css('[data-test-id="add-driver-button"]'));
+    const addDriverButton = debugElement.query(By.directive(ButtonStubComponent));
     expect(addDriverButton).toBeTruthy();
   });
+
+  it('should contain the correct text for the add driver button', () => {
+    const { debugElement } = arrange();
+    const addDriverButton = debugElement.query(By.directive(ButtonStubComponent));
+    expect(addDriverButton.nativeElement.textContent).toContain('Add new driver');
+  });
+
   it('should call the correct firebase service method when the add driver button is clicked', () => {
     const spy = jest.fn();
     const { debugElement } = arrange({
@@ -176,8 +188,8 @@ describe('DashboardComponent', () => {
         addNewDriver: spy,
       },
     });
-    const addDriverButton = debugElement.query(By.css('[data-test-id="add-driver-button"]'));
-    addDriverButton.nativeElement.click();
+    const addDriverButton = debugElement.query(By.directive(ButtonStubComponent));
+    addDriverButton.componentInstance.addNewDriver.emit();
     expect(spy).toHaveBeenCalled();
   });
 });

@@ -1,0 +1,19 @@
+button {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  &:hover {
+    background-color: var(--button-hover-background-color);
+  }
+
+  mat-icon {
+    margin-right: 16px;
+  }
+}
