@@ -1,0 +1,17 @@
+<app-page-wrapper heading="Settings">
+  <app-panel>
+    <div class="settings-row">
+      <section>
+        <h2>Dark mode</h2>
+        <p>Switch between dark or light mode</p>
+      </section>
+      <div class="select">
+        <select (change)="updatePreference($any($event.target).value)" [value]="darkModePreference | async">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="system-default">System default</option>
+        </select>
+      </div>
+    </div>
+  </app-panel>
+</app-page-wrapper>
