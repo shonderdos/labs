@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -9,6 +9,5 @@ import { NgClass } from '@angular/common';
   imports: [NgClass],
 })
 export class StandingsCardComponent {
-  @HostBinding('class.someClass') someField = false;
   @Input() public constructorId: string | undefined;
 }
