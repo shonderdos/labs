@@ -1,0 +1,15 @@
+div {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  padding: 0 20px;
+  color: var(--navigation-text-color);
+  height: 48px;
+}
+div:hover {
+  cursor: pointer;
+  background-color: var(--navigation-hover-background-color);
+}
+mat-icon {
+  margin-right: 10px;
+}
