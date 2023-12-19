@@ -1,6 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { BehaviorSubject, distinctUntilChanged, of, pipe, tap } from 'rxjs';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
 export enum DarkModePreference {
@@ -14,55 +13,47 @@ export class DarkModeService {
   private localStoreService = inject(LocalStorageService);
   private document = inject(DOCUMENT);
 
-  private preferenceSubject = new BehaviorSubject<DarkModePreference>(
-    this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK
-  );
-  public preference = this.preferenceSubject.pipe(distinctUntilChanged(), this.updateUI(), this.updateLocalStorage());
+  public preference = signal<DarkModePreference>(this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK);
 
+  constructor() {
+    this.updateUIEffect();
+    this.updateLocalStorageEffect();
+  }
   public init() {
-    const preference = this.loadPreferenceFromLocalStore() ?? DarkModePreference.DARK;
-    this.updateUI()(of(preference)).subscribe();
-
-    this.updateLocalStorage()(of(preference)).subscribe();
-
     this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (this.preferenceSubject.value === DarkModePreference.SYSTEM_DEFAULT) {
+      if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
         event.matches ? this.enable() : this.disable();
       }
     });
   }
 
   public updatePreference(preference: DarkModePreference) {
-    this.preferenceSubject.next(preference);
+    this.preference.set(preference);
   }
 
-  private updateUI() {
-    return pipe(
-      tap((preference: DarkModePreference) => {
-        if (preference === DarkModePreference.DARK) {
-          this.enable();
-          return;
-        }
+  private updateUIEffect() {
+    effect(() => {
+      if (this.preference() === DarkModePreference.DARK) {
+        this.enable();
+        return;
+      }
 
-        if (preference === DarkModePreference.LIGHT) {
-          this.disable();
-          return;
-        }
+      if (this.preference() === DarkModePreference.LIGHT) {
+        this.disable();
+        return;
+      }
 
-        if (preference === DarkModePreference.SYSTEM_DEFAULT) {
-          this.isSystemDarkMode() ? this.enable() : this.disable();
-          return;
-        }
-      })
-    );
+      if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
+        this.isSystemDarkMode() ? this.enable() : this.disable();
+        return;
+      }
+    });
   }
 
-  private updateLocalStorage() {
-    return pipe(
-      tap((preference: DarkModePreference) => {
-        this.localStoreService.set('darkMode', preference);
-      })
-    );
+  private updateLocalStorageEffect() {
+    effect(() => {
+      this.localStoreService.set('darkMode', this.preference());
+    });
   }
 
   private enable() {

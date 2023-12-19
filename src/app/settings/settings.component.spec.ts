@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import SettingsComponent from './settings.component';
 import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
-import { of } from 'rxjs';
+import { signal } from '@angular/core';
 
 function arrange(overrides?: { darkModeService?: Partial<DarkModeService> }) {
   const stub = {
     darkModeService: {
-      preference: of(DarkModePreference.DARK),
+      preference: signal(DarkModePreference.DARK),
       updatePreference: () => {},
       ...overrides?.darkModeService,
     },
@@ -32,7 +32,7 @@ describe('SettingsComponent', () => {
   it('should pass the correct value to the select', () => {
     const darkModePreference = DarkModePreference.DARK;
     const { debugElement } = arrange({
-      darkModeService: { preference: of(darkModePreference) },
+      darkModeService: { preference: signal(darkModePreference) },
     });
 
     const selectElement = debugElement.nativeElement.querySelector('select');
