@@ -6,7 +6,7 @@
         <p>Switch between dark or light mode</p>
       </section>
       <div class="select">
-        <select (change)="updatePreference($any($event.target).value)" [value]="darkModePreference | async">
+        <select (change)="darkMode.updatePreference($any($event.target).value)" [value]="darkMode.preference()">
           <option value="light">Light</option>
           <option value="dark">Dark</option>
           <option value="system-default">System default</option>
