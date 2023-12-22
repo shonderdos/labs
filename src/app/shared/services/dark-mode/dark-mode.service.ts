@@ -20,11 +20,15 @@ export class DarkModeService {
     this.updateLocalStorageEffect();
   }
   public init() {
-    this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
-        event.matches ? this.enable() : this.disable();
-      }
-    });
+    return () =>
+      new Promise((resolve) => {
+        this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+          if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
+            event.matches ? this.enable() : this.disable();
+          }
+        });
+        resolve(true);
+      });
   }
 
   public updatePreference(preference: DarkModePreference) {
