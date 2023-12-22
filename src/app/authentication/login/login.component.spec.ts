@@ -103,6 +103,6 @@ describe('LoginComponent', () => {
     const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
     submitEl.triggerEventHandler('click');
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(['/dashboard']);
+    expect(spy).toHaveBeenCalledWith(['/dashboard'], { queryParamsHandling: 'preserve' });
   });
 });

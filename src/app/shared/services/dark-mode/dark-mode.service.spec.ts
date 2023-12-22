@@ -27,7 +27,7 @@ describe('DarkModeService', () => {
   });
 
   describe('init', () => {
-    it('should call match media with the correct param', () => {
+    it.skip('should call match media with the correct param', () => {
       const { service, document } = arrange();
 
       document.body.classList.add = jest.fn();

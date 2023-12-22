@@ -32,7 +32,7 @@ export default class LoginComponent {
       .login(this.email.value as string, this.password.value as string)
       .pipe(
         tap(() => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard'], { queryParamsHandling: 'preserve' });
         }),
         catchError((err) => {
           this.error.next(err);
