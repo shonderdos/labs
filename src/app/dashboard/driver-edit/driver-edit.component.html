@@ -1,7 +1,7 @@
 <app-panel>
-  <p>Edit page works</p>
-
-  <app-button (click)="close()">Close</app-button>
+  <div class="header">
+    <app-button displayMode="icon" icon="close" (click)="close()">Close</app-button>
+  </div>
   <app-button (click)="cancel()">Cancel</app-button>
   @for (prop of driverStream(); track prop) {
     <p>

@@ -5,7 +5,7 @@ import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app-routing';
 import { provideHttpClient } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { DarkModeService } from './app/shared/services/dark-mode/dark-mode.service';
 import { RedirectService } from './app/shared/services/redirect/redirect.service';
 
@@ -16,6 +16,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
+    provideAnimations(),
     provideHttpClient(),
     BrowserAnimationsModule,
     {

@@ -1,8 +1,8 @@
 <app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
   <app-panel>
     <div class="table-heading">
-      <input type="text" data-test-id="search-input" (keyup)="searchEvent.next($event)" placeholder="Search" />
-      <app-button (addNewDriver)="addNewDriver()" icon="person_add" data-test-id="add-driver-button">
+      <app-input (value)="searchEvent.next($event)" />
+      <app-button (click)="addNewDriver()" icon="person_add" data-test-id="add-driver-button">
         Add new driver
       </app-button>
     </div>

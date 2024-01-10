@@ -9,6 +9,7 @@ import { PanelComponent } from '../shared/ui/panel/panel.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/ui/button/button.component';
+import { InputComponent } from '../shared/ui/input/input.component';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { ButtonComponent } from '../shared/ui/button/button.component';
     MatIconModule,
     RouterOutlet,
     ButtonComponent,
+    InputComponent,
   ],
 })
 export default class DashboardComponent {

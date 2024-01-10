@@ -1,19 +1,46 @@
-button {
-  background-color: var(--primary-color);
-  border-radius: 4px;
-  color: #fff;
+.button {
   border: none;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 8px 12px;
+  background-color: transparent;
+  border-radius: 4px;
   display: flex;
-  align-items: center;
-  height: 48px;
-  &:hover {
-    background-color: var(--button-hover-background-color);
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.display-mode {
+  &__text {
+    font-size: 14px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    height: 48px;
   }
 
-  mat-icon {
-    margin-right: 16px;
+  &__icon-text {
+    mat-icon {
+      margin-right: 16px;
+    }
+  }
+
+  &__icon {
+    padding: 8px;
+  }
+}
+
+.theme {
+  &__primary {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+
+  &__transparent {
+    background-color: transparent;
+    color: var(--navigation-text-color);
+  }
+
+  &__warn {
+    background-color: red;
+    color: var(--navigation-text-color);
   }
 }

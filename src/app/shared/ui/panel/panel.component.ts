@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-panel',
@@ -7,4 +7,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PanelComponent {}
+export class PanelComponent {
+  @Input() style: 'rounded' | 'square' = 'rounded';
+
+  @HostBinding('class') get classList() {
+    return {
+      [`border-radius-${this.style}`]: true,
+    };
+  }
+}

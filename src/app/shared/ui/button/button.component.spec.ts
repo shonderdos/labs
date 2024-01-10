@@ -7,7 +7,7 @@ function arrange(overrides?: { host: { icon?: string; content?: string; addNewDr
   @Component({
     standalone: true,
     imports: [ButtonComponent],
-    template: `<app-button [icon]="icon" (addNewDriver)="addNewDriver()">{{ content }}</app-button>`,
+    template: `<app-button [icon]="icon" (click)="addNewDriver()">{{ content }}</app-button>`,
   })
   class TestHostComponent {
     icon = overrides?.host?.icon ?? null;

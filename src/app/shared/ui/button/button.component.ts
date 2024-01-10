@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -10,6 +10,23 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatIconModule],
 })
 export class ButtonComponent {
+  @Input() public displayMode: 'icon' | 'text' | 'icon-text' = 'text';
+  @Input() public theme: 'transparent' | 'primary' | 'accent' | 'warn' = 'primary';
   @Input() public icon: string | null = null;
-  @Output() public addNewDriver = new EventEmitter<void>();
+
+  public get classList() {
+    return {
+      button: true,
+      [`display-mode__${this.displayMode}`]: true,
+      [`theme__${this.theme}`]: true,
+    };
+  }
+
+  public get displayIcon(): boolean {
+    return ['icon', 'icon-text'].includes(this.displayMode) && this.icon !== null;
+  }
+
+  public get displayText(): boolean {
+    return ['text', 'icon-text'].includes(this.displayMode);
+  }
 }

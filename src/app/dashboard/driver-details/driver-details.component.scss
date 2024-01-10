@@ -1,0 +1,25 @@
+:host {
+  min-width: 640px;
+}
+
+.header {
+  display: flex;
+  justify-content: end;
+}
+
+.name {
+  display: flex;
+  margin-top: 48px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+
+  .label {
+    font-weight: bold;
+  }
+}
