@@ -1,6 +1,8 @@
-<button (click)="addNewDriver.emit()">
-  @if (icon) {
+<button [class]="classList">
+  @if (displayIcon) {
     <mat-icon class="material-icons-outlined">{{ icon }}</mat-icon>
   }
-  <ng-content></ng-content>
+  @if (displayText) {
+    <ng-content></ng-content>
+  }
 </button>

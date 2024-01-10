@@ -1,11 +1,31 @@
-<app-panel>
-  <app-button (click)="closeModal()">Close</app-button>
-  <app-button (click)="edit()">Edit</app-button>
-  <p>display content for:</p>
-  @for (prop of driver | async; track prop) {
-    <p>
-      <strong>{{ prop[0] }}:</strong>
-    </p>
-    <i>{{ prop[1] || '-' }}</i>
-  }
+<app-panel [style]="'square'">
+  <div class="header">
+    <app-button theme="transparent" displayMode="icon" icon="close" (click)="closeModal()">Close</app-button>
+  </div>
+  <div class="name">
+    <h1>{{ driver()?.firstName }} {{ driver()?.lastName }}</h1>
+    <app-button (click)="edit()">Edit</app-button>
+  </div>
+  <div class="details">
+    <div class="row">
+      <div class="label">Driver id</div>
+      <div class="value">{{ driver()?.driverId ?? '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="label">Constructor Name</div>
+      <div class="value">{{ driver()?.constructorName ?? '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="label">Points</div>
+      <div class="value">{{ driver()?.points ?? '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="label">Position</div>
+      <div class="value">{{ driver()?.position ?? '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="label">Driver number</div>
+      <div class="value">{{ driver()?.driverNumber ?? '-' }}</div>
+    </div>
+  </div>
 </app-panel>

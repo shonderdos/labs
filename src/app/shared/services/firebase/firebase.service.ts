@@ -78,8 +78,25 @@ export class FirebaseService {
     const q = doc(this.db, `driver-standings/${id}`);
     return new Observable((subscriber) => {
       const snapUnsub = onSnapshot(q, (doc) => {
+        if (!doc.exists()) {
+          // Did not find a driver. might want to handle this differently and return null
+          subscriber.next({} as DriverStanding);
+          return;
+        }
+
+        // Convert empty strings to null, might be more useful if we can do this in the backend...
+        // Firebase doesn't allow a type to be null or a string. So it seems that a conversion is necessary
+        // what I tought of last night is that when there is no data it should just emit the property...
+        // obviously that is how it works in a nosql database.
+        const f = Object.entries(doc.data()).reduce((acc, [key, value]) => {
+          return {
+            ...acc,
+            [key]: value === '' ? null : value,
+          };
+        }, {}) as DriverStanding;
+
         subscriber.next({
-          ...(doc.data() as DriverStanding),
+          ...f,
           id: doc.id,
         });
       });

@@ -189,7 +189,7 @@ describe('DashboardComponent', () => {
       },
     });
     const addDriverButton = debugElement.query(By.directive(ButtonStubComponent));
-    addDriverButton.componentInstance.addNewDriver.emit();
+    addDriverButton.nativeElement.click();
     expect(spy).toHaveBeenCalled();
   });
 });
