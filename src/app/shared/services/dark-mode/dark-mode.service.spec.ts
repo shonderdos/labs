@@ -31,7 +31,7 @@ describe('DarkModeService', () => {
       const { service, document } = arrange();
 
       document.body.classList.add = jest.fn();
-      // @ts-ignore
+      // @ts-expect-error - mock
       document.defaultView.matchMedia = jest.fn(() => ({ addEventListener: jest.fn() }));
 
       service.init();

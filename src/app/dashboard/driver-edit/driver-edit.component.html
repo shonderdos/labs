@@ -3,11 +3,53 @@
     <app-button displayMode="icon" icon="close" (click)="close()">Close</app-button>
   </div>
   <app-button (click)="cancel()">Cancel</app-button>
-  @for (prop of driverStream(); track prop) {
-    <p>
-      <strong>{{ prop[0] }}:</strong>
-    </p>
-    <input [disabled]="prop[0] === 'id'" type="text" [(ngModel)]="prop[1]" />
-  }
+  <div class="details">
+    <div class="row">
+      <div class="label">Driver id</div>
+      <app-input
+        [default]="driverStream()?.driverId"
+        (value)="updateSignal('driverId', $event)"
+        hint="Fill in driver id"
+        class="value"
+      />
+    </div>
+    <div class="row">
+      <div class="label">Constructor Name</div>
+      <app-input
+        [default]="driverStream()?.constructorName"
+        (value)="updateSignal('constructorName', $event)"
+        hint="Fill in constructor name"
+        class="value"
+      />
+    </div>
+    <div class="row">
+      <div class="label">Points</div>
+      <app-input
+        [default]="driverStream()?.points"
+        (value)="updateSignal('points', $event)"
+        hint="Fill in points name"
+        class="value"
+      />
+    </div>
+    <div class="row">
+      <div class="label">Position</div>
+      <app-input
+        [default]="driverStream()?.position"
+        (value)="updateSignal('position', $event)"
+        hint="Fill in position"
+        class="value"
+      />
+    </div>
+    <div class="row">
+      <div class="label">Driver number</div>
+      <app-input
+        [default]="driverStream()?.driverNumber"
+        (value)="updateSignal('driverNumber', $event)"
+        hint="Fill in driver number"
+        class="value"
+      />
+    </div>
+  </div>
+
   <app-button (click)="save()">Save</app-button>
 </app-panel>
