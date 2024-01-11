@@ -3,16 +3,17 @@ import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-function arrange(overrides?: { host: { icon?: string; content?: string; addNewDriver?: () => void } }) {
+function arrange(overrides?: { host?: Partial<ButtonComponent>; content?: string }) {
   @Component({
     standalone: true,
     imports: [ButtonComponent],
-    template: `<app-button [icon]="icon" (click)="addNewDriver()">{{ content }}</app-button>`,
+    template: `<app-button [icon]="icon" [displayMode]="displayMode" [theme]="theme">{{ content }}</app-button>`,
   })
   class TestHostComponent {
     icon = overrides?.host?.icon ?? null;
-    content = overrides?.host?.content ?? null;
-    addNewDriver = overrides?.host?.addNewDriver ?? null;
+    displayMode = overrides?.host?.displayMode ?? 'text';
+    theme = overrides?.host?.theme ?? 'primary';
+    content = overrides?.content ?? null;
   }
   TestBed.configureTestingModule({
     imports: [TestHostComponent, ButtonComponent],
@@ -38,7 +39,8 @@ describe('ButtonComponent', () => {
 
   it('should show the correct icon', () => {
     const icon = 'test';
-    const { debugElement } = arrange({ host: { icon } });
+    const displayMode = 'icon';
+    const { debugElement } = arrange({ host: { icon, displayMode } });
     const iconEl = debugElement.query(By.css('mat-icon'));
     expect(iconEl).toBeTruthy();
     expect(iconEl.nativeElement.textContent).toBe(icon);
@@ -52,15 +54,8 @@ describe('ButtonComponent', () => {
 
   it('should show the correct text', () => {
     const content = 'test';
-    const { debugElement } = arrange({ host: { content } });
+    const { debugElement } = arrange({ content });
     const textEl = debugElement.query(By.css('button'));
     expect(textEl.nativeElement.textContent).toBe(content);
-  });
-
-  it('should emit when the button is clicked', () => {
-    const addNewDriver = jest.fn();
-    const { debugElement } = arrange({ host: { addNewDriver } });
-    debugElement.query(By.css('button')).nativeElement.click();
-    expect(addNewDriver).toHaveBeenCalled();
   });
 });

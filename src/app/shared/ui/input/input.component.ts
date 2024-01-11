@@ -8,7 +8,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  @Input() placeholder = 'Search';
+  @Input() hint = 'Search';
+  @Input() default: string | number | undefined = '';
 
   @Output() public value = new EventEmitter<KeyboardEvent>();
 }
