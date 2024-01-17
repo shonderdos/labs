@@ -9,7 +9,7 @@
       <app-input
         [default]="driverStream()?.driverId"
         (value)="updateSignal('driverId', $event)"
-        hint="Fill in driver id"
+        placeholder="Fill in driver id"
         class="value"
       />
     </div>
@@ -18,7 +18,7 @@
       <app-input
         [default]="driverStream()?.constructorName"
         (value)="updateSignal('constructorName', $event)"
-        hint="Fill in constructor name"
+        placeholder="Something different"
         class="value"
       />
     </div>
@@ -27,7 +27,7 @@
       <app-input
         [default]="driverStream()?.points"
         (value)="updateSignal('points', $event)"
-        hint="Fill in points name"
+        placeholder="Fill in points name"
         class="value"
       />
     </div>
@@ -36,7 +36,7 @@
       <app-input
         [default]="driverStream()?.position"
         (value)="updateSignal('position', $event)"
-        hint="Fill in position"
+        placeholder="Fill in position"
         class="value"
       />
     </div>
@@ -45,7 +45,7 @@
       <app-input
         [default]="driverStream()?.driverNumber"
         (value)="updateSignal('driverNumber', $event)"
-        hint="Fill in driver number"
+        placeholder="Fill in driver number"
         class="value"
       />
     </div>
