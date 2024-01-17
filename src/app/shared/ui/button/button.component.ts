@@ -13,6 +13,7 @@ export class ButtonComponent {
   @Input() public displayMode: 'icon' | 'text' | 'icon-text' = 'text';
   @Input() public theme: 'transparent' | 'primary' | 'accent' | 'warn' = 'primary';
   @Input() public icon: string | null = null;
+  @Input() public type: 'button' | 'submit' | 'reset' = 'button';
 
   public get classList() {
     return {

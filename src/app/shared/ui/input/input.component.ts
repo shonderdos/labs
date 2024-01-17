@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -11,18 +11,28 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() placeholder = 'Search';
-  @Input() default: string | number | undefined = '';
+  value: string | number | undefined = '';
+  public changed: (value: string) => void = () => {};
+  public touched: () => void = () => {};
+  public disabled = false;
 
-  @Output() public value = new EventEmitter<KeyboardEvent>();
-
-  public onChange: any;
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  registerOnChange(fn: (v: string) => void): void {
+    this.changed = fn;
   }
 
-  registerOnTouched(fn: any): void {}
+  onChange(event: Event) {
+    this.changed((event.target as HTMLInputElement).value);
+  }
 
-  setDisabledState(isDisabled: boolean): void {}
+  registerOnTouched(fn: () => void): void {
+    this.touched = fn;
+  }
 
-  writeValue(obj: any): void {}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
 }
