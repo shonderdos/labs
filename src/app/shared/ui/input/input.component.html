@@ -1,7 +1,9 @@
 <input
   type="text"
   data-test-id="search-input"
-  (keyup)="onChange($event)"
+  (input)="onChange($event)"
+  (blur)="touched()"
+  [disabled]="disabled"
   [placeholder]="placeholder"
-  [value]="default"
+  [value]="value"
 />
