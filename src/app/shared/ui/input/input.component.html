@@ -1,1 +1,7 @@
-<input type="text" data-test-id="search-input" (keyup)="value.emit($event)" [placeholder]="hint" [value]="default" />
+<input
+  type="text"
+  data-test-id="search-input"
+  (keyup)="onChange($event)"
+  [placeholder]="placeholder"
+  [value]="default"
+/>

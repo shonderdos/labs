@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { AsyncPipe } from '@angular/common';
-import { combineLatest, debounceTime, distinctUntilChanged, map, of, startWith, Subject } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import { combineLatest, debounceTime, distinctUntilChanged, map, of, startWith } from 'rxjs';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 import { DriverRowComponent } from './driver-row/driver-row.component';
 import { PanelComponent } from '../shared/ui/panel/panel.component';
@@ -28,14 +28,15 @@ import { InputComponent } from '../shared/ui/input/input.component';
     RouterOutlet,
     ButtonComponent,
     InputComponent,
+    ReactiveFormsModule,
   ],
 })
 export default class DashboardComponent {
   private firebaseService = inject(FirebaseService);
   public drivers = this.firebaseService.getDriverStandings() || of([]);
-  public searchEvent = new Subject<Event>();
 
-  private searchTerm = this.searchEvent.pipe(
+  public searchControl = new FormControl();
+  private searchTerm = this.searchControl.valueChanges.pipe(
     debounceTime(150),
     map((event) => (event.target as HTMLInputElement).value),
     distinctUntilChanged(),
