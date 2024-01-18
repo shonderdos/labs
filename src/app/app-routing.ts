@@ -19,6 +19,11 @@ export const routes: Routes = [
         canActivate: [isLoggedInAndRedirectGuard('/dashboard')],
         loadComponent: () => import('./authentication/login/login.component'),
       },
+      {
+        path: 'logout',
+        canActivate: [isLoggedInGuard],
+        loadComponent: () => import('./authentication/logout/logout.component'),
+      },
     ],
   },
   // DASHBOARD
