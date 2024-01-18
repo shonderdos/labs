@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import DashboardComponent from './dashboard.component';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { createDriverStanding } from '../driver-standings/utils/fixtures/driver-standing.fixutre';
@@ -123,51 +123,45 @@ describe('DashboardComponent', () => {
     expect(searchInput).toBeTruthy();
   });
 
-  it('should filter the drivers by firstName in the search input', async () => {
+  it('should filter the drivers by firstName in the search input', fakeAsync(() => {
     const driversStandings = [
       createDriverStanding({ firstName: 'lewis' }),
       createDriverStanding({ firstName: 'lando' }),
     ];
-    const { fixture, debugElement } = arrange({
+    const { fixture, debugElement, component } = arrange({
       firebaseService: {
         getDriverStandings: () => of(driversStandings),
       },
     });
 
-    const searchInput = debugElement.query(By.css('[data-test-id="search-input"]'));
-    searchInput.nativeElement.value = driversStandings[0].firstName;
-    searchInput.nativeElement.dispatchEvent(new Event('keyup'));
-
-    await fixture.whenStable();
+    component.searchControl.setValue(driversStandings[0].firstName);
+    tick(150);
     fixture.detectChanges();
-
     const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
     expect(driverElements.length).toEqual(1);
     expect(driverElements[0].componentInstance.driver).toEqual(driversStandings[0]);
-  });
+  }));
 
-  it('should filter the drivers by lastName in the search input', async () => {
+  it('should filter the drivers by lastName in the search input', fakeAsync(() => {
     const driversStandings = [
       createDriverStanding({ lastName: 'hamilton' }),
       createDriverStanding({ lastName: 'norris' }),
     ];
-    const { fixture, debugElement } = arrange({
+    const { fixture, debugElement, component } = arrange({
       firebaseService: {
         getDriverStandings: () => of(driversStandings),
       },
     });
 
-    const searchInput = debugElement.query(By.css('[data-test-id="search-input"]'));
-    searchInput.nativeElement.value = driversStandings[0].lastName;
-    searchInput.nativeElement.dispatchEvent(new Event('keyup'));
+    component.searchControl.setValue(driversStandings[0].lastName);
 
-    await fixture.whenStable();
+    tick(150);
     fixture.detectChanges();
 
     const driverElements = debugElement.queryAll(By.css('[data-test-id="driver-row"]'));
     expect(driverElements.length).toEqual(1);
     expect(driverElements[0].componentInstance.driver).toEqual(driversStandings[0]);
-  });
+  }));
 
   it('should have a button to add a new driver', () => {
     const { debugElement } = arrange();
