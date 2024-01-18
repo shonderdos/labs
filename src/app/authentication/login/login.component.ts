@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, EMPTY, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -18,18 +18,16 @@ export default class LoginComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
 
-  public loginForm = this.fb.group({
-    email: [''],
-    password: [''],
+  public loginForm = this.fb.nonNullable.group({
+    email: '',
+    password: '',
   });
 
-  public email = this.loginForm.get('email') as FormControl;
-  public password = this.loginForm.get('password') as FormControl;
   public error = new BehaviorSubject<unknown>(null);
 
-  public handleSubmit() {
+  public handleSubmit({ email, password }: { email: string; password: string }) {
     this.authService
-      .login(this.email.value as string, this.password.value as string)
+      .login(email, password)
       .pipe(
         tap(() => {
           this.router.navigate(['/dashboard'], { queryParamsHandling: 'preserve' });

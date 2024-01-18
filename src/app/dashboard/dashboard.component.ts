@@ -36,12 +36,7 @@ export default class DashboardComponent {
   public drivers = this.firebaseService.getDriverStandings() || of([]);
 
   public searchControl = new FormControl();
-  private searchTerm = this.searchControl.valueChanges.pipe(
-    debounceTime(150),
-    map((event) => (event.target as HTMLInputElement).value),
-    distinctUntilChanged(),
-    startWith('')
-  );
+  private searchTerm = this.searchControl.valueChanges.pipe(debounceTime(150), distinctUntilChanged(), startWith(''));
 
   public filteredDrivers = combineLatest([this.drivers, this.searchTerm]).pipe(
     map(([drivers, filter]) => {

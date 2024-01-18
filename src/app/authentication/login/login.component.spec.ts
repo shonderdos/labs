@@ -57,8 +57,7 @@ describe('LoginComponent', () => {
       },
     });
     const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
-
-    submitEl.triggerEventHandler('click');
+    submitEl.nativeElement.click();
     fixture.detectChanges();
 
     const error = debugElement.query(By.css('[data-test-id="error"]'));
@@ -85,7 +84,7 @@ describe('LoginComponent', () => {
 
     await fixture.whenStable();
 
-    submitEl.triggerEventHandler('click');
+    submitEl.nativeElement.click();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(email, password);
   });
@@ -101,7 +100,7 @@ describe('LoginComponent', () => {
       },
     });
     const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
-    submitEl.triggerEventHandler('click');
+    submitEl.nativeElement.click();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(['/dashboard'], { queryParamsHandling: 'preserve' });
   });
