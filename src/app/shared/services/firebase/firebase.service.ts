@@ -12,7 +12,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import { connectAuthEmulator, getAuth, signOut } from 'firebase/auth';
 import { from, map, Observable } from 'rxjs';
 import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
 import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
@@ -72,6 +72,11 @@ export class FirebaseService {
         snapUnsub();
       });
     });
+  }
+
+  public logout() {
+    // handle errors
+    return signOut(this.auth);
   }
 
   public getDriver(id: string): Observable<DriverStanding> {

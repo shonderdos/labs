@@ -31,6 +31,11 @@ export const NAVIGATION_TOKEN = new InjectionToken<Navigation[]>('NavigationToke
           link: '/settings',
           icon: 'settings',
         },
+        {
+          name: 'Logout',
+          link: '/logout',
+          icon: 'logout',
+        },
       ],
     },
   ],
