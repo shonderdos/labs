@@ -4,6 +4,9 @@
   }
 </div>
 <div>
-  <app-navigation-item name="Login" icon="login" link="/login" />
-  <app-navigation-item name="Logout" icon="logout" link="/logout" />
+  @if (isLoggedIn()) {
+    <app-navigation-item name="Logout" icon="logout" link="/logout" />
+  } @else {
+    <app-navigation-item name="Login" icon="login" link="/login" />
+  }
 </div>
