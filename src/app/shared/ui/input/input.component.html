@@ -1,9 +1,10 @@
 <input
-  type="text"
+  [type]="type"
   data-test-id="search-input"
   (input)="onChange($event)"
   (blur)="touched()"
   [disabled]="disabled"
   [placeholder]="placeholder"
   [value]="value"
+  [name]="name"
 />
