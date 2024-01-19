@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, EMPTY, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../shared/services/auth/auth.service';
+import { ButtonComponent } from '../../shared/ui/button/button.component';
+import { InputComponent } from '../../shared/ui/input/input.component';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
   styleUrls: ['./login.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule, AsyncPipe, ButtonComponent, InputComponent],
 })
 export default class LoginComponent {
   private authService = inject(AuthService);

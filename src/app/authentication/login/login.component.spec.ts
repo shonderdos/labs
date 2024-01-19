@@ -56,7 +56,7 @@ describe('LoginComponent', () => {
         },
       },
     });
-    const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
+    const submitEl = debugElement.query(By.css('button'));
     submitEl.nativeElement.click();
     fixture.detectChanges();
 
@@ -73,16 +73,8 @@ describe('LoginComponent', () => {
         login: spy,
       },
     });
-    const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
-    const emailEl = debugElement.query(By.css('[data-test-id="email"]'));
-    const passwordEl = debugElement.query(By.css('[data-test-id="password"]'));
-
-    emailEl.nativeElement.value = email;
-    passwordEl.nativeElement.value = password;
-    emailEl.nativeElement.dispatchEvent(new Event('input'));
-    passwordEl.nativeElement.dispatchEvent(new Event('input'));
-
-    await fixture.whenStable();
+    const submitEl = debugElement.query(By.css('button'));
+    fixture.componentInstance.loginForm.setValue({ email, password });
 
     submitEl.nativeElement.click();
     expect(spy).toHaveBeenCalledTimes(1);
@@ -99,7 +91,7 @@ describe('LoginComponent', () => {
         navigate: spy,
       },
     });
-    const submitEl = debugElement.query(By.css('[data-test-id="submit"]'));
+    const submitEl = debugElement.query(By.css('button'));
     submitEl.nativeElement.click();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(['/dashboard'], { queryParamsHandling: 'preserve' });

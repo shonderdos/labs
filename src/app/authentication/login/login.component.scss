@@ -16,8 +16,8 @@
 }
 
 .left {
-  background-color: #ffffff;
-  color: #1e293b;
+  background-color: var(--body-background-color);
+  color: var(--body-text-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,26 +60,11 @@ label {
   display: flex;
   flex-direction: column;
 }
-input[type='password'],
-input[type='text'] {
-  border: 1px solid var(--select-border-color-focus);
-  border-radius: 0.375rem;
-  padding: 15px;
-}
 
 .error {
   color: red;
   font-size: 12px;
   margin-top: 5px;
-}
-
-button {
-  background-color: var(--select-border-color-focus);
-  color: #f1f5f9;
-  border-radius: 100px;
-  padding: 15px;
-  cursor: pointer;
-  border: none;
 }
 
 .button-container {

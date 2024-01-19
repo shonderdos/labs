@@ -11,6 +11,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() placeholder = 'Search';
+  @Input() name: string | undefined;
+  @Input() type: string = 'text';
   value: string | number | undefined = '';
   public changed: (value: string) => void = () => {};
   public touched: () => void = () => {};
@@ -32,7 +34,7 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: any): void {
+  writeValue(value: string | number): void {
     this.value = value;
   }
 }

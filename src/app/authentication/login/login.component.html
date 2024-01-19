@@ -5,18 +5,11 @@
       @if (error | async) {
         <p data-test-id="error">Login attempt failed, please try again.</p>
       }
-      <form [formGroup]="loginForm" (ngSubmit)="handleSubmit(loginForm.getRawValue())">
+      <form [formGroup]="loginForm" (submit)="handleSubmit(loginForm.getRawValue())">
         <div class="formfield">
           <div class="input-wrapper">
             <label for="email">Email*</label>
-            <input
-              data-test-id="email"
-              formControlName="email"
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Email"
-            />
+            <app-input data-test-id="email" formControlName="email" id="email" name="email" placeholder="Email" />
           </div>
         </div>
         <br />
@@ -24,7 +17,7 @@
         <div class="formfield">
           <div class="input-wrapper">
             <label for="password">Password*</label>
-            <input
+            <app-input
               data-test-id="password"
               formControlName="password"
               type="password"
@@ -36,7 +29,7 @@
         </div>
         <br />
         <div class="button-container">
-          <button data-test-id="submit" type="submit">Submit</button>
+          <app-button type="submit">Submit</app-button>
         </div>
       </form>
     </div>
