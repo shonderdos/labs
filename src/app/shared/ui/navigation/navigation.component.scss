@@ -1,11 +1,16 @@
 :host {
   height: 80px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: var(--navigation-background-color);
   box-shadow: var(--navigation-box-shadow);
+  padding: 0 48px;
 
   z-index: 100;
   position: relative;
+}
+
+div {
+  display: flex;
 }

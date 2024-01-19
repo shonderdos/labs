@@ -1,3 +1,9 @@
-@for (item of navigationItems; track item.link) {
-  <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
-}
+<div>
+  @for (item of navigationItems; track item.link) {
+    <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
+  }
+</div>
+<div>
+  <app-navigation-item name="Login" icon="login" link="/login" />
+  <app-navigation-item name="Logout" icon="logout" link="/logout" />
+</div>
