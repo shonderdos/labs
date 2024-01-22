@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import LayoutComponent from './layouts/layout.component';
 import { isLoggedInAndRedirectGuard, isLoggedInGuard } from './shared/guards/isLogedIn.guard';
+import { NAVIGATION_TOKEN } from './app.component';
 
 export const routes: Routes = [
   // Redirect an empty path to '/drivers'
@@ -29,7 +30,20 @@ export const routes: Routes = [
   // DASHBOARD
   {
     path: '',
-    component: LayoutComponent,
+    providers: [
+      {
+        provide: NAVIGATION_TOKEN,
+        useValue: [
+          {
+            name: 'Dashboard',
+            link: '/dashboard',
+            icon: 'dashboard',
+          },
+        ],
+      },
+    ],
+
+    loadComponent: () => import('./layouts/layout.component'),
     data: {
       layout: 'vertical',
     },
@@ -55,6 +69,28 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    providers: [
+      {
+        provide: NAVIGATION_TOKEN,
+        useValue: [
+          {
+            name: 'Drivers',
+            link: '/drivers',
+            icon: 'person',
+          },
+          {
+            name: 'Constructors',
+            link: '/constructors',
+            icon: 'people',
+          },
+          {
+            name: 'Settings',
+            link: '/settings',
+            icon: 'settings',
+          },
+        ],
+      },
+    ],
     data: {
       layout: 'vertical',
     },
