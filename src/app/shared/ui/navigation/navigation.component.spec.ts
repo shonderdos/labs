@@ -31,29 +31,31 @@ describe('NavigationComponent', () => {
   });
 
   it('should loop over navigationItems', () => {
+    const hardcodedNavigationItems = 1;
+    const navigationItems = [
+      {
+        name: 'Drivers',
+        link: '/drivers',
+        icon: 'person',
+      },
+      {
+        name: 'Constructors',
+        link: '/constructors',
+        icon: 'people',
+      },
+      {
+        name: 'Settings',
+        link: '/settings',
+        icon: 'settings',
+      },
+    ];
     const { fixture } = arrange({
-      navigationItems: [
-        {
-          name: 'Drivers',
-          link: '/drivers',
-          icon: 'person',
-        },
-        {
-          name: 'Constructors',
-          link: '/constructors',
-          icon: 'people',
-        },
-        {
-          name: 'Settings',
-          link: '/settings',
-          icon: 'settings',
-        },
-      ],
+      navigationItems,
     });
 
     const items = fixture.debugElement.queryAll(By.directive(NavigationItemComponent));
 
-    expect(items.length).toBe(3);
+    expect(items.length).toBe(navigationItems.length + hardcodedNavigationItems);
   });
   it('should pass the correct param to link', () => {
     const link = '/drivers';

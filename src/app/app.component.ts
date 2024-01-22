@@ -12,28 +12,6 @@ export const NAVIGATION_TOKEN = new InjectionToken<Navigation[]>('NavigationToke
   standalone: true,
   imports: [RouterOutlet],
   selector: 'app-root',
-  providers: [
-    {
-      provide: NAVIGATION_TOKEN,
-      useValue: [
-        {
-          name: 'Drivers',
-          link: '/drivers',
-          icon: 'person',
-        },
-        {
-          name: 'Constructors',
-          link: '/constructors',
-          icon: 'people',
-        },
-        {
-          name: 'Settings',
-          link: '/settings',
-          icon: 'settings',
-        },
-      ],
-    },
-  ],
   template: ` <router-outlet></router-outlet> `,
   styles: [
     `
