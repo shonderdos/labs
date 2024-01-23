@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NAVIGATION_TOKEN } from '../../../app.component';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
   standalone: true,
@@ -16,4 +17,6 @@ import { NAVIGATION_TOKEN } from '../../../app.component';
 export class NavigationComponent {
   public navigationItems = inject(NAVIGATION_TOKEN);
   public isLoggedIn = toSignal(inject(AuthService).state.pipe(map(Boolean)));
+
+  public service = inject(NavigationService);
 }
