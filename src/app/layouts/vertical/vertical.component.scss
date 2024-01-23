@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+:host.navigation-opened {
+  .nav {
+    flex: 0 0 300px;
+    background-color: black;
+  }
+}
+:host.navigation-closed {
+  .nav {
+    display: none;
+  }
+}
+
+.main {
+  flex: 1 1 1024px;
+}

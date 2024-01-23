@@ -1,12 +1,7 @@
 <div>
-  @for (item of navigationItems; track item.link) {
-    <app-navigation-item [icon]="item.icon" [link]="item.link" [name]="item.name" />
-  }
+  <app-navigation-item icon="menu" (click)="service.toggle()" />
+  <p>🏆 RaceManager PRO</p>
 </div>
 <div>
-  @if (isLoggedIn()) {
-    <app-navigation-item name="Logout" icon="logout" link="/logout" />
-  } @else {
-    <app-navigation-item name="Login" icon="login" link="/login" />
-  }
+  <app-navigation-item name="Logout" icon="logout" link="/logout" />
 </div>

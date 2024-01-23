@@ -43,7 +43,7 @@ export const routes: Routes = [
       },
     ],
 
-    loadComponent: () => import('./layouts/layout.component'),
+    component: LayoutComponent,
     data: {
       layout: 'vertical',
     },
@@ -92,7 +92,7 @@ export const routes: Routes = [
       },
     ],
     data: {
-      layout: 'vertical',
+      layout: 'horizontal',
     },
     children: [
       { path: 'drivers', loadComponent: () => import('./driver-standings/driver-standings.component') },

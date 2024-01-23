@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, HostBinding, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from '../../shared/ui/navigation/navigation.component';
+import { NavigationService } from '../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-vertical',
@@ -10,4 +11,12 @@ import { NavigationComponent } from '../../shared/ui/navigation/navigation.compo
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NavigationComponent, RouterOutlet],
 })
-export default class VerticalComponent {}
+export default class VerticalComponent {
+  @HostBinding('class') class = 'navigation-closed';
+  private state = inject(NavigationService).isOpen;
+  constructor() {
+    effect(() => {
+      this.class = this.state() ? 'navigation-opened' : 'navigation-closed';
+    });
+  }
+}
