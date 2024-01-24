@@ -1,11 +1,9 @@
 :host {
-  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--navigation-background-color);
-  box-shadow: var(--navigation-box-shadow);
-  padding: 0 48px;
+  padding-inline: 16px;
 
   z-index: 100;
   position: relative;
