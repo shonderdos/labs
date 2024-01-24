@@ -1,5 +1,9 @@
-<div class="nav">here is some content</div>
+<app-navigation></app-navigation>
 <div class="main">
-  <app-navigation></app-navigation>
+  <div class="nav">
+    @for (item of navigationItems; track item) {
+      <app-navigation-item [name]="item.name" [icon]="item.icon" [link]="item.link" />
+    }
+  </div>
   <router-outlet></router-outlet>
 </div>

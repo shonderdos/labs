@@ -1,11 +1,18 @@
-:host {
+.main {
   display: flex;
   height: 100%;
 }
+
+.nav {
+  padding: 0 8px;
+  padding-top: 16px;
+}
+
 :host.navigation-opened {
   .nav {
     flex: 0 0 300px;
-    background-color: black;
+    background-color: var(--navigation-background-color);
+    border-right: 1px solid rgb(54, 64, 80);
   }
 }
 :host.navigation-closed {
@@ -15,5 +22,4 @@
 }
 
 .main {
-  flex: 1 1 1024px;
 }

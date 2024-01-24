@@ -35,9 +35,29 @@ export const routes: Routes = [
         provide: NAVIGATION_TOKEN,
         useValue: [
           {
-            name: 'Dashboard',
+            name: 'Home',
             link: '/dashboard',
             icon: 'dashboard',
+          },
+          {
+            name: 'Drivers',
+            link: '/drivers',
+            icon: 'sports_motorsports',
+          },
+          {
+            name: 'Users',
+            link: '/users',
+            icon: 'group',
+          },
+          {
+            name: 'Series',
+            link: '/series',
+            icon: 'list_alt',
+          },
+          {
+            name: 'Tracks',
+            link: '/track',
+            icon: 'circle',
           },
         ],
       },
