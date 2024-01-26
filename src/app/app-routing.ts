@@ -67,7 +67,6 @@ export const routes: Routes = [
         ],
       },
     ],
-
     component: LayoutComponent,
     data: {
       layout: 'vertical',
@@ -76,17 +75,30 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./dashboard/dashboard.component'),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./dashboard/dashboard.component'),
+          },
+          {
+            path: ':id',
+            children: [
+              {
+                path: '',
+                loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
+              },
+              {
+                path: 'edit',
+                loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
+              },
+            ],
+          },
+        ],
       },
       {
-        path: 'dashboard/:id',
-        loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
+        path: 'settings',
+        loadComponent: () => import('./settings/settings.component'),
       },
-      {
-        path: 'dashboard/:id/edit',
-        loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
-      },
-      { path: 'settings', loadComponent: () => import('./settings/settings.component') },
     ],
   },
   // PUBLIC
