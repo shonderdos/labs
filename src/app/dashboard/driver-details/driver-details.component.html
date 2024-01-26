@@ -1,31 +1,33 @@
-<app-panel [style]="'square'">
-  <div class="header">
-    <app-button theme="transparent" displayMode="icon" icon="close" (click)="closeModal()">Close</app-button>
-  </div>
-  <div class="name">
-    <h1>{{ driver()?.firstName }} {{ driver()?.lastName }}</h1>
-    <app-button (click)="edit()">Edit</app-button>
-  </div>
-  <div class="details">
-    <div class="row">
-      <div class="label">Driver id</div>
-      <div class="value">{{ driver()?.driverId ?? '-' }}</div>
+<app-page-wrapper heading="Driver details">
+  <app-panel>
+    <div class="header">
+      <app-button theme="transparent" displayMode="icon" icon="close" (click)="closeModal()">Close</app-button>
     </div>
-    <div class="row">
-      <div class="label">Constructor Name</div>
-      <div class="value">{{ driver()?.constructorName ?? '-' }}</div>
+    <div class="name">
+      <h1>{{ driver()?.firstName }} {{ driver()?.lastName }}</h1>
+      <app-button (click)="edit()">Edit</app-button>
     </div>
-    <div class="row">
-      <div class="label">Points</div>
-      <div class="value">{{ driver()?.points ?? '-' }}</div>
+    <div class="details">
+      <div class="row">
+        <div class="label">Driver id</div>
+        <div class="value">{{ driver()?.driverId ?? '-' }}</div>
+      </div>
+      <div class="row">
+        <div class="label">Constructor Name</div>
+        <div class="value">{{ driver()?.constructorName ?? '-' }}</div>
+      </div>
+      <div class="row">
+        <div class="label">Points</div>
+        <div class="value">{{ driver()?.points ?? '-' }}</div>
+      </div>
+      <div class="row">
+        <div class="label">Position</div>
+        <div class="value">{{ driver()?.position ?? '-' }}</div>
+      </div>
+      <div class="row">
+        <div class="label">Driver number</div>
+        <div class="value">{{ driver()?.driverNumber ?? '-' }}</div>
+      </div>
     </div>
-    <div class="row">
-      <div class="label">Position</div>
-      <div class="value">{{ driver()?.position ?? '-' }}</div>
-    </div>
-    <div class="row">
-      <div class="label">Driver number</div>
-      <div class="value">{{ driver()?.driverNumber ?? '-' }}</div>
-    </div>
-  </div>
-</app-panel>
+  </app-panel>
+</app-page-wrapper>

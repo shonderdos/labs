@@ -1,13 +1,22 @@
 .flex {
   display: flex;
+  gap: 16px;
   align-items: center;
-  padding: 16px 40px;
+  justify-content: space-between;
+  padding: 8px 40px;
   border-bottom: 1px solid var(--select-border-color);
   margin: 0 -40px;
-  &:hover {
-    background-color: var(--navigation-hover-background-color);
-    cursor: pointer;
-  }
+}
+.firstName,
+.lastName,
+.email,
+.phoneNumber {
+  flex: 1;
+}
+.view,
+.edit,
+.delete {
+  flex: 0 0 40px;
 }
 .border-top {
   border-top: 1px solid var(--select-border-color);

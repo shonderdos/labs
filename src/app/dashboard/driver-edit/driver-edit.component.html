@@ -1,43 +1,29 @@
-<app-panel>
-  <div class="header">
-    <app-button displayMode="icon" icon="close" (click)="close()">Close</app-button>
-  </div>
-  <app-button (click)="cancel()">Cancel</app-button>
-  @if (editForm | async; as form) {
-    <form [formGroup]="form" (ngSubmit)="save(form.getRawValue())" class="details">
-      <div class="row">
-        <div class="label">First name</div>
-        <app-input formControlName="firstName" placeholder="Fill in first name" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Last name</div>
-        <app-input formControlName="lastName" placeholder="Fill in last name" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Driver id</div>
-        <app-input formControlName="driverId" placeholder="Fill in driver id" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Constructor Id</div>
-        <app-input formControlName="constructorId" placeholder="Fill in constructor id" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Constructor Name</div>
-        <app-input formControlName="constructorName" placeholder="Fill in constructor name" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Points</div>
-        <app-input formControlName="points" placeholder="Fill in points name" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Position</div>
-        <app-input formControlName="position" placeholder="Fill in position" class="value" />
-      </div>
-      <div class="row">
-        <div class="label">Driver number</div>
-        <app-input formControlName="driverNumber" placeholder="Fill in driver number" class="value" />
-      </div>
-      <app-button type="submit">Save</app-button>
-    </form>
-  }
-</app-panel>
+<app-page-wrapper heading="Edit driver">
+  <app-panel>
+    <div class="header">
+      <app-button displayMode="icon" icon="close" (click)="close()">Close</app-button>
+    </div>
+    <app-button (click)="cancel()">Cancel</app-button>
+    @if (editForm | async; as form) {
+      <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
+        <div class="row">
+          <div class="label">First name</div>
+          <app-input formControlName="firstName" placeholder="Fill in first name" class="value" />
+        </div>
+        <div class="row">
+          <div class="label">Last name</div>
+          <app-input formControlName="lastName" placeholder="Fill in last name" class="value" />
+        </div>
+        <div class="row">
+          <div class="label">Email</div>
+          <app-input formControlName="email" placeholder="Fill in email" class="value" />
+        </div>
+        <div class="row">
+          <div class="label">Phone number</div>
+          <app-input formControlName="phoneNumber" placeholder="Fill in phone number" class="value" />
+        </div>
+        <app-button type="submit">Save</app-button>
+      </form>
+    }
+  </app-panel>
+</app-page-wrapper>

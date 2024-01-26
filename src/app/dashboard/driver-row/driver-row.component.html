@@ -1,11 +1,20 @@
 @if (driver) {
-  <div data-test-id="row" class="flex" [ngClass]="{ 'border-top': isFirst }" (click)="openDrawer()">
-    <div class="profiles">
-      <span>{{ driver.firstName[0]?.toUpperCase() }}</span>
-    </div>
-    <div class="data">
-      <span data-test-id="name">{{ driver.firstName }} {{ driver.lastName }}</span>
-    </div>
+  <div class="flex">
+    <span class="firstName">{{ driver.firstName ?? '-' }}</span>
+    <span class="lastName">{{ driver.lastName ?? '-' }}</span>
+    <span class="phoneNumber">{{ driver.phoneNumber ?? '-' }}</span>
+    <span class="email">{{ driver.email ?? '-' }}</span>
+    <span class="view">
+      <app-button (click)="view(driver.id)" icon="visibility" displayMode="icon-text" theme="transparent"
+        >View</app-button
+      >
+    </span>
+    <span class="edit">
+      <app-button (click)="edit(driver.id)" displayMode="icon-text" icon="edit" theme="transparent">Edit</app-button>
+    </span>
+    <span class="delete">
+      <app-button displayMode="icon-text" theme="transparent" icon="delete">Delete</app-button>
+    </span>
   </div>
 } @else {
   <p>Loading</p>

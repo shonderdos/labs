@@ -93,15 +93,9 @@ export class FirebaseService {
         // Firebase doesn't allow a type to be null or a string. So it seems that a conversion is necessary
         // what I tought of last night is that when there is no data it should just emit the property...
         // obviously that is how it works in a nosql database.
-        const f = Object.entries(doc.data()).reduce((acc, [key, value]) => {
-          return {
-            ...acc,
-            [key]: value === '' ? null : value,
-          };
-        }, {}) as DriverStanding;
 
         subscriber.next({
-          ...f,
+          ...doc.data(),
           id: doc.id,
         });
       });
@@ -112,29 +106,13 @@ export class FirebaseService {
     });
   }
 
-  public writeData({
-    id,
-    points,
-    position,
-    constructorId,
-    constructorName,
-    firstName,
-    lastName,
-    driverNumber,
-    driverId,
-  }: DriverStanding) {
-    position = Number(position);
-    const docRef = doc(this.db, 'driver-standings', id);
-    updateDoc(docRef, {
-      points,
-      position,
-      constructorId,
-      constructorName,
-      firstName,
-      lastName,
-      driverId,
-      driverNumber,
-    });
+  public writeData(formData: DriverStanding) {
+    if (!formData.id) {
+      return;
+    }
+    const docRef = doc(this.db, 'driver-standings', formData.id);
+    // @ts-expect-error - I don't know how to fix this
+    updateDoc(docRef, formData);
   }
 
   addNewDriver() {

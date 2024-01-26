@@ -59,6 +59,11 @@ export const routes: Routes = [
             link: '/track',
             icon: 'circle',
           },
+          {
+            name: 'Settings',
+            link: '/settings',
+            icon: 'settings',
+          },
         ],
       },
     ],
@@ -72,17 +77,16 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./dashboard/dashboard.component'),
-        children: [
-          {
-            path: ':id',
-            loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
-          },
-          {
-            path: ':id/edit',
-            loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
-          },
-        ],
       },
+      {
+        path: 'dashboard/:id',
+        loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
+      },
+      {
+        path: 'dashboard/:id/edit',
+        loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
+      },
+      { path: 'settings', loadComponent: () => import('./settings/settings.component') },
     ],
   },
   // PUBLIC
@@ -117,7 +121,6 @@ export const routes: Routes = [
     children: [
       { path: 'drivers', loadComponent: () => import('./driver-standings/driver-standings.component') },
       { path: 'constructors', loadComponent: () => import('./constructor-standings/constructor-standings.component') },
-      { path: 'settings', loadComponent: () => import('./settings/settings.component') },
     ],
   },
 

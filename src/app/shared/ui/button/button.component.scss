@@ -12,12 +12,16 @@
   &__text {
     font-size: 14px;
     padding: 8px 12px;
-    display: flex;
     align-items: center;
     height: 48px;
   }
 
   &__icon-text {
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    height: 48px;
+
     mat-icon {
       margin-right: 16px;
     }
@@ -37,6 +41,9 @@
   &__transparent {
     background-color: transparent;
     color: var(--navigation-text-color);
+    &:hover {
+      background-color: var(--navigation-hover-background-color);
+    }
   }
 
   &__warn {

@@ -8,6 +8,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { InputComponent } from '../../shared/ui/input/input.component';
 import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.component';
 
 @Component({
   selector: 'app-driver-edit',
@@ -15,7 +16,15 @@ import { DriverStanding } from '../../driver-standings/utils/driver-standing.int
   styleUrls: ['./driver-edit.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PanelComponent, AsyncPipe, FormsModule, ButtonComponent, InputComponent, ReactiveFormsModule],
+  imports: [
+    PanelComponent,
+    AsyncPipe,
+    FormsModule,
+    ButtonComponent,
+    InputComponent,
+    ReactiveFormsModule,
+    PageWrapperComponent,
+  ],
 })
 export default class DriverEditComponent {
   private router = inject(Router);
@@ -25,17 +34,13 @@ export default class DriverEditComponent {
   public editForm = this.activatedRoute.params.pipe(
     map((params) => params['id']),
     switchMap((id) => this.firebaseService.getDriver(id)),
-    map(({ id, lastName, firstName, driverId, constructorName, constructorId, points, position, driverNumber }) =>
-      this.fb.nonNullable.group({
+    map(({ id, lastName, firstName, email, phoneNumber }) =>
+      this.fb.group({
         id,
         lastName,
         firstName,
-        driverId,
-        constructorName,
-        constructorId,
-        points,
-        position,
-        driverNumber,
+        email,
+        phoneNumber,
       })
     )
   );

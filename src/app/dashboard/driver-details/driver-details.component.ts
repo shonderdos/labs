@@ -6,6 +6,7 @@ import { map, switchMap } from 'rxjs';
 import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.component';
 
 @Component({
   selector: 'app-driver-details',
@@ -13,7 +14,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrls: ['./driver-details.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [JsonPipe, PanelComponent, AsyncPipe, ButtonComponent],
+  imports: [JsonPipe, PanelComponent, AsyncPipe, ButtonComponent, PageWrapperComponent],
 })
 export default class DriverDetailsComponent {
   private router = inject(Router);
