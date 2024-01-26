@@ -27,36 +27,10 @@ service cloud.firestore {
             allow read
             allow create:
             if isLoggedIn() &&
-            hasOnly(['constructorName', 'driverId', 'constructorId', 'firstName', 'lastName', 'points', 'driverNumber', 'position', 'id']) &&
-            isString('constructorName') &&
-            isString('driverId') &&
-            isString('constructorId') &&
-            isString('firstName') &&
-            isString('lastName') &&
-            isString('driverNumber') &&
-            isString('points') &&
-            isNumber('position') &&
-            isInRange('position', 0, 30) &&
-            isString('id')
+            hasOnly(['firstName', 'lastName', 'phoneNumber', 'email', 'id'])
             allow update:
-            if affectedKeys(['points',
-                'position',
-                'constructorId',
-                'constructorName',
-                'firstName',
-                'lastName',
-                'driverId',
-                'driverNumber']) &&
-            isLoggedIn() &&
-            isString('points') &&
-            isNumber('position') &&
-            isInRange('position', 0, 30) &&
-            isString('constructorId') &&
-            isString('constructorName') &&
-            isString('firstName') &&
-            isString('lastName') &&
-            isString('driverId') &&
-            isString('driverNumber')
+            if affectedKeys(['firstName', 'lastName', 'phoneNumber', 'email', 'id']) &&
+            isLoggedIn()
         }
         match /constructor-standings/{id} {
             allow read
