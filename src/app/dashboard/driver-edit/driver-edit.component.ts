@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PanelComponent } from '../../shared/ui/panel/panel.component';
 import { AsyncPipe } from '@angular/common';
 import { map, switchMap } from 'rxjs';
@@ -24,6 +24,7 @@ import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.
     InputComponent,
     ReactiveFormsModule,
     PageWrapperComponent,
+    RouterLink,
   ],
 })
 export default class DriverEditComponent {

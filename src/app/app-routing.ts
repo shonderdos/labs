@@ -75,6 +75,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+        data: { breadcrumb: 'Manage drivers' },
         children: [
           {
             path: '',
@@ -82,6 +83,7 @@ export const routes: Routes = [
           },
           {
             path: ':id',
+            data: { breadcrumb: 'Driver Details' },
             children: [
               {
                 path: '',
@@ -89,6 +91,7 @@ export const routes: Routes = [
               },
               {
                 path: 'edit',
+                data: { breadcrumb: 'Edit Driver' },
                 loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
               },
             ],
@@ -97,6 +100,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
+        data: { breadcrumb: 'Settings' },
         loadComponent: () => import('./settings/settings.component'),
       },
     ],

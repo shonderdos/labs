@@ -1,2 +1,11 @@
+<div class="breadcrumbs">
+  @for (breadcrumb of breadcrumbs; track breadcrumb) {
+    @if ($last) {
+      <span class="current">{{ breadcrumb.label }}</span>
+    } @else {
+      <a class="link" [href]="breadcrumb.url">{{ breadcrumb.label }}</a> /
+    }
+  }
+</div>
 <h1>{{ heading }}</h1>
 <ng-content></ng-content>
