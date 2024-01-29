@@ -14,6 +14,7 @@ export class ButtonComponent {
   @Input() public theme: 'transparent' | 'primary' | 'accent' | 'warn' = 'primary';
   @Input() public icon: string | null = null;
   @Input() public type: 'button' | 'submit' | 'reset' = 'button';
+  @Input() public disabled = false;
 
   public get classList() {
     return {

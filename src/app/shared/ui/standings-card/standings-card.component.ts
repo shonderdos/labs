@@ -9,5 +9,5 @@ import { NgClass } from '@angular/common';
   imports: [NgClass],
 })
 export class StandingsCardComponent {
-  @Input() public constructorId: string | undefined;
+  @Input() public constructorId: string | undefined | null;
 }
