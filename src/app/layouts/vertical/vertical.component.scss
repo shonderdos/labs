@@ -34,10 +34,21 @@ app-navigation {
 
 nav {
   grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   padding: 16px;
   border-right: 1px solid #1c2437;
-  & * {
-    margin-bottom: 8px;
+  .top {
+    & * {
+      margin-bottom: 8px;
+    }
+  }
+  .bottom {
+    & * {
+      margin-top: 8px;
+    }
   }
 }
 

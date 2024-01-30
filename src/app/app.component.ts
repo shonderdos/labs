@@ -6,7 +6,7 @@ export interface Navigation {
   link: string;
   icon: string;
 }
-export const NAVIGATION_TOKEN = new InjectionToken<Navigation[]>('NavigationToken');
+export const NAVIGATION_TOKEN = new InjectionToken<{ top: Navigation[]; bottom: Navigation[] }>('NavigationToken');
 
 @Component({
   standalone: true,
