@@ -10,10 +10,13 @@ div {
   color: var(--navigation-text-color);
   height: 48px;
 }
-div:hover {
+div:hover:not(.active) {
   cursor: pointer;
-  background-color: var(--navigation-hover-background-color);
+  background-color: #1c2437;
 }
 span {
   margin-left: 10px;
+}
+.active {
+  background-color: var(--navigation-hover-background-color);
 }
