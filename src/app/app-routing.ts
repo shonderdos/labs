@@ -33,28 +33,32 @@ export const routes: Routes = [
     providers: [
       {
         provide: NAVIGATION_TOKEN,
-        useValue: [
-          {
-            name: 'Dashboard',
-            link: '/dashboard',
-            icon: 'dashboard',
-          },
-          {
-            name: 'Drivers',
-            link: '/drivers',
-            icon: 'sports_motorsports',
-          },
-          {
-            name: 'Settings',
-            link: '/settings',
-            icon: 'settings',
-          },
-          {
-            name: 'Logout',
-            link: '/logout',
-            icon: 'logout',
-          },
-        ],
+        useValue: {
+          top: [
+            {
+              name: 'Dashboard',
+              link: '/dashboard',
+              icon: 'dashboard',
+            },
+            {
+              name: 'Drivers',
+              link: '/drivers',
+              icon: 'sports_motorsports',
+            },
+          ],
+          bottom: [
+            {
+              name: 'Settings',
+              link: '/settings',
+              icon: 'settings',
+            },
+            {
+              name: 'Logout',
+              link: '/logout',
+              icon: 'logout',
+            },
+          ],
+        },
       },
     ],
     component: LayoutComponent,
