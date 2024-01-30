@@ -35,7 +35,7 @@ export const routes: Routes = [
         provide: NAVIGATION_TOKEN,
         useValue: [
           {
-            name: 'Home',
+            name: 'Dashboard',
             link: '/dashboard',
             icon: 'dashboard',
           },
@@ -45,24 +45,14 @@ export const routes: Routes = [
             icon: 'sports_motorsports',
           },
           {
-            name: 'Users',
-            link: '/users',
-            icon: 'group',
-          },
-          {
-            name: 'Series',
-            link: '/series',
-            icon: 'list_alt',
-          },
-          {
-            name: 'Tracks',
-            link: '/track',
-            icon: 'circle',
-          },
-          {
             name: 'Settings',
             link: '/settings',
             icon: 'settings',
+          },
+          {
+            name: 'Logout',
+            link: '/logout',
+            icon: 'logout',
           },
         ],
       },
@@ -75,24 +65,29 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        data: { breadcrumb: 'Manage drivers' },
+        data: { breadcrumb: 'Dashboard' },
+        loadComponent: () => import('./dashboard/dashboard.component'),
+      },
+      {
+        path: 'drivers',
+        data: { breadcrumb: 'Drivers' },
         children: [
           {
             path: '',
-            loadComponent: () => import('./dashboard/dashboard.component'),
+            loadComponent: () => import('./drivers/drivers.component'),
           },
           {
             path: ':id',
-            data: { breadcrumb: 'Driver Details' },
+            data: { breadcrumb: 'Details' },
             children: [
               {
                 path: '',
-                loadComponent: () => import('./dashboard/driver-details/driver-details.component'),
+                loadComponent: () => import('./drivers/driver-details/driver-details.component'),
               },
               {
                 path: 'edit',
-                data: { breadcrumb: 'Edit Driver' },
-                loadComponent: () => import('./dashboard/driver-edit/driver-edit.component'),
+                data: { breadcrumb: 'Edit' },
+                loadComponent: () => import('./drivers/driver-edit/driver-edit.component'),
               },
             ],
           },
@@ -105,41 +100,7 @@ export const routes: Routes = [
       },
     ],
   },
-  // PUBLIC
-  {
-    path: '',
-    component: LayoutComponent,
-    providers: [
-      {
-        provide: NAVIGATION_TOKEN,
-        useValue: [
-          {
-            name: 'Drivers',
-            link: '/drivers',
-            icon: 'person',
-          },
-          {
-            name: 'Constructors',
-            link: '/constructors',
-            icon: 'people',
-          },
-          {
-            name: 'Settings',
-            link: '/settings',
-            icon: 'settings',
-          },
-        ],
-      },
-    ],
-    data: {
-      layout: 'horizontal',
-    },
-    children: [
-      { path: 'drivers', loadComponent: () => import('./driver-standings/driver-standings.component') },
-      { path: 'constructors', loadComponent: () => import('./constructor-standings/constructor-standings.component') },
-    ],
-  },
 
   // redirect to /drivers if no route matches
-  { path: '**', redirectTo: '/drivers' },
+  { path: '**', redirectTo: '/login' },
 ];

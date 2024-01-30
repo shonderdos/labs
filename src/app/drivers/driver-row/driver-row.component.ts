@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { DriverStanding } from '../../shared/interfaces/driver-standing.interface';
 import { NgClass } from '@angular/common';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 
 @Component({
   selector: 'app-driver-row',
@@ -17,11 +18,16 @@ export class DriverRowComponent {
   @Input({ required: true }) isFirst = false;
 
   private router = inject(Router);
+  private service = inject(FirebaseService);
   public view(id: DriverStanding['id']): void {
-    this.router.navigate(['/dashboard/', id]);
+    this.router.navigate(['/drivers/', id]);
   }
 
   public edit(id: DriverStanding['id']): void {
-    this.router.navigate(['/dashboard/', id, 'edit']);
+    this.router.navigate(['/drivers/', id, 'edit']);
+  }
+
+  public delete(id: DriverStanding['id']): void {
+    this.service.deleteDriver(id);
   }
 }

@@ -1,15 +1,1 @@
-<app-page-wrapper data-test-id="page-wrapper" heading="Manage drivers">
-  <app-panel>
-    <div class="table-heading">
-      <app-input [formControl]="searchControl" />
-      <app-button (click)="addNewDriver()" icon="person_add" data-test-id="add-driver-button">
-        Add new driver
-      </app-button>
-    </div>
-    @for (driver of filteredDrivers | async; track driver.id) {
-      <app-driver-row [driver]="driver" [isFirst]="$first" data-test-id="driver-row" />
-    }
-  </app-panel>
-</app-page-wrapper>
-
-<router-outlet></router-outlet>
+<p>Dashboard component works</p>

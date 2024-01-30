@@ -13,7 +13,9 @@
       <app-button (click)="edit(driver.id)" displayMode="icon-text" icon="edit" theme="transparent">Edit</app-button>
     </span>
     <span class="delete">
-      <app-button displayMode="icon-text" theme="transparent" icon="delete">Delete</app-button>
+      <app-button (click)="delete(driver.id)" displayMode="icon-text" theme="transparent" icon="delete"
+        >Delete</app-button
+      >
     </span>
   </div>
 } @else {

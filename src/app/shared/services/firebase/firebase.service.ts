@@ -3,19 +3,17 @@ import { initializeApp } from 'firebase/app';
 import {
   collection,
   connectFirestoreEmulator,
+  deleteDoc,
   doc,
-  getDocs,
   getFirestore,
   onSnapshot,
-  orderBy,
   query,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
 import { connectAuthEmulator, getAuth, signOut } from 'firebase/auth';
-import { from, map, Observable } from 'rxjs';
-import { DriverStanding } from '../../../driver-standings/utils/driver-standing.interface';
-import { ConstructorStanding } from '../../../constructor-standings/utils/constructor-standings.interface';
+import { Observable } from 'rxjs';
+import { DriverStanding } from '../../interfaces/driver-standing.interface';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -40,21 +38,8 @@ export class FirebaseService {
       connectFirestoreEmulator(this.db, 'localhost', 8080);
     }
   }
-  public getConstructorStandings(): Observable<ConstructorStanding[]> {
-    const q = query(collection(this.db, 'constructor-standings'), orderBy('position'));
-    return from(getDocs(q)).pipe(
-      map((querySnapshot) =>
-        querySnapshot.docs.map((doc) => {
-          return {
-            ...(doc.data() as ConstructorStanding),
-            id: doc.id,
-          };
-        })
-      )
-    );
-  }
   public getDriverStandings(): Observable<DriverStanding[]> {
-    const q = query(collection(this.db, 'driver-standings'), orderBy('position'));
+    const q = query(collection(this.db, 'driver-standings'));
 
     return new Observable((subscriber) => {
       const snapUnsub = onSnapshot(q, (next) => {
@@ -119,15 +104,16 @@ export class FirebaseService {
     const colRef = collection(this.db, 'driver-standings');
     const newDoc = doc(colRef);
     setDoc(newDoc, {
-      constructorName: '',
-      driverId: '',
-      constructorId: '',
-      firstName: '',
-      lastName: '',
-      points: '',
-      driverNumber: '',
-      position: 0,
       id: newDoc.id,
     });
+  }
+
+  deleteDriver(id: DriverStanding['id']) {
+    if (!id) {
+      return;
+    }
+    const colRef = collection(this.db, 'driver-standings');
+    const docRef = doc(colRef, id);
+    deleteDoc(docRef);
   }
 }

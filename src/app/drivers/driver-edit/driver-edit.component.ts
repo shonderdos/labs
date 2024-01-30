@@ -7,7 +7,7 @@ import { FirebaseService } from '../../shared/services/firebase/firebase.service
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { InputComponent } from '../../shared/ui/input/input.component';
-import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { DriverStanding } from '../../shared/interfaces/driver-standing.interface';
 import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.component';
 
 @Component({
