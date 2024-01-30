@@ -1,9 +1,10 @@
 <div class="breadcrumbs">
+  <a class="link" routerLink="/dashboard">Dashboard</a> /
   @for (breadcrumb of breadcrumbs; track breadcrumb) {
     @if ($last) {
       <span class="current">{{ breadcrumb.label }}</span>
     } @else {
-      <a class="link" [href]="breadcrumb.url">{{ breadcrumb.label }}</a> /
+      <a class="link" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a> /
     }
   }
 </div>

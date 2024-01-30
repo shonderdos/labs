@@ -1,4 +1,4 @@
-import { DriverStanding } from '../driver-standing.interface';
+import { DriverStanding } from '../../../../shared/interfaces/driver-standing.interface';
 
 export const createDriverStanding = (override?: Partial<DriverStanding>): DriverStanding => {
   return {
@@ -9,7 +9,7 @@ export const createDriverStanding = (override?: Partial<DriverStanding>): Driver
     lastName: 'Latifi',
     points: '86',
     driverNumber: '6',
-    position: 1,
+    position: '1',
     id: 'mocked-id',
     ...override,
   };

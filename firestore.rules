@@ -31,6 +31,8 @@ service cloud.firestore {
             allow update:
             if affectedKeys(['firstName', 'lastName', 'phoneNumber', 'email', 'id']) &&
             isLoggedIn()
+            allow delete:
+            if isLoggedIn()
         }
         match /constructor-standings/{id} {
             allow read

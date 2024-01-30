@@ -1,10 +1,10 @@
-import { createDriverStanding } from '../../driver-standings/utils/fixtures/driver-standing.fixutre';
+import { createDriverStanding } from './utils/fixtures/driver-standing.fixutre';
 import { By } from '@angular/platform-browser';
 import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 import { TestBed } from '@angular/core/testing';
 import { DriverRowComponent } from './driver-row.component';
 import { Component } from '@angular/core';
-import { DriverStanding } from '../../driver-standings/utils/driver-standing.interface';
+import { DriverStanding } from '../../shared/interfaces/driver-standing.interface';
 import { ActivatedRoute } from '@angular/router';
 
 describe('DashboardComponent', () => {
