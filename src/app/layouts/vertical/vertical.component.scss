@@ -29,13 +29,13 @@ main {
 }
 app-navigation {
   grid-area: menubar;
-  border-bottom: 1px solid rgba(60, 64, 67, 1);
+  border-bottom: 1px solid #1c2437;
 }
 
 nav {
   grid-area: sidebar;
   padding: 16px;
-  border-right: 1px solid rgba(60, 64, 67, 1);
+  border-right: 1px solid #1c2437;
   & * {
     margin-bottom: 8px;
   }

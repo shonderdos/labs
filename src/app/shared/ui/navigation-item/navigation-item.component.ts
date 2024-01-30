@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-navigation-item',
   templateUrl: './navigation-item.component.html',
   styleUrls: ['./navigation-item.component.scss'],
-  imports: [RouterLink, MatIconModule],
+  imports: [RouterLink, MatIconModule, RouterLinkActive],
 })
 export class NavigationItemComponent {
   @Input() link: string | undefined;
