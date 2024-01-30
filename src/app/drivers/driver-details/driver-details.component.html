@@ -1,8 +1,5 @@
 <app-page-wrapper heading="Driver details">
   <app-panel>
-    <div class="header">
-      <app-button theme="transparent" displayMode="icon" icon="close" (click)="closeModal()">Close</app-button>
-    </div>
     <div class="name">
       <h1>{{ driver()?.firstName }} {{ driver()?.lastName }}</h1>
       <app-button (click)="edit()">Edit</app-button>

@@ -1,8 +1,5 @@
 <app-page-wrapper heading="Edit driver">
   <app-panel>
-    <div class="header">
-      <app-button displayMode="icon" icon="close" (click)="close()">Close</app-button>
-    </div>
     <app-button (click)="cancel()">Cancel</app-button>
     @if (editForm | async; as form) {
       <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
