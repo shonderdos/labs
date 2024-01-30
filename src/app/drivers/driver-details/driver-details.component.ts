@@ -26,9 +26,6 @@ export default class DriverDetailsComponent {
       switchMap((id) => this.firebaseService.getDriver(id))
     )
   );
-  public closeModal() {
-    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-  }
   public edit() {
     if (this.driver === null) return;
     this.router.navigate([`./edit`], { relativeTo: this.activatedRoute });

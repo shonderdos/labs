@@ -46,10 +46,6 @@ export default class DriverEditComponent {
     )
   );
 
-  public close() {
-    this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
-  }
-
   public cancel() {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
