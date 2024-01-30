@@ -100,12 +100,12 @@ export class FirebaseService {
     updateDoc(docRef, formData);
   }
 
-  addNewDriver() {
+  public async addNewDriver() {
     const colRef = collection(this.db, 'driver-standings');
     const newDoc = doc(colRef);
-    setDoc(newDoc, {
-      id: newDoc.id,
-    });
+    const { id } = newDoc;
+    await setDoc(newDoc, { id });
+    return id;
   }
 
   deleteDriver(id: DriverStanding['id']) {
