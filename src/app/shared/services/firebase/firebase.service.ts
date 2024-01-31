@@ -91,13 +91,13 @@ export class FirebaseService {
     });
   }
 
-  public writeData(formData: DriverStanding) {
+  public async writeData(formData: DriverStanding) {
     if (!formData.id) {
       return;
     }
     const docRef = doc(this.db, 'driver-standings', formData.id);
     // @ts-expect-error - I don't know how to fix this
-    updateDoc(docRef, formData);
+    await updateDoc(docRef, formData);
   }
 
   public async addNewDriver() {
