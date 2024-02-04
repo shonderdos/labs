@@ -4,7 +4,40 @@
   align-items: center;
   margin-bottom: 34px;
 }
+.table-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions {
+  flex: 0 0 120px;
+}
 
 app-input {
   flex: 1;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  thead {
+    tr {
+      th {
+        text-align: start;
+        font-size: 14px;
+        color: #a3a3a3;
+      }
+    }
+  }
+  tbody {
+    tr {
+      border-bottom: 1px solid #1c2437;
+      margin: 0 -40px;
+      td {
+        padding: 12px 0;
+      }
+    }
+  }
 }
