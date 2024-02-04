@@ -6,9 +6,42 @@
         Add new driver
       </app-button>
     </div>
-    @for (driver of filteredDrivers | async; track driver.id) {
-      <app-driver-row [driver]="driver" [isFirst]="$first" data-test-id="driver-row" />
-    }
+    <table>
+      <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Phone number</th>
+          <th>Email</th>
+          <th colspan="3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (driver of filteredDrivers | async; track driver.id) {
+          <tr>
+            <td>{{ driver.firstName ?? '-' }}</td>
+            <td>{{ driver.lastName ?? '-' }}</td>
+            <td>{{ driver.phoneNumber ?? '-' }}</td>
+            <td>{{ driver.email ?? '-' }}</td>
+            <td>
+              <app-button (click)="view(driver.id)" icon="visibility" displayMode="icon-text" theme="transparent"
+                >View</app-button
+              >
+            </td>
+            <td>
+              <app-button (click)="edit(driver.id)" displayMode="icon-text" icon="edit" theme="transparent"
+                >Edit</app-button
+              >
+            </td>
+            <td>
+              <app-button (click)="delete(driver.id)" displayMode="icon-text" theme="transparent" icon="delete"
+                >Delete</app-button
+              >
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </app-panel>
 </app-page-wrapper>
 
