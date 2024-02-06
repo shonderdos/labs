@@ -1,5 +1,6 @@
 <app-page-wrapper heading="Edit driver">
   <app-panel>
+    <app-button (click)="deleteDriver()" theme="warn">Delete</app-button>
     <app-button (click)="cancel()">Cancel</app-button>
     @if (editForm | async; as form) {
       <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
