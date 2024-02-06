@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { AsyncPipe } from '@angular/common';
-import { combineLatest, debounceTime, distinctUntilChanged, map, of, startWith } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, of, startWith, tap } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 import { PanelComponent } from '../shared/ui/panel/panel.component';
@@ -10,6 +10,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../shared/ui/button/button.component';
 import { InputComponent } from '../shared/ui/input/input.component';
 import { DriverStanding } from '../shared/interfaces/driver-standing.interface';
+import { ModalService } from '../shared/modal/modal.service';
 
 @Component({
   standalone: true,
@@ -36,6 +37,7 @@ export default class DriversComponent {
   public drivers = this.firebaseService.getDriverStandings() || of([]);
 
   private router = inject(Router);
+  private modalService = inject(ModalService);
   private service = inject(FirebaseService);
   public searchControl = new FormControl();
   private searchTerm = this.searchControl.valueChanges.pipe(debounceTime(150), distinctUntilChanged(), startWith(''));
@@ -57,7 +59,13 @@ export default class DriversComponent {
   }
 
   public delete(id: DriverStanding['id']): void {
-    this.service.deleteDriver(id);
+    this.modalService
+      .open()
+      .pipe(
+        filter(({ confirmed }) => confirmed),
+        tap(() => this.service.deleteDriver(id))
+      )
+      .subscribe();
   }
 
   public async addNewDriver() {
