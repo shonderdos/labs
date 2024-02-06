@@ -23,17 +23,17 @@
             <td>{{ driver.lastName ?? '-' }}</td>
             <td>{{ driver.phoneNumber ?? '-' }}</td>
             <td>{{ driver.email ?? '-' }}</td>
-            <td>
+            <td class="narrow">
               <app-button (click)="view(driver.id)" icon="visibility" displayMode="icon-text" theme="transparent"
                 >View</app-button
               >
             </td>
-            <td>
+            <td class="narrow">
               <app-button (click)="edit(driver.id)" displayMode="icon-text" icon="edit" theme="transparent"
                 >Edit</app-button
               >
             </td>
-            <td>
+            <td class="narrow">
               <app-button (click)="delete(driver.id)" displayMode="icon-text" theme="transparent" icon="delete"
                 >Delete</app-button
               >
