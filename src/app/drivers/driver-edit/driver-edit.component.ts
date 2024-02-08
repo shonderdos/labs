@@ -53,8 +53,8 @@ export default class DriverEditComponent {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
 
-  public async save(value: DriverStanding) {
-    await this.firebaseService.writeData(value);
+  public save(value: DriverStanding) {
+    this.firebaseService.writeData(value);
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
   }
   public deleteDriver(): void {

@@ -68,8 +68,8 @@ export default class DriversComponent {
       .subscribe();
   }
 
-  public async addNewDriver() {
-    const id = await this.firebaseService.addNewDriver();
+  public addNewDriver() {
+    const id = this.firebaseService.addNewDriver();
     this.route.navigate(['/drivers', id, 'edit']);
   }
 }
