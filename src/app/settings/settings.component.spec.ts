@@ -1,8 +1,15 @@
+import { PageWrapperComponent } from '../shared/ui/page-wrapper/page-wrapper.component';
 import { TestBed } from '@angular/core/testing';
 import SettingsComponent from './settings.component';
 import { DarkModePreference, DarkModeService } from '../shared/services/dark-mode/dark-mode.service';
-import { signal } from '@angular/core';
+import { signal, Component } from '@angular/core';
 
+@Component({
+  standalone: true,
+  selector: 'app-page-wrapper',
+  template: '<ng-content></ng-content>',
+})
+class FakePageWrapperComponent {}
 function arrange(overrides?: { darkModeService?: Partial<DarkModeService> }) {
   const stub = {
     darkModeService: {
@@ -14,6 +21,11 @@ function arrange(overrides?: { darkModeService?: Partial<DarkModeService> }) {
   TestBed.configureTestingModule({
     providers: [{ provide: DarkModeService, useValue: stub.darkModeService }],
     imports: [SettingsComponent],
+  }).overrideComponent(SettingsComponent, {
+    remove: {
+      imports: [PageWrapperComponent],
+    },
+    add: { imports: [FakePageWrapperComponent] },
   });
   const fixture = TestBed.createComponent(SettingsComponent);
   const component = fixture.componentInstance;
