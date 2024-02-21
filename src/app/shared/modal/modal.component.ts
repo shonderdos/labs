@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ModalService } from './modal.service';
 import { ButtonComponent } from '../ui/button/button.component';
 
@@ -10,7 +10,7 @@ import { ButtonComponent } from '../ui/button/button.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ButtonComponent],
 })
-export default class ModalComponent implements AfterViewInit {
+export default class ModalComponent {
   @ViewChild('modal') modal!: ElementRef<HTMLDivElement>;
   @ViewChild('overlay') overlay!: ElementRef<HTMLDivElement>;
 
@@ -28,17 +28,6 @@ export default class ModalComponent implements AfterViewInit {
   onClose(props?: { confirmed: boolean }) {
     // closing modal when clicking on the overlay
     this.modalService.close(props ?? undefined);
-  }
-
-  ngAfterViewInit() {
-    const { minWidth, width, maxWidth, minHeight, height, maxHeight } = this.modalService.options?.size || {};
-
-    //this.modal.nativeElement.style.minWidth = minWidth || 'auto';
-    //this.modal.nativeElement.style.width = width || 'auto';
-    //this.modal.nativeElement.style.maxWidth = maxWidth || 'auto';
-    //this.modal.nativeElement.style.minHeight = minHeight || 'auto';
-    //this.modal.nativeElement.style.height = height || 'auto';
-    //this.modal.nativeElement.style.maxHeight = maxHeight || 'auto';
   }
 
   close() {

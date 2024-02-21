@@ -1,27 +1,33 @@
 <app-page-wrapper heading="Edit driver">
-  <app-panel>
-    <app-button (click)="deleteDriver()" theme="warn">Delete</app-button>
-    <app-button (click)="cancel()">Cancel</app-button>
-    @if (editForm | async; as form) {
-      <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
-        <div class="row">
-          <div class="label">First name</div>
-          <app-input formControlName="firstName" placeholder="Fill in first name" class="value" />
-        </div>
-        <div class="row">
-          <div class="label">Last name</div>
-          <app-input formControlName="lastName" placeholder="Fill in last name" class="value" />
-        </div>
-        <div class="row">
-          <div class="label">Email</div>
-          <app-input formControlName="email" placeholder="Fill in email" class="value" />
-        </div>
-        <div class="row">
-          <div class="label">Phone number</div>
-          <app-input formControlName="phoneNumber" placeholder="Fill in phone number" class="value" />
-        </div>
-        <app-button type="submit">Save</app-button>
-      </form>
-    }
-  </app-panel>
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Personal Details</h2>
+      </div>
+      @if (editForm | async; as form) {
+        <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
+          <div class="row">
+            <div class="label">First name</div>
+            <app-input formControlName="firstName" placeholder="Fill in first name" class="value" />
+          </div>
+          <div class="row">
+            <div class="label">Last name</div>
+            <app-input formControlName="lastName" placeholder="Fill in last name" class="value" />
+          </div>
+          <div class="row">
+            <div class="label">Email</div>
+            <app-input formControlName="email" placeholder="Fill in email" class="value" />
+          </div>
+          <div class="row">
+            <div class="label">Phone number</div>
+            <app-input formControlName="phoneNumber" placeholder="Fill in phone number" class="value" />
+          </div>
+          <div class="actions">
+            <app-button theme="accent" (click)="cancel()">Cancel</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </form>
+      }
+    </app-panel>
+  </div>
 </app-page-wrapper>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
@@ -12,7 +12,6 @@ import { ButtonComponent } from '../button/button.component';
 })
 export class PageWrapperComponent {
   @Input({ required: true }) heading: string = 'Fill in page heading';
-  private router = inject(Router);
   public breadcrumbs = inject(ActivatedRoute).pathFromRoot.reduce(
     (acc, route) => {
       if (route.snapshot.data['breadcrumb'] && route.snapshot.url.length) {
@@ -26,8 +25,4 @@ export class PageWrapperComponent {
     },
     [] as { label: string; url: string }[]
   );
-
-  public navigateTo(url: string) {
-    this.router.navigateByUrl(url);
-  }
 }

@@ -1,12 +1,16 @@
 import { Component, InjectionToken } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-export interface Navigation {
+interface Item {
   name: string;
   link: string;
   icon: string;
 }
-export const NAVIGATION_TOKEN = new InjectionToken<{ top: Navigation[]; bottom: Navigation[] }>('NavigationToken');
+export interface Navigation {
+  top: Item[];
+  bottom: Item[] | never[];
+}
+export const NAVIGATION_TOKEN = new InjectionToken<Navigation>('NavigationToken');
 
 @Component({
   standalone: true,

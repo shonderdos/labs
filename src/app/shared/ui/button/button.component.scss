@@ -39,7 +39,7 @@
 .theme {
   &__primary {
     background-color: var(--primary-color);
-    color: #fff;
+    color: var(--navigation-text-color);
   }
 
   &__transparent {
@@ -51,7 +51,13 @@
   }
 
   &__warn {
-    background-color: red;
+    background-color: #dc2626;
+    color: var(--navigation-text-color);
+  }
+
+  &__accent {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
     color: var(--navigation-text-color);
   }
 }

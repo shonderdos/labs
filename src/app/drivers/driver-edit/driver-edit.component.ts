@@ -2,14 +2,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PanelComponent } from '../../shared/ui/panel/panel.component';
 import { AsyncPipe } from '@angular/common';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { FirebaseService } from '../../shared/services/firebase/firebase.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { InputComponent } from '../../shared/ui/input/input.component';
 import { DriverStanding } from '../../shared/interfaces/driver-standing.interface';
 import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.component';
-import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-driver-edit',
@@ -33,8 +32,6 @@ export default class DriverEditComponent {
   private activatedRoute = inject(ActivatedRoute);
   private firebaseService = inject(FirebaseService);
   private fb = inject(FormBuilder);
-  private modalService = inject(ModalService);
-  private driverId = this.activatedRoute.snapshot.params['id'];
   public editForm = this.activatedRoute.params.pipe(
     map((params) => params['id']),
     switchMap((id) => this.firebaseService.getDriver(id)),
@@ -56,17 +53,5 @@ export default class DriverEditComponent {
   public save(value: DriverStanding) {
     this.firebaseService.writeData(value);
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-  }
-  public deleteDriver(): void {
-    this.modalService
-      .open()
-      .pipe(
-        filter(({ confirmed }) => confirmed),
-        tap(() => {
-          this.firebaseService.deleteDriver(this.driverId);
-          this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
-        })
-      )
-      .subscribe();
   }
 }

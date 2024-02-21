@@ -1,30 +1,30 @@
 <app-page-wrapper heading="Driver details">
-  <app-panel>
-    <div class="name">
-      <h1>{{ driver()?.firstName }} {{ driver()?.lastName }}</h1>
-      <app-button (click)="edit()">Edit</app-button>
-    </div>
-    <div class="details">
-      <div class="row">
-        <div class="label">Driver id</div>
-        <div class="value">{{ driver()?.driverId ?? '-' }}</div>
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Personal Details</h2>
+        <div class="spacer"></div>
+        <app-button theme="accent" (click)="edit()">Edit profile</app-button>
+        <app-button theme="warn" (click)="delete(driver()?.id)">Delete profile</app-button>
       </div>
-      <div class="row">
-        <div class="label">Constructor Name</div>
-        <div class="value">{{ driver()?.constructorName ?? '-' }}</div>
+      <div class="details">
+        <div class="row">
+          <div class="label">First name</div>
+          <div class="value">{{ driver()?.firstName ?? '-' }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Last name</div>
+          <div class="value">{{ driver()?.lastName ?? '-' }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Email</div>
+          <div class="value">{{ driver()?.email ?? '-' }}</div>
+        </div>
+        <div class="row">
+          <div class="label">phonenumber</div>
+          <div class="value">{{ driver()?.phoneNumber ?? '-' }}</div>
+        </div>
       </div>
-      <div class="row">
-        <div class="label">Points</div>
-        <div class="value">{{ driver()?.points ?? '-' }}</div>
-      </div>
-      <div class="row">
-        <div class="label">Position</div>
-        <div class="value">{{ driver()?.position ?? '-' }}</div>
-      </div>
-      <div class="row">
-        <div class="label">Driver number</div>
-        <div class="value">{{ driver()?.driverNumber ?? '-' }}</div>
-      </div>
-    </div>
-  </app-panel>
+    </app-panel>
+  </div>
 </app-page-wrapper>
