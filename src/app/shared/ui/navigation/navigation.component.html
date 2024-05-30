@@ -1,3 +1,8 @@
-<app-navigation-item icon="menu" (click)="service.toggle()" />
+<app-navigation-item icon="menu" (click)="navigationService.toggle()" />
 <p>🏆 RaceManager PRO</p>
-<div></div>
+
+<div>
+  @if (isShown | async) {
+    <app-navigation-item [iconStyle]="(isOnline | async) ? 'default' : 'disabled'" [icon]="icon | async" />
+  }
+</div>

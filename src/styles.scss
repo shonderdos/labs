@@ -21,6 +21,7 @@ html {
 
   --profile-background-color: rgb(226, 232, 240);
   --profile-text-color: rgb(71, 85, 105);
+  --disabled: #a3a3a3;
 }
 
 .dark {
@@ -42,6 +43,7 @@ html {
 
   --profile-background-color: rgb(51, 65, 85);
   --profile-text-color: rgb(225, 231, 239);
+  --disabled: #a3a3a3;
 }
 
 body {
@@ -56,6 +58,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;

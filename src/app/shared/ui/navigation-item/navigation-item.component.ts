@@ -12,5 +12,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class NavigationItemComponent {
   @Input() link: string | undefined;
   @Input() name: string | undefined;
-  @Input() icon: string | undefined;
+  @Input() icon?: string | null;
+  @Input() iconStyle: 'default' | 'disabled' = 'default';
 }

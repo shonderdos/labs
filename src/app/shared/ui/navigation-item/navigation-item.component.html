@@ -1,5 +1,5 @@
 <div role="button" routerLinkActive="active" [routerLink]="link">
-  <mat-icon class="material-icons-outlined">{{ icon }}</mat-icon>
+  <mat-icon class="material-icons-outlined" [class]="iconStyle">{{ icon }}</mat-icon>
   @if (name) {
     <span>{{ name }}</span>
   }
