@@ -5,7 +5,7 @@
     "node": true,
     "jest": true
   },
-  "ignorePatterns": ["src/test.ts", "src/main.ts", "projects/**/*"],
+  "ignorePatterns": ["src/test.ts", "src/main.ts", "projects/**/*", "functions/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],

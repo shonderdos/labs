@@ -85,9 +85,7 @@ export class FirebaseService {
         });
       });
 
-      subscriber.add(() => {
-        snapUnsub();
-      });
+      subscriber.add(snapUnsub);
     });
   }
 

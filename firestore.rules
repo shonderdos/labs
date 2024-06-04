@@ -37,5 +37,8 @@ service cloud.firestore {
         match /constructor-standings/{id} {
             allow read
         }
+        match /weather/{id} {
+          allow read, update: if isLoggedIn()
+        }
     }
 }
