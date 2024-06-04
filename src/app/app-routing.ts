@@ -45,6 +45,11 @@ export const routes: Routes = [
               link: '/drivers',
               icon: 'sports_motorsports',
             },
+            {
+              name: 'Weather',
+              link: '/weather',
+              icon: 'cloud',
+            },
           ],
           bottom: [
             {
@@ -98,6 +103,11 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'weather',
+        data: { breadcrumb: 'Weather' },
+        loadComponent: () => import('./weather/weather.component'),
+      },
+      {
         path: 'settings',
         data: { breadcrumb: 'Settings' },
         loadComponent: () => import('./settings/settings.component'),
@@ -105,6 +115,6 @@ export const routes: Routes = [
     ],
   },
 
-  // redirect to /drivers if no route matches
+  // redirect to /login if no route matches
   { path: '**', redirectTo: '/login' },
 ];

@@ -1,0 +1,15 @@
+<app-page-wrapper heading="Weather">
+  <div class="grid-container">
+    @if (wind_speed | async; as wind) {
+      <app-environment-measurement [config]="wind" />
+    }
+    @if (temperature | async; as temperature) {
+      <app-environment-measurement [config]="temperature" />
+    }
+    @if (chance_of_rain | async; as rain) {
+      <app-environment-measurement [config]="rain" />
+    }
+    @if (uv_index | async; as uv) {
+      <app-environment-measurement [config]="uv" />
+    }</div
+></app-page-wrapper>

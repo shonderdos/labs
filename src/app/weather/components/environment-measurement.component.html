@@ -1,0 +1,21 @@
+<app-panel class="information">
+  <div class="icon">
+    <mat-icon class="indicator material-icons-outlined">{{ config.icon }}</mat-icon>
+  </div>
+  <div class="content">
+    <h3 class="heading">{{ config.title }}</h3>
+    <div class="value-container">
+      <span class="value">{{ config.current_value }} {{ config.unit }}</span>
+      <span class="changes">
+        @if (config.current_value === config.previous_value) {
+          <mat-icon class="arrow material-icons-outlined equal">arrow_drop_down</mat-icon>
+        } @else if (config.current_value > config.previous_value) {
+          <mat-icon class="arrow material-icons-outlined rotate">arrow_drop_down</mat-icon>
+        } @else {
+          <mat-icon class="arrow material-icons-outlined">arrow_drop_down</mat-icon>
+        }
+        {{ abs(config.current_value - config.previous_value) }}{{ config.unit }}
+      </span>
+    </div>
+  </div>
+</app-panel>

@@ -1,0 +1,59 @@
+.grid-container {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+
+  gap: 25px;
+}
+
+.information {
+  display: flex;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.heading {
+  font-size: 16px;
+  color: var(--disabled);
+}
+
+.value {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.value-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.changes {
+  align-self: center;
+}
+
+.arrow {
+  position: relative;
+  top: 4px;
+}
+
+.content {
+  flex: 1;
+}
+
+.indicator {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+}
+
+.rotate {
+  rotate: 180deg;
+}
+
+.equal {
+  rotate: 90deg;
+}
