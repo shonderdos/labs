@@ -1,6 +1,6 @@
 [build]
   base    = "/"
-  publish = "dist/dev-case"
+  publish = "dist/dev-case/browser"
   command = "npm run build"
 [[redirects]]
   from = "/*"
