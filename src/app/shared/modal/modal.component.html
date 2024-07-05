@@ -1,9 +1,9 @@
 <div class="modal-wrapper">
   <section class="modal" #modal>
     <header>
-      <h2>Delete driver</h2>
+      <h2>{{ title }}</h2>
     </header>
-    <p>Are you sure you want to delete this driver? This action can not be undone!</p>
+    <p>{{ body }}</p>
     <footer>
       <app-button (click)="onClose({ confirmed: false })">Cancel</app-button>
       <app-button theme="warn" (click)="onClose({ confirmed: true })">Delete</app-button>

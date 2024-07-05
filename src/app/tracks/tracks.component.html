@@ -1,0 +1,45 @@
+<app-page-wrapper data-test-id="page-wrapper" heading="Tracks">
+  <app-panel>
+    <div class="table-heading">
+      <app-input [formControl]="searchControl" />
+      <app-button (click)="addNewTrack()" icon="person_add" data-test-id="add-driver-button"> Add new track</app-button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Lattitude</th>
+          <th>Longtitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (track of filteredTracks | async; track track.id) {
+          <tr>
+            <td>{{ track.name ?? '-' }}</td>
+            <td>{{ track.lat ?? '-' }}</td>
+            <td>{{ track.lon ?? '-' }}</td>
+            <td class="narrow">
+              <app-button (click)="view(track.id)" icon="visibility" displayMode="icon-text" theme="transparent"
+                >View</app-button
+              >
+            </td>
+            <td class="narrow">
+              <app-button (click)="edit(track.id)" displayMode="icon-text" icon="edit" theme="transparent"
+                >Edit</app-button
+              >
+            </td>
+            <td class="narrow">
+              <app-button (click)="delete(track.id)" displayMode="icon-text" theme="transparent" icon="delete"
+                >Delete</app-button
+              >
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7">No tracks found</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </app-panel>
+</app-page-wrapper>

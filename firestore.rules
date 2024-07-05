@@ -40,5 +40,8 @@ service cloud.firestore {
         match /weather/{id} {
           allow read, update: if isLoggedIn()
         }
+        match /tracks/{id} {
+          allow read, update, create, delete: if isLoggedIn()
+        }
     }
 }

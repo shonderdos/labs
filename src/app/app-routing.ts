@@ -50,6 +50,11 @@ export const routes: Routes = [
               link: '/weather',
               icon: 'cloud',
             },
+            {
+              name: 'Tracks',
+              link: '/tracks',
+              icon: 'location_on',
+            },
           ],
           bottom: [
             {
@@ -106,6 +111,31 @@ export const routes: Routes = [
         path: 'weather',
         data: { breadcrumb: 'Weather' },
         loadComponent: () => import('./weather/weather.component'),
+      },
+      {
+        path: 'tracks',
+        data: { breadcrumb: 'Tracks' },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./tracks/tracks.component'),
+          },
+          {
+            path: ':id',
+            data: { breadcrumb: 'Details' },
+            children: [
+              {
+                path: '',
+                loadComponent: () => import('./tracks/track-details/track-details.component'),
+              },
+              {
+                path: 'edit',
+                data: { breadcrumb: 'Edit' },
+                loadComponent: () => import('./tracks/track-edit/track-edit.component'),
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'settings',

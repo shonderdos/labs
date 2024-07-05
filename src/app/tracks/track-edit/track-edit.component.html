@@ -1,0 +1,29 @@
+<app-page-wrapper heading="Edit track">
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Track Details</h2>
+      </div>
+      @if (editForm | async; as form) {
+        <form [formGroup]="form" (ngSubmit)="save(form.value)" class="details">
+          <div class="row">
+            <div class="label">Name</div>
+            <app-input formControlName="name" placeholder="Fill in name" class="value" />
+          </div>
+          <div class="row">
+            <div class="label">Lat</div>
+            <app-input formControlName="lat" placeholder="Fill in Lat" class="value" />
+          </div>
+          <div class="row">
+            <div class="label">Lon</div>
+            <app-input formControlName="lon" placeholder="Fill in Lon" class="value" />
+          </div>
+          <div class="actions">
+            <app-button theme="accent" (click)="cancel()">Cancel</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </form>
+      }
+    </app-panel>
+  </div>
+</app-page-wrapper>
