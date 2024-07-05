@@ -17,7 +17,14 @@ export default class ModalComponent {
   constructor(
     private modalService: ModalService,
     private element: ElementRef
-  ) {}
+  ) {
+    console.log(this.modalService.options);
+  }
+
+  title = this.modalService.options?.content.title || 'Delete driver';
+  body =
+    this.modalService.options?.content.body ||
+    'Are you sure you want to delete this driver? This action can not be undone!';
 
   @HostListener('document:keydown.escape')
   private onEscape() {

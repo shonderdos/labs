@@ -10,12 +10,19 @@ import {
   query,
   setDoc,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import { connectAuthEmulator, getAuth, signOut } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { DriverStanding } from '../../interfaces/driver-standing.interface';
 import { environment } from '../../../../environments/environment';
 
+export interface Track {
+  name: string;
+  id: string;
+  lat: string;
+  lon: string;
+}
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   private firebaseConfig = {
@@ -113,5 +120,63 @@ export class FirebaseService {
     const colRef = collection(this.db, 'driver-standings');
     const docRef = doc(colRef, id);
     deleteDoc(docRef);
+  }
+
+  addTrack() {
+    const colRef = collection(this.db, 'tracks');
+    const docRef = doc(colRef);
+    const { id } = docRef;
+    setDoc(docRef, { id });
+
+    return id;
+  }
+
+  deleteTrack(id: string) {
+    if (!id) {
+      console.error('Failed to delete track. No id provided');
+      return;
+    }
+
+    console.log(`deleting track ${id}`);
+    const docRef = doc(this.db, 'tracks', id);
+
+    deleteDoc(docRef);
+    console.log(`Document ${id} was deleted`);
+  }
+
+  async updateTrack(id: string, data: Partial<Track>, merge = true) {
+    if (!id) {
+      console.error('Failed to update track. No id provided');
+    }
+
+    console.log(`updating track ${id} with ${data.name}, ${data.lon}, ${data.lat}`);
+    const docRef = doc(this.db, 'tracks', id);
+
+    await setDoc(docRef, data, { merge });
+  }
+
+  getTrack(id?: string): Observable<Track[]> {
+    if (id) {
+      console.log('getting a single track');
+      const docRef = query(collection(this.db, 'tracks'), where('id', '==', id));
+      return new Observable((subscriber) => {
+        const unsubscribe = onSnapshot(docRef, (doc) => {
+          doc.forEach((doc) => subscriber.next([doc.data() as Track]));
+        });
+        subscriber.add(unsubscribe);
+      });
+    }
+
+    console.log('getting all tracks');
+    const colRef = collection(this.db, 'tracks');
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(colRef, (docs) => {
+        const tracks: Track[] = [];
+        docs.forEach((track) => tracks.push(track.data() as Track));
+        subscriber.next(tracks);
+      });
+
+      subscriber.add(unsubscribe);
+    });
   }
 }

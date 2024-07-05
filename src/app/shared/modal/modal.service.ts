@@ -19,6 +19,7 @@ export class ModalService {
   ) {}
 
   open(options?: Options) {
+    this.options = options;
     this.newModalComponent = createComponent(ModalComponent, {
       environmentInjector: this.injector,
     });
@@ -28,7 +29,6 @@ export class ModalService {
     // Attach views to the changeDetection cycle
     this.appRef.attachView(this.newModalComponent.hostView);
     this.subject = new Subject();
-    this.options = options;
     return this.subject;
   }
 
