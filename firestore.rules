@@ -42,6 +42,10 @@ service cloud.firestore {
         }
         match /tracks/{id} {
           allow read, update, create, delete: if isLoggedIn()
-        }
+
+          match /configurations/{id} {
+            allow read, update, create, delete: if isLoggedIn()
+          }
+      }
     }
 }

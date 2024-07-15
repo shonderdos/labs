@@ -1,7 +1,8 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, switchMap, take, tap } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
 import { ButtonComponent } from 'src/app/shared/ui/button/button.component';
@@ -13,23 +14,22 @@ import { PanelComponent } from 'src/app/shared/ui/panel/panel.component';
   styleUrl: './track-details.component.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PageWrapperComponent, PanelComponent, ButtonComponent],
+  imports: [PageWrapperComponent, PanelComponent, ButtonComponent, JsonPipe],
 })
 export default class TrackDetailsComponent {
   #route = inject(ActivatedRoute);
   #router = inject(Router);
   #modalService = inject(ModalService);
   #firbaseService = inject(FirebaseService);
-  #id = this.#route.params.pipe(
-    take(1),
-    map(({ id }) => id)
-  );
+  #id = this.#route.params.pipe(map(({ id }) => id));
   track = toSignal(
     this.#id.pipe(
       switchMap((id) => this.#firbaseService.getTrack(id)),
       map(([track]) => track)
     )
   );
+
+  configurations = toSignal(this.#id.pipe(switchMap((id) => this.#firbaseService.getTrackConfiguration(id))));
 
   edit() {
     this.#router.navigate(['edit'], { relativeTo: this.#route });

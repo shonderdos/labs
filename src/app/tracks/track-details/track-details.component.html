@@ -26,6 +26,19 @@
             <div class="value">{{ track()?.lon ?? '-' }}</div>
           </div>
         </div>
+
+        <div class="header">
+          <h3>Configurations</h3>
+        </div>
+        <div class="details">
+          @for (configuration of configurations(); track configuration.id) {
+            <div class="row">
+              <div class="value">{{ configuration?.name ?? '-' }}</div>
+            </div>
+          } @empty {
+            no configurations
+          }
+        </div>
       </app-panel>
     } @else {
       no track
