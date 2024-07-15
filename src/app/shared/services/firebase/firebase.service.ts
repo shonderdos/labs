@@ -23,6 +23,10 @@ export interface Track {
   lat: string;
   lon: string;
 }
+export interface TrackConfiguration {
+  name: string;
+  id: string;
+}
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   private firebaseConfig = {
@@ -137,19 +141,22 @@ export class FirebaseService {
       return;
     }
 
-    console.log(`deleting track ${id}`);
     const docRef = doc(this.db, 'tracks', id);
 
     deleteDoc(docRef);
-    console.log(`Document ${id} was deleted`);
   }
 
-  async updateTrack(id: string, data: Partial<Track>, merge = true) {
+  async updateTrack(id: string, formData: Partial<Track>, merge = true) {
     if (!id) {
       console.error('Failed to update track. No id provided');
     }
 
-    console.log(`updating track ${id} with ${data.name}, ${data.lon}, ${data.lat}`);
+    const data = {
+      lat: formData.lat,
+      lon: formData.lon,
+      name: formData.name,
+    };
+
     const docRef = doc(this.db, 'tracks', id);
 
     await setDoc(docRef, data, { merge });
@@ -157,7 +164,6 @@ export class FirebaseService {
 
   getTrack(id?: string): Observable<Track[]> {
     if (id) {
-      console.log('getting a single track');
       const docRef = query(collection(this.db, 'tracks'), where('id', '==', id));
       return new Observable((subscriber) => {
         const unsubscribe = onSnapshot(docRef, (doc) => {
@@ -167,7 +173,6 @@ export class FirebaseService {
       });
     }
 
-    console.log('getting all tracks');
     const colRef = collection(this.db, 'tracks');
     return new Observable((subscriber) => {
       const unsubscribe = onSnapshot(colRef, (docs) => {
@@ -178,5 +183,55 @@ export class FirebaseService {
 
       subscriber.add(unsubscribe);
     });
+  }
+
+  getTrackConfiguration(trackId: Track['id']) {
+    if (!trackId) {
+      throw new Error('No trackid provided ');
+    }
+    const colRef = collection(this.db, 'tracks', trackId, 'configurations');
+    return new Observable<TrackConfiguration[]>((subscriber) => {
+      const unsubscribe = onSnapshot(colRef, (docs) => {
+        const tracks: TrackConfiguration[] = [];
+        docs.forEach((track) => tracks.push(track.data() as TrackConfiguration));
+        subscriber.next(tracks);
+      });
+
+      subscriber.add(unsubscribe);
+    });
+  }
+
+  addConfiguration(trackId: Track['id']) {
+    const colRef = collection(this.db, 'tracks', trackId, 'configurations');
+    const docRef = doc(colRef);
+    const { id } = docRef;
+    setDoc(docRef, { id, name: '' });
+
+    return id;
+  }
+  updateTrackConfiguration(trackId: Track['id'], trackConfiguration: TrackConfiguration, merge = true) {
+    if (!trackId) {
+      throw new Error('No trackid provided');
+    }
+
+    if (!trackConfiguration) {
+      throw new Error('no track configuration provided');
+    }
+
+    const docRef = doc(this.db, 'tracks', trackId, 'configurations', trackConfiguration.id);
+
+    setDoc(docRef, trackConfiguration, { merge });
+  }
+
+  deleteTrackConfiguration(trackId: Track['id'], trackConfigurationId: TrackConfiguration['id']) {
+    if (!trackId) {
+      throw new Error('No track if provided');
+    }
+    if (!trackConfigurationId) {
+      throw new Error('No Track Configuration provided');
+    }
+
+    const docRef = doc(this.db, 'tracks', trackId, 'configurations', trackConfigurationId);
+    deleteDoc(docRef);
   }
 }

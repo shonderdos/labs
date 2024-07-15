@@ -25,5 +25,41 @@
         </form>
       }
     </app-panel>
+
+    <app-panel>
+      <div class="header">
+        <h2>Track Configurations</h2>
+      </div>
+
+      @if (configurationsForm | async; as form) {
+        <form [formGroup]="form">
+          <ng-container formArrayName="configs">
+            @for (configuration of form.controls.configs.controls; track configuration.value.id) {
+              <app-panel class="configuration" [formGroup]="configuration">
+                <div class="row">
+                  <div class="label">Name</div>
+                  <app-input class="name" formControlName="name" class="value"></app-input>
+                </div>
+                <div class="configuration-actions">
+                  <app-button icon="edit" displayMode="icon-text" (click)="updateConfiguration(configuration.value)"
+                    >Save</app-button
+                  >
+                  <app-button
+                    icon="delete"
+                    displayMode="icon-text"
+                    theme="warn"
+                    (click)="deleteConfiguration(configuration.value.id)"
+                    >Delete</app-button
+                  >
+                </div>
+              </app-panel>
+            }
+          </ng-container>
+        </form>
+      } @else {
+        no content
+      }
+      <app-button icon="add" displayMode="icon-text" (click)="addConfiguration()">Add Configuration</app-button>
+    </app-panel>
   </div>
 </app-page-wrapper>
