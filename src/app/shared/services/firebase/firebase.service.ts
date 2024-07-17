@@ -5,17 +5,22 @@ import {
   connectFirestoreEmulator,
   deleteDoc,
   doc,
+  Firestore,
   getFirestore,
+  limit,
   onSnapshot,
+  orderBy,
   query,
   setDoc,
+  startAt,
   updateDoc,
   where,
 } from 'firebase/firestore';
 import { connectAuthEmulator, getAuth, signOut } from 'firebase/auth';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DriverStanding } from '../../interfaces/driver-standing.interface';
 import { environment } from '../../../../environments/environment';
+import { Team } from 'src/app/teams/teams.component';
 
 export interface Track {
   name: string;
@@ -43,6 +48,12 @@ export class FirebaseService {
   public auth = getAuth(this.app);
   public db = getFirestore(this.app);
 
+  #newDocument = newDocumentBuilder(this.db);
+  #getAllDocuments = getAllDocumentsBuilder(this.db);
+  #getSingleDocument = getSingleDocumentBuilder(this.db);
+  #deleteDocument = deleteDocumentBuilder(this.db);
+  #updateDocument = updateDocumentBuilder(this.db);
+
   constructor() {
     if (!environment.production) {
       connectAuthEmulator(this.auth, 'http://localhost:9099', { disableWarnings: true });
@@ -50,24 +61,7 @@ export class FirebaseService {
     }
   }
   public getDriverStandings(): Observable<DriverStanding[]> {
-    const q = query(collection(this.db, 'driver-standings'));
-
-    return new Observable((subscriber) => {
-      const snapUnsub = onSnapshot(q, (next) => {
-        subscriber.next(
-          next.docs.map((doc) => {
-            return {
-              ...(doc.data() as DriverStanding),
-              id: doc.id,
-            };
-          })
-        );
-      });
-
-      subscriber.add(() => {
-        snapUnsub();
-      });
-    });
+    return this.#getAllDocuments('driver-standings');
   }
 
   public logout() {
@@ -76,28 +70,7 @@ export class FirebaseService {
   }
 
   public getDriver(id: string): Observable<DriverStanding> {
-    const q = doc(this.db, `driver-standings/${id}`);
-    return new Observable((subscriber) => {
-      const snapUnsub = onSnapshot(q, (doc) => {
-        if (!doc.exists()) {
-          // Did not find a driver. might want to handle this differently and return null
-          subscriber.next({} as DriverStanding);
-          return;
-        }
-
-        // Convert empty strings to null, might be more useful if we can do this in the backend...
-        // Firebase doesn't allow a type to be null or a string. So it seems that a conversion is necessary
-        // what I tought of last night is that when there is no data it should just emit the property...
-        // obviously that is how it works in a nosql database.
-
-        subscriber.next({
-          ...doc.data(),
-          id: doc.id,
-        });
-      });
-
-      subscriber.add(snapUnsub);
-    });
+    return this.#getSingleDocument<DriverStanding>('driver-standings', id).pipe(map(([driver]) => driver));
   }
 
   public writeData(formData: DriverStanding) {
@@ -110,43 +83,48 @@ export class FirebaseService {
   }
 
   public addNewDriver() {
-    const colRef = collection(this.db, 'driver-standings');
-    const newDoc = doc(colRef);
-    const { id } = newDoc;
-    setDoc(newDoc, { id });
-    return id;
+    return this.#newDocument('driver-standings');
   }
 
   deleteDriver(id: DriverStanding['id']) {
     if (!id) {
       return;
     }
+
+    this.#deleteDocument(`driver-standings/${id}`);
+  }
+
+  searchDrivers<T = DriverStanding>(
+    searchValue: string,
+    maxResults = 5
+  ): Observable<{ results: T[]; searchValue: string }> {
     const colRef = collection(this.db, 'driver-standings');
-    const docRef = doc(colRef, id);
-    deleteDoc(docRef);
+    const q = query(colRef, orderBy('firstName'), limit(maxResults), startAt(searchValue));
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(q, (docs) => {
+        const results: T[] = [];
+        docs.forEach((result) => results.push(result.data() as T));
+        subscriber.next({ results, searchValue });
+      });
+
+      subscriber.add(unsubscribe);
+    });
   }
 
   addTrack() {
-    const colRef = collection(this.db, 'tracks');
-    const docRef = doc(colRef);
-    const { id } = docRef;
-    setDoc(docRef, { id });
-
-    return id;
+    return this.#newDocument('tracks');
   }
 
   deleteTrack(id: string) {
     if (!id) {
-      console.error('Failed to delete track. No id provided');
-      return;
+      throw new Error('Failed to delete track. No id provided');
     }
 
-    const docRef = doc(this.db, 'tracks', id);
-
-    deleteDoc(docRef);
+    console.log(id);
+    this.#deleteDocument(`tracks/${id}`);
   }
 
-  async updateTrack(id: string, formData: Partial<Track>, merge = true) {
+  updateTrack(id: string, formData: Partial<Track>) {
     if (!id) {
       console.error('Failed to update track. No id provided');
     }
@@ -157,59 +135,24 @@ export class FirebaseService {
       name: formData.name,
     };
 
-    const docRef = doc(this.db, 'tracks', id);
-
-    await setDoc(docRef, data, { merge });
+    this.#updateDocument(`tracks/${id}`, data);
   }
 
   getTrack(id?: string): Observable<Track[]> {
-    if (id) {
-      const docRef = query(collection(this.db, 'tracks'), where('id', '==', id));
-      return new Observable((subscriber) => {
-        const unsubscribe = onSnapshot(docRef, (doc) => {
-          doc.forEach((doc) => subscriber.next([doc.data() as Track]));
-        });
-        subscriber.add(unsubscribe);
-      });
-    }
-
-    const colRef = collection(this.db, 'tracks');
-    return new Observable((subscriber) => {
-      const unsubscribe = onSnapshot(colRef, (docs) => {
-        const tracks: Track[] = [];
-        docs.forEach((track) => tracks.push(track.data() as Track));
-        subscriber.next(tracks);
-      });
-
-      subscriber.add(unsubscribe);
-    });
+    return id ? this.#getSingleDocument('tracks', id) : this.#getAllDocuments('tracks');
   }
 
   getTrackConfiguration(trackId: Track['id']) {
     if (!trackId) {
       throw new Error('No trackid provided ');
     }
-    const colRef = collection(this.db, 'tracks', trackId, 'configurations');
-    return new Observable<TrackConfiguration[]>((subscriber) => {
-      const unsubscribe = onSnapshot(colRef, (docs) => {
-        const tracks: TrackConfiguration[] = [];
-        docs.forEach((track) => tracks.push(track.data() as TrackConfiguration));
-        subscriber.next(tracks);
-      });
-
-      subscriber.add(unsubscribe);
-    });
+    return this.#getAllDocuments<TrackConfiguration>(`tracks/${trackId}/configurations`);
   }
 
   addConfiguration(trackId: Track['id']) {
-    const colRef = collection(this.db, 'tracks', trackId, 'configurations');
-    const docRef = doc(colRef);
-    const { id } = docRef;
-    setDoc(docRef, { id, name: '' });
-
-    return id;
+    return this.#newDocument<Partial<TrackConfiguration>>(`tracks/${trackId}/configurations`, { name: '' });
   }
-  updateTrackConfiguration(trackId: Track['id'], trackConfiguration: TrackConfiguration, merge = true) {
+  updateTrackConfiguration(trackId: Track['id'], trackConfiguration: TrackConfiguration) {
     if (!trackId) {
       throw new Error('No trackid provided');
     }
@@ -218,9 +161,7 @@ export class FirebaseService {
       throw new Error('no track configuration provided');
     }
 
-    const docRef = doc(this.db, 'tracks', trackId, 'configurations', trackConfiguration.id);
-
-    setDoc(docRef, trackConfiguration, { merge });
+    this.#updateDocument(`tracks/${trackId}/configurations/${trackConfiguration.id}`, trackConfiguration);
   }
 
   deleteTrackConfiguration(trackId: Track['id'], trackConfigurationId: TrackConfiguration['id']) {
@@ -231,7 +172,101 @@ export class FirebaseService {
       throw new Error('No Track Configuration provided');
     }
 
-    const docRef = doc(this.db, 'tracks', trackId, 'configurations', trackConfigurationId);
-    deleteDoc(docRef);
+    this.#deleteDocument(`tracks/${trackId}/configurations/${trackConfigurationId}`);
+  }
+
+  addTeam() {
+    return this.#newDocument<Omit<Team, 'id'>>('teams', { name: '' });
+  }
+
+  getTeam(teamId?: Team['id']) {
+    return teamId ? this.#getSingleDocument<Team>('teams', teamId) : this.#getAllDocuments<Team>('teams');
+  }
+
+  deleteTeam(teamId: Team['id']) {
+    if (!teamId) throw new Error('deleting team failed. No team id provided');
+    this.#deleteDocument(`teams/${teamId}`);
+  }
+
+  updateTeam(teamId: Team['id'], data: Partial<Team>) {
+    if (!teamId) throw new Error('No team id provided');
+    this.#updateDocument(`teams/${teamId}`, data);
+  }
+
+  getTeamMembers(id: Team['id']) {
+    if (!id) throw new Error('No team id provided');
+    return this.#getAllDocuments<DriverStanding>(`teams/${id}/members`);
+  }
+  addTeamMember(id: Team['id'], user: DriverStanding) {
+    if (!id) throw new Error('No team id provided');
+    if (!user) throw new Error('No member provided');
+
+    this.#newDocument(`teams/${id}/members/${user.id}`, user);
+  }
+
+  deleteTeamMember(teamId: Team['id'], userId: DriverStanding['id']) {
+    if (!teamId) throw new Error('No team id provided');
+    if (!userId) throw new Error('No member provided');
+
+    this.#deleteDocument(`teams/${teamId}/members/${userId}`);
   }
 }
+
+export const newDocumentBuilder =
+  (database: Firestore) =>
+  <T>(path: string, defaultData?: T): string => {
+    const segments = path.split('/').length;
+    if (segments % 2) {
+      const colRef = collection(database, path);
+      const docRef = doc(colRef);
+      const { id } = docRef;
+      setDoc(docRef, { ...defaultData, id });
+      return id;
+    } else {
+      const docRef = doc(database, path);
+      setDoc(docRef, { ...defaultData });
+      return docRef.id;
+    }
+  };
+
+export const getSingleDocumentBuilder =
+  (database: Firestore) =>
+  <T>(path: string, id: string): Observable<T[]> => {
+    const docRef = query(collection(database, path), where('id', '==', id));
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(docRef, (docs) => {
+        const result = [] as T[];
+        docs.forEach((doc) => result.push(doc.data() as T));
+        subscriber.next(result);
+      });
+      subscriber.add(unsubscribe);
+    });
+  };
+
+export const getAllDocumentsBuilder =
+  (database: Firestore) =>
+  <T>(path: string): Observable<T[]> => {
+    const colRef = collection(database, path);
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(colRef, (docs) => {
+        const results: T[] = [];
+        docs.forEach((result) => results.push(result.data() as T));
+        subscriber.next(results);
+      });
+
+      subscriber.add(unsubscribe);
+    });
+  };
+export const deleteDocumentBuilder =
+  (database: Firestore) =>
+  (path: string): void => {
+    const docRef = doc(database, path);
+    deleteDoc(docRef);
+  };
+
+export const updateDocumentBuilder =
+  (database: Firestore) =>
+  <T>(path: string, data: Partial<T>) => {
+    const docRef = doc(database, path);
+    updateDoc(docRef, data);
+  };

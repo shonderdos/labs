@@ -19,3 +19,10 @@ input {
     border: 1px solid var(--primary-color);
   }
 }
+
+input:disabled {
+  background: #12151d;
+  color: #757575;
+  border-color: #343434;
+  cursor: not-allowed;
+}

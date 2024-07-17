@@ -1,5 +1,5 @@
 :host {
-  width: 640px;
+  min-width: 640px;
 }
 
 .container {
@@ -8,27 +8,32 @@
   grid-gap: 24px;
 }
 
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
-  gap: 12px;
-}
-
 .header {
+  display: flex;
+  align-items: baseline;
   padding-bottom: 8px;
   margin-bottom: 24px;
   border-bottom: 1px solid #1c2437;
+
+  .spacer {
+    flex: 1;
+  }
+
+  app-button {
+    margin-left: 12px;
+  }
 }
 
 .row {
+  display: flex;
+  justify-content: space-between;
   margin-top: 24px;
 
   .label {
     font-weight: bold;
   }
+}
 
-  .value {
-    margin-top: 8px;
-  }
+h3 {
+  margin-top: 48px;
 }

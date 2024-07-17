@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Input, ChangeDetectorRef, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,10 +13,12 @@ export class InputComponent implements ControlValueAccessor {
   @Input() placeholder = 'Search';
   @Input() name: string | undefined;
   @Input() type: string = 'text';
+
   value: string | number | undefined = '';
   public changed: (value: string) => void = () => {};
   public touched: () => void = () => {};
   public disabled = false;
+  ref = inject(ChangeDetectorRef);
 
   registerOnChange(fn: (v: string) => void): void {
     this.changed = fn;
@@ -34,7 +36,18 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: string | number): void {
-    this.value = value;
+  // @ts-expect-error value is any
+  writeValue(value): void {
+    // this is hardcoded to display a user name when given an user object
+    if (value?.firstName || value?.lastName) {
+      this.value = `${value.firstName} ${value.lastName}`;
+    } else {
+      this.value = value;
+    }
+    this.ref.markForCheck();
+  }
+
+  onBlur() {
+    this.touched();
   }
 }
