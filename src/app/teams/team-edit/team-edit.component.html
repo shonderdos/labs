@@ -1,0 +1,46 @@
+<app-page-wrapper heading="Edit Team">
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Team Details</h2>
+      </div>
+      @if (editForm | async; as form) {
+        <form [formGroup]="form" (ngSubmit)="save(form.getRawValue())" class="details">
+          <div class="row">
+            <div class="label">Name</div>
+            <app-input formControlName="name" placeholder="Fill in name" class="value" />
+          </div>
+          <div class="actions">
+            <app-button theme="accent" (click)="cancel()">Cancel</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </form>
+      }
+    </app-panel>
+
+    <app-panel>
+      <div class="header">
+        <h2>Team members</h2>
+      </div>
+      @for (driver of drivers | async; track driver.id) {
+        <div class="configuration">
+          <div class="label">{{ driver.firstName }} {{ driver.lastName }}</div>
+          <app-button icon="close" displayMode="icon-text" theme="warn" (click)="removeMember(driver.id)"
+            >Remove</app-button
+          >
+        </div>
+      } @empty {
+        no drivers
+      }
+      <br />
+      <h2>Add new team member</h2>
+      <app-input [formControl]="memberSearchControl" placeholder="Search for a member by name" />
+      @for (user of memberSearchResults(); track user.id) {
+        <div class="driver-result">
+          <span>{{ user.firstName }} {{ user.lastName }}</span>
+          <app-button icon="add" displayMode="icon-text" (click)="addTeamMember(user)">Add team member</app-button>
+        </div>
+      }
+    </app-panel>
+  </div>
+</app-page-wrapper>

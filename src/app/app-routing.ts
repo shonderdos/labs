@@ -46,6 +46,11 @@ export const routes: Routes = [
               icon: 'sports_motorsports',
             },
             {
+              name: 'Teams',
+              link: '/teams',
+              icon: 'groups',
+            },
+            {
               name: 'Weather',
               link: '/weather',
               icon: 'cloud',
@@ -132,6 +137,28 @@ export const routes: Routes = [
                 path: 'edit',
                 data: { breadcrumb: 'Edit' },
                 loadComponent: () => import('./tracks/track-edit/track-edit.component'),
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'teams',
+        data: { breadcrumb: 'Teams' },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./teams/teams.component'),
+          },
+          {
+            path: ':id',
+            data: { breadcrumb: 'Details' },
+            children: [
+              { path: '', loadComponent: () => import('./teams/team-details/team-details.component') },
+              {
+                path: 'edit',
+                data: { breadcrumb: 'Edit' },
+                loadComponent: () => import('./teams/team-edit/team-edit.component'),
               },
             ],
           },

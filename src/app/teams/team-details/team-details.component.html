@@ -1,0 +1,39 @@
+<app-page-wrapper heading="Team details">
+  <div class="container">
+    @if (team()) {
+      <app-panel>
+        <div class="header">
+          <h2>Team Details</h2>
+          <div class="spacer"></div>
+          <app-button theme="accent" (click)="edit()">Edit team</app-button>
+          <app-button theme="warn" (click)="delete()">Delete team</app-button>
+        </div>
+        <div class="details">
+          <div class="row">
+            <div class="label">ID</div>
+            <div class="value">{{ team()?.id ?? '-' }}</div>
+          </div>
+          <div class="row">
+            <div class="label">Name</div>
+            <div class="value">{{ team()?.name ?? '-' }}</div>
+          </div>
+        </div>
+
+        <div class="header">
+          <h3>Members</h3>
+        </div>
+        <div class="details">
+          @for (member of members(); track member.id) {
+            <div class="row">
+              <div class="value">{{ member.firstName }} {{ member.lastName }}</div>
+            </div>
+          } @empty {
+            no team members
+          }
+        </div>
+      </app-panel>
+    } @else {
+      no team
+    }
+  </div>
+</app-page-wrapper>
