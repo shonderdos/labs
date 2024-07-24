@@ -17,9 +17,7 @@ export default class ModalComponent {
   constructor(
     private modalService: ModalService,
     private element: ElementRef
-  ) {
-    console.log(this.modalService.options);
-  }
+  ) { }
 
   title = this.modalService.options?.content.title || 'Delete driver';
   body =
