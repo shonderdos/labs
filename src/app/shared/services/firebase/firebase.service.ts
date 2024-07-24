@@ -32,6 +32,10 @@ export interface TrackConfiguration {
   name: string;
   id: string;
 }
+export interface Championship {
+  name: string;
+  id: string;
+}
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   private firebaseConfig = {
@@ -210,63 +214,83 @@ export class FirebaseService {
 
     this.#deleteDocument(`teams/${teamId}/members/${userId}`);
   }
+
+  addChampionship() {
+    return this.#newDocument<Omit<Championship, "id">>('championships', { name: '' })
+  }
+
+  deleteChampionship(id: Championship['id']) {
+    if (!id) throw new Error('id not provided')
+
+    this.#deleteDocument(`championships/${id}`)
+  }
+
+  getChampionship(id?: Championship['id']) {
+    return id ? this.#getSingleDocument<Championship>("championships", id) : this.#getAllDocuments<Championship>('championships')
+  }
+
+  updateChampionship(id: Championship['id'], data: Partial<Championship>) {
+    if (!id) throw new Error('id not provided')
+
+    this.#updateDocument(`championships/${id}`, data)
+  }
 }
 
 export const newDocumentBuilder =
   (database: Firestore) =>
-  <T>(path: string, defaultData?: T): string => {
-    const segments = path.split('/').length;
-    if (segments % 2) {
-      const colRef = collection(database, path);
-      const docRef = doc(colRef);
-      const { id } = docRef;
-      setDoc(docRef, { ...defaultData, id });
-      return id;
-    } else {
-      const docRef = doc(database, path);
-      setDoc(docRef, { ...defaultData });
-      return docRef.id;
-    }
-  };
+    <T>(path: string, defaultData?: T): string => {
+      const segments = path.split('/').length;
+      if (segments % 2) {
+        const colRef = collection(database, path);
+        const docRef = doc(colRef);
+        const { id } = docRef;
+        setDoc(docRef, { ...defaultData, id });
+        return id;
+      } else {
+        const docRef = doc(database, path);
+        setDoc(docRef, { ...defaultData });
+        return docRef.id;
+      }
+    };
 
 export const getSingleDocumentBuilder =
   (database: Firestore) =>
-  <T>(path: string, id: string): Observable<T[]> => {
-    const docRef = query(collection(database, path), where('id', '==', id));
-    return new Observable((subscriber) => {
-      const unsubscribe = onSnapshot(docRef, (docs) => {
-        const result = [] as T[];
-        docs.forEach((doc) => result.push(doc.data() as T));
-        subscriber.next(result);
+    <T>(path: string, id: string): Observable<T[]> => {
+      const docRef = query(collection(database, path), where('id', '==', id));
+      return new Observable((subscriber) => {
+        const unsubscribe = onSnapshot(docRef, (docs) => {
+          const result = [] as T[];
+          docs.forEach((doc) => result.push(doc.data() as T));
+          subscriber.next(result);
+        });
+        subscriber.add(unsubscribe);
       });
-      subscriber.add(unsubscribe);
-    });
-  };
+    };
 
 export const getAllDocumentsBuilder =
   (database: Firestore) =>
-  <T>(path: string): Observable<T[]> => {
-    const colRef = collection(database, path);
-    return new Observable((subscriber) => {
-      const unsubscribe = onSnapshot(colRef, (docs) => {
-        const results: T[] = [];
-        docs.forEach((result) => results.push(result.data() as T));
-        subscriber.next(results);
-      });
+    <T>(path: string): Observable<T[]> => {
+      const colRef = collection(database, path);
+      return new Observable((subscriber) => {
+        const unsubscribe = onSnapshot(colRef, (docs) => {
+          const results: T[] = [];
+          docs.forEach((result) => results.push(result.data() as T));
+          subscriber.next(results);
+        });
 
-      subscriber.add(unsubscribe);
-    });
-  };
+        subscriber.add(unsubscribe);
+      });
+    };
 export const deleteDocumentBuilder =
   (database: Firestore) =>
-  (path: string): void => {
-    const docRef = doc(database, path);
-    deleteDoc(docRef);
-  };
+    (path: string): void => {
+      const docRef = doc(database, path);
+      deleteDoc(docRef);
+    };
 
 export const updateDocumentBuilder =
   (database: Firestore) =>
-  <T>(path: string, data: Partial<T>) => {
-    const docRef = doc(database, path);
-    updateDoc(docRef, data);
-  };
+    <T>(path: string, data: Partial<T>) => {
+      const docRef = doc(database, path);
+      updateDoc(docRef, data);
+    };

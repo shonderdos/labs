@@ -1,0 +1,39 @@
+<app-page-wrapper heading="Edit Championship">
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Championship Details</h2>
+      </div>
+      @if (editForm | async; as form) {
+        <form [formGroup]="form" (ngSubmit)="save(form.getRawValue())" class="details">
+          <div class="row">
+            <div class="label">Name</div>
+            <app-input formControlName="name" placeholder="Fill in name" class="value" />
+          </div>
+          <div class="actions">
+            <app-button theme="accent" (click)="cancel()">Cancel</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </form>
+      }
+    </app-panel>
+    <app-panel>
+      <div class="header">
+        <h2>Championship Events</h2>
+      </div>
+      @for (event of events | async; track event.id) {
+        <app-panel>
+          {{ event.date }}
+          <div class="event-actions">
+            <app-button theme="warn" (click)="cancel()">Remove</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </app-panel>
+      } @empty {
+        No Events Scheduled
+      }
+
+      <app-button icon="add" displayMode="icon-text">Add event</app-button>
+    </app-panel>
+  </div>
+</app-page-wrapper>

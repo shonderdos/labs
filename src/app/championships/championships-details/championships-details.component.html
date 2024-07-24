@@ -1,0 +1,26 @@
+<app-page-wrapper heading="Championship details">
+  <div class="container">
+    @if (championship()) {
+      <app-panel>
+        <div class="header">
+          <h2>Championship Details</h2>
+          <div class="spacer"></div>
+          <app-button theme="accent" (click)="edit()">Edit championship</app-button>
+          <app-button theme="warn" (click)="delete()">Delete championship</app-button>
+        </div>
+        <div class="details">
+          <div class="row">
+            <div class="label">ID</div>
+            <div class="value">{{ championship()?.id ?? '-' }}</div>
+          </div>
+          <div class="row">
+            <div class="label">Name</div>
+            <div class="value">{{ championship()?.name ?? '-' }}</div>
+          </div>
+        </div>
+      </app-panel>
+    } @else {
+      no championship
+    }
+  </div>
+</app-page-wrapper>

@@ -54,5 +54,8 @@ service cloud.firestore {
             allow read, create, delete, update: if isLoggedIn()
           }
         }
+      match /championships/{id} {
+          allow read, create, delete, update: if isLoggedIn()
+      }
     }
 }

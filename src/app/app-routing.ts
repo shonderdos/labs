@@ -51,6 +51,11 @@ export const routes: Routes = [
               icon: 'groups',
             },
             {
+              name: 'Championships',
+              link: '/championships',
+              icon: 'emoji_events',
+            },
+            {
               name: 'Weather',
               link: '/weather',
               icon: 'cloud',
@@ -163,6 +168,28 @@ export const routes: Routes = [
             ],
           },
         ],
+      },
+      {
+        path: "championships",
+        data: { breadcrumb: "Championships" },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./championships/championships.component')
+          },
+          {
+            path: ':id',
+            data: { breadcrumb: "Details" },
+            children: [
+              { path: '', loadComponent: () => import('./championships/championships-details/championships-details.component') },
+              {
+                path: 'edit',
+                data: { breadcrumb: "Edit" },
+                loadComponent: () => import('./championships/championships-edit/championships-edit.component')
+              }
+            ],
+          },
+        ]
       },
       {
         path: 'settings',
