@@ -1,0 +1,21 @@
+<app-page-wrapper heading="Edit Event">
+  <div class="container">
+    <app-panel>
+      <div class="header">
+        <h2>Event Details</h2>
+      </div>
+      @if (editForm | async; as form) {
+        <form [formGroup]="form" (ngSubmit)="save(form.getRawValue())" class="details">
+          <div class="row">
+            <div class="label">date</div>
+            <app-input formControlName="date" placeholder="Fill in name" class="value" />
+          </div>
+          <div class="actions">
+            <app-button theme="accent" (click)="cancel()">Cancel</app-button>
+            <app-button type="submit">Save</app-button>
+          </div>
+        </form>
+      }
+    </app-panel>
+  </div>
+</app-page-wrapper>

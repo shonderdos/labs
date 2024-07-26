@@ -1,0 +1,40 @@
+:host {
+  width: 640px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 24px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.header {
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #1c2437;
+}
+
+.row {
+  margin-top: 24px;
+
+  .label {
+    font-weight: bold;
+  }
+
+  .value {
+    margin-top: 8px;
+  }
+}
+
+.event-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: end;
+}
