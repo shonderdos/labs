@@ -9,23 +9,23 @@ import { PageWrapperComponent } from 'src/app/shared/ui/page-wrapper/page-wrappe
 import { PanelComponent } from 'src/app/shared/ui/panel/panel.component';
 
 @Component({
-  templateUrl: './championships-details.component.html',
-  styleUrl: './championships-details.component.scss',
+  templateUrl: './events-details.component.html',
+  styleUrl: './events-details.component.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PanelComponent, PageWrapperComponent, ButtonComponent],
 })
-export default class ChampionshipDetailsComponent {
+export default class EventDetailsComponent {
   #firebaseService = inject(FirebaseService);
   #router = inject(Router);
   #route = inject(ActivatedRoute);
   #modalService = inject(ModalService);
 
   #id = this.#route.params.pipe(map(({ id }) => id));
-  championship = toSignal(
+  event = toSignal(
     this.#id.pipe(
-      switchMap((id) => this.#firebaseService.getChampionship(id)),
-      map(([championship]) => championship)
+      switchMap((id) => this.#firebaseService.getEvent(id)),
+      map(([event]) => event)
     )
   );
 
@@ -40,7 +40,7 @@ export default class ChampionshipDetailsComponent {
         filter(({ confirmed }) => confirmed),
         switchMap(() => this.#id),
         tap((id) => {
-          this.#firebaseService.deleteChampionship(id);
+          this.#firebaseService.deleteEvent(id);
           this.#router.navigate(['../'], { relativeTo: this.#route });
         })
       )

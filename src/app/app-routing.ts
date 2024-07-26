@@ -56,6 +56,11 @@ export const routes: Routes = [
               icon: 'emoji_events',
             },
             {
+              name: 'Events',
+              link: '/events',
+              icon: 'calendar_today',
+            },
+            {
               name: 'Weather',
               link: '/weather',
               icon: 'cloud',
@@ -170,26 +175,51 @@ export const routes: Routes = [
         ],
       },
       {
-        path: "championships",
-        data: { breadcrumb: "Championships" },
+        path: 'championships',
+        data: { breadcrumb: 'Championships' },
         children: [
           {
             path: '',
-            loadComponent: () => import('./championships/championships.component')
+            loadComponent: () => import('./championships/championships.component'),
           },
           {
             path: ':id',
-            data: { breadcrumb: "Details" },
+            data: { breadcrumb: 'Details' },
             children: [
-              { path: '', loadComponent: () => import('./championships/championships-details/championships-details.component') },
+              {
+                path: '',
+                loadComponent: () => import('./championships/championships-details/championships-details.component'),
+              },
               {
                 path: 'edit',
-                data: { breadcrumb: "Edit" },
-                loadComponent: () => import('./championships/championships-edit/championships-edit.component')
-              }
+                data: { breadcrumb: 'Edit' },
+                loadComponent: () => import('./championships/championships-edit/championships-edit.component'),
+              },
             ],
           },
-        ]
+        ],
+      },
+      {
+        path: 'events',
+        data: { breadcrumb: 'Events' },
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./events/events.component'),
+          },
+          {
+            path: ':id',
+            data: { breadcrumb: 'Details' },
+            children: [
+              { path: '', loadComponent: () => import('./events/events-details/events-details.component') },
+              {
+                path: 'edit',
+                data: { breadcrumb: 'Edit' },
+                loadComponent: () => import('./events/events-edit/events-edit.component'),
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'settings',

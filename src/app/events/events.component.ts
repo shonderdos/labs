@@ -5,50 +5,51 @@ import { ButtonComponent } from '../shared/ui/button/button.component';
 import { InputComponent } from '../shared/ui/input/input.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { Championship, FirebaseService } from '../shared/services/firebase/firebase.service';
+import { FirebaseService } from '../shared/services/firebase/firebase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../shared/modal/modal.service';
 import { filter, tap } from 'rxjs';
+import { Event } from './events-edit/events-edit.component';
 
 @Component({
-  templateUrl: './championship.component.html',
-  styleUrl: './championship.component.scss',
+  templateUrl: './events.component.html',
+  styleUrl: './events.component.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PageWrapperComponent, PanelComponent, ButtonComponent, InputComponent, ReactiveFormsModule, AsyncPipe],
 })
-export default class ChampionshipsComponent {
+export default class EventsComponent {
   #firebaseService = inject(FirebaseService);
   #router = inject(Router);
   #route = inject(ActivatedRoute);
   #modalService = inject(ModalService);
   searchControl = new FormControl('');
-  filteredChampionships = this.#firebaseService.getChampionship();
+  filteredEvents = this.#firebaseService.getEvent();
 
   add() {
-    const id = this.#firebaseService.addChampionship();
+    const id = this.#firebaseService.addEvent();
     this.#router.navigate([id, 'edit'], { relativeTo: this.#route });
   }
 
-  view(id: Championship['id']) {
+  view(id: Event['id']) {
     this.#router.navigate([id], { relativeTo: this.#route });
   }
 
-  edit(id: Championship['id']) {
+  edit(id: Event['id']) {
     this.#router.navigate([id, 'edit'], { relativeTo: this.#route });
   }
 
-  delete(id: Championship['id']) {
+  delete(id: Event['id']) {
     this.#modalService
       .open({
         content: {
-          title: 'Delete championship?',
-          body: 'Are you sure you want to delete the championship? ',
+          title: 'Delete event?',
+          body: 'Are you sure you want to delete the event? ',
         },
       })
       .pipe(
         filter(({ confirmed }) => confirmed),
-        tap(() => this.#firebaseService.deleteChampionship(id))
+        tap(() => this.#firebaseService.deleteEvent(id))
       )
       .subscribe();
   }

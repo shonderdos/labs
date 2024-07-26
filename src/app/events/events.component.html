@@ -1,0 +1,41 @@
+<app-page-wrapper heading="Events">
+  <app-panel>
+    <div class="table-heading">
+      <app-input [formControl]="searchControl" />
+      <app-button (click)="add()" icon="person_add"> Add new Event</app-button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>date</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (event of filteredEvents | async; track event.id) {
+          <tr>
+            <td>{{ event.date ?? '-' }}</td>
+            <td class="narrow">
+              <app-button (click)="view(event.id)" icon="visibility" displayMode="icon-text" theme="transparent"
+                >View</app-button
+              >
+            </td>
+            <td class="narrow">
+              <app-button (click)="edit(event.id)" displayMode="icon-text" icon="edit" theme="transparent"
+                >Edit</app-button
+              >
+            </td>
+            <td class="narrow">
+              <app-button (click)="delete(event.id)" displayMode="icon-text" theme="transparent" icon="delete"
+                >Delete</app-button
+              >
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7">No events found</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </app-panel>
+</app-page-wrapper>

@@ -1,0 +1,26 @@
+<app-page-wrapper heading="Event details">
+  <div class="container">
+    @if (event()) {
+      <app-panel>
+        <div class="header">
+          <h2>Event Details</h2>
+          <div class="spacer"></div>
+          <app-button theme="accent" (click)="edit()">Edit event</app-button>
+          <app-button theme="warn" (click)="delete()">Delete event</app-button>
+        </div>
+        <div class="details">
+          <div class="row">
+            <div class="label">ID</div>
+            <div class="value">{{ event()?.id ?? '-' }}</div>
+          </div>
+          <div class="row">
+            <div class="label">date</div>
+            <div class="value">{{ event()?.date ?? '-' }}</div>
+          </div>
+        </div>
+      </app-panel>
+    } @else {
+      no event
+    }
+  </div>
+</app-page-wrapper>
