@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, of, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { Championship, FirebaseService, Track } from 'src/app/shared/services/firebase/firebase.service';
 import { ButtonComponent } from 'src/app/shared/ui/button/button.component';
 import { InputComponent } from 'src/app/shared/ui/input/input.component';
@@ -30,7 +30,8 @@ export default class ChampionshipEditComponent {
 
   #id = this.#activatedRoute.params.pipe(map((params) => params['id']));
   #championshipData = this.#id.pipe(switchMap((id) => this.#firebaseService.getChampionship(id)));
-  events = of([{ date: 'in 3 days', track: {} }] as Event[]);
+  championshipEvents = this.#id.pipe(switchMap((id) => this.#firebaseService.getChampionshipEvents(id)));
+  allEvents = this.#firebaseService.getEvent();
 
   editForm = this.#championshipData.pipe(
     map((teams) => teams[0]),
@@ -45,5 +46,15 @@ export default class ChampionshipEditComponent {
 
   cancel() {
     this.#router.navigate(['../'], { relativeTo: this.#activatedRoute });
+  }
+
+  addEvent(eventId: Event['id']) {
+    const championshipId = this.#activatedRoute.snapshot.params['id'];
+    this.#firebaseService.addChampionshipEvent(championshipId, eventId);
+  }
+
+  deleteEvent(eventId: Event['id']) {
+    const championshipId = this.#activatedRoute.snapshot.params['id'];
+    this.#firebaseService.deleteChampionshipEvent(championshipId, eventId);
   }
 }

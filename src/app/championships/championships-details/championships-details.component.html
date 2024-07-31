@@ -22,5 +22,20 @@
     } @else {
       no championship
     }
+    <app-panel>
+      <div class="header">
+        <h2>Events</h2>
+      </div>
+      <div class="details">
+        @for (event of events(); track event.id) {
+          <div class="row">
+            <div class="label">Event name</div>
+            <div class="value">{{ event.date ?? '-' }}</div>
+          </div>
+        } @empty {
+          No events scheduled
+        }
+      </div>
+    </app-panel>
   </div>
 </app-page-wrapper>

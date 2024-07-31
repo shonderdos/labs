@@ -31,9 +31,9 @@ export default class DriverDetailsComponent {
   teams = toSignal(
     this.activatedRoute.params.pipe(
       map((params) => params['id']),
-      switchMap(id => this.firebaseService.getDriverTeams(id))
+      switchMap((id) => this.firebaseService.getDriverTeams(id))
     )
-  )
+  );
   public edit() {
     if (this.driver === null) return;
     this.router.navigate([`./edit`], { relativeTo: this.activatedRoute });

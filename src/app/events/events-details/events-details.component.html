@@ -22,5 +22,14 @@
     } @else {
       no event
     }
+    <app-panel>
+      <div class="header">
+        <h2>Championships</h2>
+      </div>
+
+      @for (championship of championships(); track championship.id) {
+        <div>{{ championship.name }}</div>
+      }
+    </app-panel>
   </div>
 </app-page-wrapper>

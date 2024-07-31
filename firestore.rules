@@ -66,5 +66,8 @@ service cloud.firestore {
 match /user_team/{id} {
           allow read, write, create, delete, update: if isLoggedIn()
       }
+match /championship_event/{id} {
+          allow read, write, create, delete, update: if isLoggedIn()
+      }
     }
 }

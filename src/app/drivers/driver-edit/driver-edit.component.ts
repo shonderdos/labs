@@ -9,6 +9,7 @@ import { ButtonComponent } from '../../shared/ui/button/button.component';
 import { InputComponent } from '../../shared/ui/input/input.component';
 import { DriverStanding } from '../../shared/interfaces/driver-standing.interface';
 import { PageWrapperComponent } from '../../shared/ui/page-wrapper/page-wrapper.component';
+import { Team } from '../../teams/teams.component';
 
 @Component({
   selector: 'app-driver-edit',
@@ -45,6 +46,23 @@ export default class DriverEditComponent {
       })
     )
   );
+
+  driverTeams = this.activatedRoute.params.pipe(
+    map((params) => params['id']),
+    switchMap((id) => this.firebaseService.getDriverTeams(id))
+  );
+
+  allTeams = this.firebaseService.getTeam();
+
+  removeFromTeam(teamId: Team['id']) {
+    const userId = this.activatedRoute.snapshot.params['id'];
+    this.firebaseService.deleteTeamMember(teamId, userId);
+  }
+
+  addToTeam(teamId: Team['id']) {
+    const userId = this.activatedRoute.snapshot.params['id'];
+    this.firebaseService.addTeamMember(teamId, userId);
+  }
 
   public cancel() {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
