@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, FormControl, AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
@@ -63,8 +63,8 @@ export default class TeamEditComponent {
     this.#router.navigate(['../'], { relativeTo: this.#activatedRoute });
   }
 
-  addTeamMember(member: DriverStanding) {
-    this.#firebaseService.addTeamMember(this.#activatedRoute.snapshot.params['id'], member);
+  addTeamMember(userId: DriverStanding['id']) {
+    this.#firebaseService.addTeamMember(this.#activatedRoute.snapshot.params['id'], userId);
   }
   removeMember(configurationId: Partial<DriverStanding>['id']) {
     if (!configurationId) {

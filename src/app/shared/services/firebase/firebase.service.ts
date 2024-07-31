@@ -93,27 +93,27 @@ export class FirebaseService {
 
   getDriverTeams(id: DriverStanding['id']): Observable<Team[]> {
     // TODO: I need to get a better understanding on how to get data from parent documents. this code is wobly
-    if (!id) throw new Error('Could not get driver teams. No id provided')
+    if (!id) throw new Error('Could not get driver teams. No id provided');
     const q = query(collection(this.db, 'user_team'), where('user', '==', id));
 
     return new Observable((subscriber) => {
       const unsubscribe = onSnapshot(q, (docs) => {
-        subscriber.next(docs.docs)
+        subscriber.next(docs.docs);
       });
 
       subscriber.add(unsubscribe);
     }).pipe(
-      map((arr => {
-        // @ts-expect-error
-        return arr.map(doc => {
-          const { team } = doc.data()
-          return team
-        })
-      })),
-      mergeMap((teamids: string[]) => {
-        return combineLatest(teamids.map(teamId => this.#getSingleDocument<Team>('teams', teamId)))
+      map((arr) => {
+        // @ts-expect-error fix this later
+        return arr.map((doc) => {
+          const { team } = doc.data();
+          return team;
+        });
       }),
-      map((arr) => arr.flat()),
+      mergeMap((teamids: string[]) => {
+        return combineLatest(teamids.map((teamId) => this.#getSingleDocument<Team>('teams', teamId)));
+      }),
+      map((arr) => arr.flat())
     );
   }
 
@@ -230,29 +230,29 @@ export class FirebaseService {
 
     return new Observable((subscriber) => {
       const unsub = onSnapshot(q, ({ docs }) => {
-        subscriber.next(docs)
+        subscriber.next(docs);
       });
 
-      subscriber.add(unsub)
+      subscriber.add(unsub);
     }).pipe(
-      // @ts-expect-error
-      map(docs => docs.map(doc => {
-        const { user } = doc.data()
+      map((docs) =>
+        // @ts-expect-error fix this later
+        docs.map((doc) => {
+          const { user } = doc.data();
 
-        return this.#getSingleDocument<DriverStanding>("driver-standings", user)
-      })),
+          return this.#getSingleDocument<DriverStanding>('driver-standings', user);
+        })
+      ),
       mergeMap((obs) => combineLatest(obs)),
-      // @ts-expect-error
-      map((arr) => arr.flat()),
-    )
+      // @ts-expect-error fix this later
+      map((arr) => arr.flat())
+    );
   }
-  addTeamMember(id: Team['id'], user: DriverStanding) {
-    if (!id) throw new Error('Add team member failed. No team id provided');
-    if (!user) throw new Error('Add team member failed. No member provided');
-    if (!user.id) throw new Error('Add team member failed. User has no id property');
+  addTeamMember(teamId: Team['id'], userId: DriverStanding['id']) {
+    if (!teamId) throw new Error('Add team member failed. No team id provided');
+    if (!userId) throw new Error('Add team member failed. No userId provided');
 
-    this.#newDocument(`user_team/${user.id}_${id}`, { user: user.id, team: id })
-    this.#newDocument(`teams/${id}/members/${user.id}`, user);
+    this.#newDocument(`user_team/${userId}_${teamId}`, { user: userId, team: teamId });
   }
 
   deleteTeamMember(teamId: Team['id'], userId: DriverStanding['id']) {
@@ -303,63 +303,126 @@ export class FirebaseService {
 
     this.#updateDocument(`events/${id}`, data);
   }
+  getEventChampionships(eventId: Event['id']): Observable<Championship[]> {
+    const colRef = collection(this.db, 'championship_event');
+    const q = query(colRef, where('event', '==', eventId));
+
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(q, ({ docs }) => {
+        subscriber.next(docs);
+      });
+      subscriber.add(unsubscribe);
+    }).pipe(
+      map((docs) => {
+        // @ts-expect-error fix this later
+        return docs.map((doc) => {
+          const { championship } = doc.data();
+          return this.#getSingleDocument<Championship>('championships', championship);
+        });
+      }),
+      mergeMap((obs) => {
+        return combineLatest(obs);
+      }),
+      // @ts-expect-error fix this later
+      map((arr) => arr.flat())
+    );
+  }
+
+  addChampionshipEvent(championshipId: Championship['id'], eventId: Event['id']) {
+    this.#newDocument(`championship_event/${championshipId}_${eventId}`, {
+      championship: championshipId,
+      event: eventId,
+    });
+  }
+
+  deleteChampionshipEvent(championshipId: Championship['id'], eventId: Event['id']) {
+    this.#deleteDocument(`championship_event/${championshipId}_${eventId}`);
+  }
+
+  getChampionshipEvents(championshipId: Championship['id']) {
+    if (!championshipId) throw new Error('No team id provided');
+
+    const colRef = collection(this.db, 'championship_event');
+    const q = query(colRef, where('championship', '==', championshipId));
+
+    return new Observable((subscriber) => {
+      const unsub = onSnapshot(q, ({ docs }) => {
+        subscriber.next(docs);
+      });
+
+      subscriber.add(unsub);
+    }).pipe(
+      // TODO: If the array is empty we dont emit here. we should because the UI doesnt update if last item is removed
+      map((docs) =>
+        // @ts-expect-error fix this later
+        docs.map((doc) => {
+          const { event } = doc.data();
+
+          return this.#getSingleDocument<Event>('events', event);
+        })
+      ),
+      mergeMap((obs) => combineLatest(obs)),
+      // @ts-expect-error fix this later
+      map((arr) => arr.flat())
+    );
+  }
 }
 
 export const newDocumentBuilder =
   (database: Firestore) =>
-    <T>(path: string, defaultData?: T): string => {
-      const segments = path.split('/').length;
-      if (segments % 2) {
-        const colRef = collection(database, path);
-        const docRef = doc(colRef);
-        const { id } = docRef;
-        setDoc(docRef, { ...defaultData, id });
-        return id;
-      } else {
-        const docRef = doc(database, path);
-        setDoc(docRef, { ...defaultData });
-        return docRef.id;
-      }
-    };
+  <T>(path: string, defaultData?: T): string => {
+    const segments = path.split('/').length;
+    if (segments % 2) {
+      const colRef = collection(database, path);
+      const docRef = doc(colRef);
+      const { id } = docRef;
+      setDoc(docRef, { ...defaultData, id });
+      return id;
+    } else {
+      const docRef = doc(database, path);
+      setDoc(docRef, { ...defaultData });
+      return docRef.id;
+    }
+  };
 
 export const getSingleDocumentBuilder =
   (database: Firestore) =>
-    <T>(path: string, id: string): Observable<T[]> => {
-      const docRef = query(collection(database, path), where('id', '==', id));
-      return new Observable((subscriber) => {
-        const unsubscribe = onSnapshot(docRef, (docs) => {
-          const result = [] as T[];
-          docs.forEach((doc) => result.push(doc.data() as T));
-          subscriber.next(result);
-        });
-        subscriber.add(unsubscribe);
+  <T>(path: string, id: string): Observable<T[]> => {
+    const docRef = query(collection(database, path), where('id', '==', id));
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(docRef, (docs) => {
+        const result = [] as T[];
+        docs.forEach((doc) => result.push(doc.data() as T));
+        subscriber.next(result);
       });
-    };
+      subscriber.add(unsubscribe);
+    });
+  };
 
 export const getAllDocumentsBuilder =
   (database: Firestore) =>
-    <T>(path: string): Observable<T[]> => {
-      const colRef = collection(database, path);
-      return new Observable((subscriber) => {
-        const unsubscribe = onSnapshot(colRef, (docs) => {
-          const results: T[] = [];
-          docs.forEach((result) => results.push(result.data() as T));
-          subscriber.next(results);
-        });
-
-        subscriber.add(unsubscribe);
+  <T>(path: string): Observable<T[]> => {
+    const colRef = collection(database, path);
+    return new Observable((subscriber) => {
+      const unsubscribe = onSnapshot(colRef, (docs) => {
+        const results: T[] = [];
+        docs.forEach((result) => results.push(result.data() as T));
+        subscriber.next(results);
       });
-    };
+
+      subscriber.add(unsubscribe);
+    });
+  };
 export const deleteDocumentBuilder =
   (database: Firestore) =>
-    (path: string): void => {
-      const docRef = doc(database, path);
-      deleteDoc(docRef);
-    };
+  (path: string): void => {
+    const docRef = doc(database, path);
+    deleteDoc(docRef);
+  };
 
 export const updateDocumentBuilder =
   (database: Firestore) =>
-    <T>(path: string, data: Partial<T>) => {
-      const docRef = doc(database, path);
-      updateDoc(docRef, data);
-    };
+  <T>(path: string, data: Partial<T>) => {
+    const docRef = doc(database, path);
+    updateDoc(docRef, data);
+  };

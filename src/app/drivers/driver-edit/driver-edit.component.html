@@ -29,5 +29,29 @@
         </form>
       }
     </app-panel>
+    <app-panel>
+      <div class="header">
+        <h2>Teams</h2>
+      </div>
+      @for (team of driverTeams | async; track team.id) {
+        <div class="configuration">
+          <div class="label">{{ team.name }}</div>
+          <app-button icon="close" displayMode="icon-text" theme="warn" (click)="removeFromTeam(team.id)"
+            >Remove from team</app-button
+          >
+        </div>
+      } @empty {
+        Not part of any team
+      }
+
+      <hr />
+      <h2>Add to team</h2>
+      @for (team of allTeams | async; track team.id) {
+        <div class="configuration">
+          <div class="label">{{ team.name }}</div>
+          <app-button icon="close" displayMode="icon-text" (click)="addToTeam(team.id)">Add to team</app-button>
+        </div>
+      }
+    </app-panel>
   </div>
 </app-page-wrapper>

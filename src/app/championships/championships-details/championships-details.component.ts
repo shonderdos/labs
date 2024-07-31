@@ -29,6 +29,8 @@ export default class ChampionshipDetailsComponent {
     )
   );
 
+  events = toSignal(this.#id.pipe(switchMap((id) => this.#firebaseService.getChampionshipEvents(id))));
+
   edit() {
     this.#router.navigate(['edit'], { relativeTo: this.#route });
   }

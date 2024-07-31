@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, of, switchMap } from 'rxjs';
+import { combineLatest, map, of, switchMap } from 'rxjs';
 import { FirebaseService, Track } from 'src/app/shared/services/firebase/firebase.service';
 import { ButtonComponent } from 'src/app/shared/ui/button/button.component';
 import { InputComponent } from 'src/app/shared/ui/input/input.component';
@@ -37,10 +37,30 @@ export default class EventEditComponent {
     map(({ id, date }) => this.#fb.group({ id, date }))
   );
 
+  eventChampionships = this.#id.pipe(switchMap((eventId) => this.#firebaseService.getEventChampionships(eventId)));
+
+  allChampionships = combineLatest({
+    allChampionships: this.#firebaseService.getChampionship(),
+    eventChampionships: this.eventChampionships.pipe(map((all) => all.map(({ id }) => id))),
+  }).pipe(
+    map(({ allChampionships, eventChampionships }) =>
+      allChampionships.filter((allChampionship) => !eventChampionships.includes(allChampionship.id))
+    )
+  );
+
   save(form: Partial<Event>) {
     const id = this.#activatedRoute.snapshot.params['id'];
     this.#firebaseService.updateEvent(id, form);
     this.#router.navigate(['../'], { relativeTo: this.#activatedRoute });
+  }
+
+  addChampionship(championshipId: Event['id']) {
+    const eventId = this.#activatedRoute.snapshot.params['id'];
+    this.#firebaseService.addChampionshipEvent(championshipId, eventId);
+  }
+  removeChampionship(championshipId: Event['id']) {
+    const eventId = this.#activatedRoute.snapshot.params['id'];
+    this.#firebaseService.deleteChampionshipEvent(championshipId, eventId);
   }
 
   cancel() {

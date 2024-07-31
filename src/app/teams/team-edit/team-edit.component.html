@@ -38,7 +38,7 @@
       @for (user of memberSearchResults(); track user.id) {
         <div class="driver-result">
           <span>{{ user.firstName }} {{ user.lastName }}</span>
-          <app-button icon="add" displayMode="icon-text" (click)="addTeamMember(user)">Add team member</app-button>
+          <app-button icon="add" displayMode="icon-text" (click)="addTeamMember(user.id)">Add team member</app-button>
         </div>
       }
     </app-panel>

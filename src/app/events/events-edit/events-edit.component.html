@@ -17,5 +17,34 @@
         </form>
       }
     </app-panel>
+    <app-panel>
+      <div class="header">
+        <h2>Championships</h2>
+      </div>
+      @for (championship of eventChampionships | async; track championship.id) {
+        <div class="configuration">
+          <div class="label">{{ championship.name }}</div>
+          <app-button icon="close" displayMode="icon-text" theme="warn" (click)="removeChampionship(championship.id)"
+            >Remove</app-button
+          >
+        </div>
+      } @empty {
+        No championships scheduled for this event
+      }
+
+      <div class="header">
+        <h2>Add championship</h2>
+      </div>
+      @for (championship of allChampionships | async; track championship.id) {
+        <div class="configuration">
+          <div class="label">{{ championship.name }}</div>
+          <app-button icon="close" displayMode="icon-text" (click)="addChampionship(championship.id)"
+            >Add to championship</app-button
+          >
+        </div>
+      } @empty {
+        No championships found
+      }
+    </app-panel>
   </div>
 </app-page-wrapper>
