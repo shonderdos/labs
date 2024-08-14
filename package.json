@@ -39,7 +39,7 @@
     "@angular-eslint/schematics": "18.3.0",
     "@angular-eslint/template-parser": "18.3.0",
     "@angular/build": "^18.0.1",
-    "@angular/cli": "18.1.4",
+    "@angular/cli": "18.2.0",
     "@angular/compiler-cli": "18.2.0",
     "@cypress/schematic": "2.5.2",
     "@types/jest": "^29.4.0",
