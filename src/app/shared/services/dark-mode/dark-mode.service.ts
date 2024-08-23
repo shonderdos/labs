@@ -24,7 +24,8 @@ export class DarkModeService {
       new Promise((resolve) => {
         this.document.defaultView?.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
           if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
-            event.matches ? this.enable() : this.disable();
+            if (event.matches) this.enable();
+            else this.disable();
           }
         });
         resolve(true);
@@ -48,7 +49,8 @@ export class DarkModeService {
       }
 
       if (this.preference() === DarkModePreference.SYSTEM_DEFAULT) {
-        this.isSystemDarkMode() ? this.enable() : this.disable();
+        if (this.isSystemDarkMode()) this.enable();
+        else this.disable();
         return;
       }
     });
