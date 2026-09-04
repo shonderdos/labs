@@ -41,7 +41,7 @@
     "@angular/build": "^18.0.1",
     "@angular/cli": "18.2.21",
     "@angular/compiler-cli": "18.2.1",
-    "@cypress/schematic": "2.5.2",
+    "@cypress/schematic": "6.0.0",
     "@types/jest": "^29.4.0",
     "@types/node": "20.19.43",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
